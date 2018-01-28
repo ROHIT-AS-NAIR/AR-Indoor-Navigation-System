@@ -12,31 +12,25 @@ User can known thier position and rotation direction from Top-view map. and can 
 
 ## ScreenShot
 on start app[1] and found marker[2] marker will show like [3] in Top-view page
-![start](https://raw.githubusercontent.com/fasterac/AR-Indoor-Navigation-System/master/ReadmeComponents/arnav04board.jpg =150) ![marker show data of that pos](https://raw.githubusercontent.com/fasterac/AR-Indoor-Navigation-System/master/ReadmeComponents/arnav05board.jpg =150) ![top view in idle mode](https://raw.githubusercontent.com/fasterac/AR-Indoor-Navigation-System/master/ReadmeComponents/arnav08top.jpg =150)
+![start](https://raw.githubusercontent.com/fasterac/AR-Indoor-Navigation-System/master/ReadmeComponents/arnav04board.jpg =250x355) ![marker show data of that pos](https://raw.githubusercontent.com/fasterac/AR-Indoor-Navigation-System/master/ReadmeComponents/arnav05board.jpg =250x355) ![top view in idle mode](https://raw.githubusercontent.com/fasterac/AR-Indoor-Navigation-System/master/ReadmeComponents/arnav08top.jpg =250x355)
 
 Search page (I Search for room 317)
-![test](https =150) ![test](https =150)
-<img src="https://raw.githubusercontent.com/fasterac/AR-Indoor-Navigation-System/master/ReadmeComponents/arnav06search.jpg" alt="search page" style="width: 150px;"/> <img src="https://raw.githubusercontent.com/fasterac/AR-Indoor-Navigation-System/master/ReadmeComponents/arnav07search.jpg" alt="search page when type something" style="width: 300px;"/>
+<img src="https://raw.githubusercontent.com/fasterac/AR-Indoor-Navigation-System/master/ReadmeComponents/arnav06search.jpg" alt="search page" width="150"/> <img src="https://raw.githubusercontent.com/fasterac/AR-Indoor-Navigation-System/master/ReadmeComponents/arnav07search.jpg" alt="search page when type something" width="150"/>
 
 before navigate will have dialog of destination's data and navigate button
-![test](https =150)
-<img src="https://raw.githubusercontent.com/fasterac/AR-Indoor-Navigation-System/master/ReadmeComponents/arnav11beforechoose.png" alt="first room" style="width: 150px;"/>
+<img src="https://raw.githubusercontent.com/fasterac/AR-Indoor-Navigation-System/master/ReadmeComponents/arnav11beforechoose.png" alt="first room" width="150"/>
 
 in navigate mode (purple)
-![test](https =150) ![test](https =150)
-<img src="https://raw.githubusercontent.com/fasterac/AR-Indoor-Navigation-System/master/ReadmeComponents/arnav01arrow.jpg" alt="first room" style="width: 150px;"/> <img src="https://raw.githubusercontent.com/fasterac/AR-Indoor-Navigation-System/master/ReadmeComponents/arnav02arrow.jpg" alt="second room" style="width: 150px;"/>
+<img src="https://raw.githubusercontent.com/fasterac/AR-Indoor-Navigation-System/master/ReadmeComponents/arnav01arrow.jpg" alt="first room" width="150"/> <img src="https://raw.githubusercontent.com/fasterac/AR-Indoor-Navigation-System/master/ReadmeComponents/arnav02arrow.jpg" alt="second room" width="150"/>
 
 Top-wiew map (relate below)
-![test](https =150) ![test](https =150)
-<img src="https://raw.githubusercontent.com/fasterac/AR-Indoor-Navigation-System/master/ReadmeComponents/arnav09top.jpg" alt="top view first room" style="width: 150px;"/> <img src="https://raw.githubusercontent.com/fasterac/AR-Indoor-Navigation-System/master/ReadmeComponents/arnav10top.jpg" alt="top view second room" style="width: 150px;"/>
+<img src="https://raw.githubusercontent.com/fasterac/AR-Indoor-Navigation-System/master/ReadmeComponents/arnav09top.jpg" alt="top view first room" width="150""/> <img src="https://raw.githubusercontent.com/fasterac/AR-Indoor-Navigation-System/master/ReadmeComponents/arnav10top.jpg" alt="top view second room" width="150"/>
 
 when reached destination
-![test](https =150)
-<img src="https://raw.githubusercontent.com/fasterac/AR-Indoor-Navigation-System/master/ReadmeComponents/arnav03tick.jpg" alt="reached" style="width: 150px;"/>
+<img src="https://raw.githubusercontent.com/fasterac/AR-Indoor-Navigation-System/master/ReadmeComponents/arnav03tick.jpg" alt="reached" width="150"/>
 
 we can also navigate complex map using dijkstra's algorithm (this is my test map)
-![test](https =150) ![test](https =150)
-<img src="https://raw.githubusercontent.com/fasterac/AR-Indoor-Navigation-System/master/ReadmeComponents/complex1.png" alt="reached" style="width: 150px;"/> <img src="https://raw.githubusercontent.com/fasterac/AR-Indoor-Navigation-System/master/ReadmeComponents/complex2.png" alt="reached" style="width: 150px;"/>
+<img src="https://raw.githubusercontent.com/fasterac/AR-Indoor-Navigation-System/master/ReadmeComponents/complex1.png" alt="reached" width="150"/> <img src="https://raw.githubusercontent.com/fasterac/AR-Indoor-Navigation-System/master/ReadmeComponents/complex2.png" alt="reached" width="150"/>
 
 
 ------------------------------------------
