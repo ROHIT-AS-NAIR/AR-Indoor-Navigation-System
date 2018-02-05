@@ -1,0 +1,19 @@
+{
+    "Items": [
+        {
+            "floorName": "Test",
+            "floorIndex": 0,
+            "floorImageName": "Testmap"
+        },
+        {
+            "floorName": "1 & M",
+            "floorIndex": 1,
+            "floorImageName": "floor1"
+        },
+        {
+            "floorName": "2",
+            "floorIndex": 2,
+            "floorImageName": "floor2"
+        }
+    ]
+}

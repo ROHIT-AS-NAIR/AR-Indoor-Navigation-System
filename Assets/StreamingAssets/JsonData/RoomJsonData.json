@@ -1,0 +1,19 @@
+{
+    "Items": [
+        {
+            "roomName": "room1",
+            "roomDescription": "room1 descript",
+            "isConnector": true
+        },
+        {
+            "roomName": "room2",
+            "roomDescription": "2 descript",
+            "isConnector": false
+        },
+        {
+            "roomName": "room3",
+            "roomDescription": "des cript tion",
+            "isConnector": false
+        }
+    ]
+}
