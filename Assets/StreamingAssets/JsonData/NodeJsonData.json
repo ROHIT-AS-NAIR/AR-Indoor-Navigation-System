@@ -1,0 +1,25 @@
+{
+    "Items": [
+        {
+            "nodeID": "n1",
+            "position": "1 1 1",
+            "referencePosition": "0 0 0",
+            "zOrientation": 270,
+            "xyOrientation": "0 0"
+        },
+        {
+            "nodeID": "n2",
+            "position": "1 1 1",
+            "referencePosition": "0 0 0",
+            "zOrientation": 270,
+            "xyOrientation": "0 0"
+        },
+        {
+            "nodeID": "n3",
+            "position": "1 1 1",
+            "referencePosition": "0 0 0",
+            "zOrientation": 270,
+            "xyOrientation": "0 0"
+        }
+    ]
+}

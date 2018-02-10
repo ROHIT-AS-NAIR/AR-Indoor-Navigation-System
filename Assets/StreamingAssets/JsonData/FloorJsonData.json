@@ -1,19 +1,32 @@
 {
     "Items": [
         {
+            "floorID": "f00",
             "floorName": "Test",
             "floorIndex": 0,
-            "floorImageName": "Testmap"
+            "floorImageName": "Testmap",
+            "buildingID": "b1"
         },
         {
+            "floorID": "f01",
             "floorName": "1 & M",
             "floorIndex": 1,
-            "floorImageName": "floor1"
+            "floorImageName": "floor1",
+            "buildingID": "b1"
         },
         {
+            "floorID": "f02",
             "floorName": "2",
             "floorIndex": 2,
-            "floorImageName": "floor2"
+            "floorImageName": "floor2",
+            "buildingID": "b1"
+        },
+        {
+            "floorID": "f03",
+            "floorName": "3",
+            "floorIndex": 3,
+            "floorImageName": "floor3",
+            "buildingID": "b1"
         }
     ]
 }

@@ -5,23 +5,24 @@ using UnityEngine;
 public class BuildingData : MonoBehaviour {
 
 	public List<GameObject> floorList;
+	public string buidingID;
 	public string buildingName = "Building";
 
 	// Use this for initialization
 	void Start () {
-		int index = 0;
-		foreach (Transform childTransform in transform)
-		{
-			GameObject objToAdd = childTransform.gameObject;
-			if(objToAdd.GetComponent<FloorData>() != null)
-			{
-				//buiding name didn't get name from gameobject name
-				Debug.Log("Get Floor " + objToAdd.GetComponent<FloorData>().floorName);
-				objToAdd.GetComponent<FloorData>().floorIndex = index;
-				index++;
-				floorList.Add(objToAdd);
-			}
-		}
+		// int index = 0;
+		// foreach (Transform childTransform in transform)
+		// {
+		// 	GameObject objToAdd = childTransform.gameObject;
+		// 	if(objToAdd.GetComponent<FloorData>() != null)
+		// 	{
+		// 		//buiding name didn't get name from gameobject name
+		// 		Debug.Log("Get Floor " + objToAdd.GetComponent<FloorData>().floorName);
+		// 		objToAdd.GetComponent<FloorData>().floorIndex = index;
+		// 		index++;
+		// 		floorList.Add(objToAdd);
+		// 	}
+		// }
 	}
 	
 	// Update is called once per frame

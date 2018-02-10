@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class RoomData : MonoBehaviour {
 
+	public string roomID;
 	public string roomName;
 	public string roomDescription;
 	public bool isConnector;
+	public string fkFloorID = "0";
 
 	// Use this for initialization
 	void Start () {

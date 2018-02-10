@@ -6,26 +6,29 @@ public class FloorData : MonoBehaviour {
 
 	public List<GameObject> markerList;
 	public List<GameObject> connectorList; //this list may check when remove
+	public string floorID;
 	public string floorName = "0";
 	public int floorIndex = 0;
+	public string fkBuildingID = "0";
 
 	// Use this for initialization
 	void Start () {
 		/* Work after All Marker Data get their position */
-		floorName = gameObject.name.Replace("Floor","");
-		foreach (Transform childTransform in transform)
-		{
-			GameObject objToAdd = childTransform.gameObject;
-			if(objToAdd.GetComponent<MarkerData>() != null)
-			{
-				MarkerData objData = objToAdd.GetComponent<MarkerData>();
-				Debug.Log("Get Marker " + objData.markerName 
-					+ ": " +objData.position);
-				objData.floor = floorName;
-				markerList.Add(objToAdd);
-				if(objData.IsConnector) {connectorList.Add(objToAdd);}
-			}
-		}
+
+		// floorName = gameObject.name.Replace("Floor","");
+		// foreach (Transform childTransform in transform)
+		// {
+		// 	GameObject objToAdd = childTransform.gameObject;
+		// 	if(objToAdd.GetComponent<MarkerData>() != null)
+		// 	{
+		// 		MarkerData objData = objToAdd.GetComponent<MarkerData>();
+		// 		Debug.Log("Get Marker " + objData.markerName 
+		// 			+ ": " +objData.position);
+		// 		objData.floor = floorName;
+		// 		markerList.Add(objToAdd);
+		// 		if(objData.IsConnector) {connectorList.Add(objToAdd);}
+		// 	}
+		// }
 	}
 	
 	// Update is called once per frame

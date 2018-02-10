@@ -1,19 +1,32 @@
 {
     "Items": [
         {
+        	"roomID": "r01",
             "roomName": "room1",
             "roomDescription": "room1 descript",
-            "isConnector": true
+            "isConnector": true,
+            "floorID": "f00"
         },
         {
+        	"roomID": "r02",
             "roomName": "room2",
             "roomDescription": "2 descript",
-            "isConnector": false
+            "isConnector": false,
+            "floorID": "f01"
         },
         {
+        	"roomID": "r03",
             "roomName": "room3",
             "roomDescription": "des cript tion",
-            "isConnector": false
+            "isConnector": false,
+            "floorID": "f03"
+        },
+        {
+        	"roomID": "r04",
+            "roomName": "room404",
+            "roomDescription": "room48",
+            "isConnector": false,
+            "floorID": "f03"
         }
     ]
 }
