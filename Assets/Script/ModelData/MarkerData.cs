@@ -5,21 +5,10 @@ using UnityEngine;
 
 public class MarkerData : MonoBehaviour, ICloneable {
 
-	[Header("Marker Data")]
-	public Vector3 position = Vector3.zero;
-	public Vector3 referencePosition = Vector3.zero;
-	public Vector3 orientation = Vector3.zero;
-	public string floor = "0";
-	public string markerName = "";
-	public string description = "";
-	public string roomName = "";
-	public bool IsConnector = false;
-
-	[Header("Vertex Data")]
-	public float cost = Single.PositiveInfinity;
-	public List<GameObject> adjacentNodeList;
-	public GameObject predecessor = null;
-	public GameObject successor = null;
+	public string markerID;
+	public string markerImageName = "";
+	public int priority = 10;
+	public string fkNodeID = "";
 
 	public enum NodeType
 	{
@@ -35,21 +24,7 @@ public class MarkerData : MonoBehaviour, ICloneable {
 
 	// Use this for initialization
 	void Start () {
-		position = transform.localPosition;
-		Transform refPoint = transform.Find("ReferencePoint");
-		if(refPoint != null)
-		{
-			refPoint.SetParent(transform.parent);
-			referencePosition = refPoint.localPosition; //or from orientation + 2 radius
-			Destroy(refPoint.gameObject);
-		}
-		else
-		{
-			referencePosition = position;
-		}
-		orientation = transform.rotation.eulerAngles;
-		Debug.Log("Start " + gameObject.name + " " +position);
-		markerName = gameObject.name.Replace("ImageTarget ","");
+		
 	}
 	
 	// Update is called once per frame
@@ -57,16 +32,12 @@ public class MarkerData : MonoBehaviour, ICloneable {
 		
 	}
 
-	/* deep clone */
-	
-
-	/* Set room data from someWhere */
-	public void SetRoomData(string name, string des)
+	/* get parent data  (NodeData) */
+	private NodeData GetParentObjectData()
 	{
-		roomName = name;
-		description = des;
+		return this.transform.parent.gameObject.GetComponent<NodeData>();
 	}
-
+	
 
 	#region Check Node Type
 	/* Method for Check Node Type */
@@ -89,49 +60,12 @@ public class MarkerData : MonoBehaviour, ICloneable {
 	public object Clone()
     {
 		MarkerData markerDataClone = new MarkerData();
-		markerDataClone.position = this.position ;
-		markerDataClone.referencePosition = this.referencePosition ;
-		markerDataClone.orientation = this.orientation ;
-		markerDataClone.floor = this.floor;
-		markerDataClone.markerName = this.markerName;
-		markerDataClone.description = this.description ;
-		markerDataClone.roomName = this.roomName ;
-		markerDataClone.IsConnector = this.IsConnector;
-		
-		markerDataClone.cost = this.cost ;
-		markerDataClone.adjacentNodeList = this.adjacentNodeList ;
-		markerDataClone.predecessor = this.predecessor ;
-		markerDataClone.successor = this.successor ;
-		markerDataClone.nodeType = this.nodeType ;
+		markerDataClone.markerID = this.markerID ;
+		markerDataClone.markerImageName = this.markerImageName ;
+		markerDataClone.priority = this.priority ;
+		markerDataClone.fkNodeID = this.fkNodeID;
 		
 		return markerDataClone;
     }
-
-#region Floor Method
-
-	public GameObject GetFloor() /* return gameObject of floorData */
-	{
-		//if(this.transform.parent.gameObject.GetComponent<FloorData>() != null)
-		return this.transform.parent.gameObject;
-	}
-
-	public bool IsSameFloorWith(string compareFloor)
-	{
-		if(this.floor == compareFloor)
-		{
-			return true;
-		}
-		return false;
-	}
-
-	public bool IsSameFloorWith(GameObject compareFloorObj)
-	{
-		if(this.floor == compareFloorObj.GetComponent<MarkerData>().floor)
-		{
-			return true;
-		}
-		return false;
-	}
-#endregion
 	
 }

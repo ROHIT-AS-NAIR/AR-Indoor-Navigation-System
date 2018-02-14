@@ -14,6 +14,9 @@ public class NodeData : MonoBehaviour {
 	public GameObject successor = null;
 	public List<GameObject> adjacentNodeList;
 
+	public string fkRoomID;
+	
+
 	// Use this for initialization
 	void Start () {
 		
@@ -24,16 +27,30 @@ public class NodeData : MonoBehaviour {
 		
 	}
 
-	public void SetupSelf()
+	/* get parent data  (Roomdata) */
+	private RoomData GetParentObjectData()
 	{
-
+		return this.transform.parent.gameObject.GetComponent<RoomData>();
 	}
 
-	private void AttractRoom()
-	/* to be heirachy of room */
-	{
+#region Floor Method
 
+	public GameObject GetFloor() /* return gameObject of floorData */
+	{
+		//if(this.transform.parent.gameObject.GetComponent<FloorData>() != null)
+		return this.transform.parent.gameObject;
 	}
+
+	/* assume that get nodedata to compare */
+	public bool IsSameFloorWith(GameObject compareFloorObj)
+	{
+		if(this.GetParentObjectData().fkFloorID == compareFloorObj.GetComponent<NodeData>().GetParentObjectData().fkFloorID)
+		{
+			return true;
+		}
+		return false;
+	}
+#endregion
 
 	private bool AttractFloor()
 	/* for attract with floor and set position */
@@ -50,4 +67,17 @@ public class NodeData : MonoBehaviour {
 		}
 		return true;
 	}
+
+	
+	public void SetupSelf()
+	{
+
+	}
+
+	private void AttractRoom()
+	/* to be heirachy of room */
+	{
+
+	}
+
 }

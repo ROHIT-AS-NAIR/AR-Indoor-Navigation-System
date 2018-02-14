@@ -36,18 +36,6 @@ public class FloorData : MonoBehaviour {
 		
 	}
 
-	public List<GameObject> GetMarkerOfRoom(string rname) /* return all marker object that have same name that provide, nullable */
-	{
-		List<GameObject> resultList = null;
-		foreach (GameObject marker in markerList)
-		{
-			if(marker.GetComponent<MarkerData>().roomName == rname) {
-				resultList.Add(marker);
-			}
-		}
-		return resultList;
-	}
-
 	public GameObject GetBuilding()
 	{
 		//if(this.transform.parent.gameObject.GetComponent<BuildingData>() != null)
@@ -63,4 +51,40 @@ public class FloorData : MonoBehaviour {
 	{
 		return GetConnector();
 	}
+
+	public static bool operator<(FloorData firstfloor, FloorData secondFloor)
+	{
+		if(firstfloor.floorIndex < secondFloor.floorIndex)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	public static bool operator>(FloorData firstfloor, FloorData secondFloor)
+	{
+		if(firstfloor.floorIndex < secondFloor.floorIndex)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	// 	public List<GameObject> GetMarkerOfRoom(string rname) /* return all marker object that have same name that provide, nullable */
+	// {
+	// 	List<GameObject> resultList = null;
+	// 	foreach (GameObject marker in markerList)
+	// 	{
+	// 		if(marker.GetComponent<MarkerData>().roomName == rname) {
+	// 			resultList.Add(marker);
+	// 		}
+	// 	}
+	// 	return resultList;
+	// }
 }

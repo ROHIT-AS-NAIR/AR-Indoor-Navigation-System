@@ -1,0 +1,39 @@
+{
+    "Items": [
+        {
+            "markerID": "m1",
+            "markerImageName": "Marker01",
+            "priority": 2,
+        },
+        {
+            "markerID": "m2",
+            "markerImageName": "Marker02",
+            "priority": 7,
+            "fkNodeID": "n1"
+        },
+        {
+            "markerID": "m3",
+            "markerImageName": "Marker03",
+            "priority": 6,
+            "fkNodeID": "n1"
+        },
+        {
+            "markerID": "m4",
+            "markerImageName": "Marker04",
+            "priority": 0,
+            "fkNodeID": "n1"
+        },
+        {
+            "markerID": "m5",
+            "markerImageName": "Marker05",
+            "priority": 5,
+            "fkNodeID": "n2"
+        },
+        {
+            "markerID": "m6",
+            "markerImageName": "Marker06",
+            "priority": 1,
+            "fkNodeID": "n2"
+        }
+    ]
+}

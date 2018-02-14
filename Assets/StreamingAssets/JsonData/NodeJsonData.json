@@ -1,25 +1,52 @@
 {
     "Items": [
         {
-            "nodeID": "n1",
+            "nodeID": "n001",
             "position": "1 1 1",
             "referencePosition": "0 0 0",
             "zOrientation": 270,
-            "xyOrientation": "0 0"
+            "xyOrientation": "0 0",
+            "fkRoomID": "r01"
         },
         {
-            "nodeID": "n2",
+            "nodeID": "n002",
             "position": "1 1 1",
             "referencePosition": "0 0 0",
-            "zOrientation": 270,
-            "xyOrientation": "0 0"
+            "zOrientation": 90,
+            "xyOrientation": "0 0",
+            "fkRoomID": "r01"
         },
         {
-            "nodeID": "n3",
+            "nodeID": "n003",
+            "position": "1 1 1",
+            "referencePosition": "0 0 0",
+            "zOrientation": 180,
+            "xyOrientation": "0 0",
+            "fkRoomID": "r01"
+        },
+        {
+            "nodeID": "n004",
             "position": "1 1 1",
             "referencePosition": "0 0 0",
             "zOrientation": 270,
-            "xyOrientation": "0 0"
+            "xyOrientation": "0 0",
+            "fkRoomID": "r03"
+        },
+        {
+            "nodeID": "n005",
+            "position": "5 5 5",
+            "referencePosition": "0 0 0",
+            "zOrientation": 250,
+            "xyOrientation": "0 0",
+            "fkRoomID": "r03"
+        },
+        {
+            "nodeID": "n006",
+            "position": "120 20 20",
+            "referencePosition": "0 0 0",
+            "zOrientation": 180,
+            "xyOrientation": "0 0",
+            "fkRoomID": "r04"
         }
     ]
 }

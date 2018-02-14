@@ -8,8 +8,8 @@ public class JsonReader : MonoBehaviour {
 
 	public string fileroomname = "RoomJsonData.json";
 	public string[] fileToLoadName = {"BuildingJsonData.json", "FloorJsonData.json", 
-		"RoomJsonData.json", "NodeJsonData.json", "MarkerJsonData.json"};
-	public string[] structTag = {"Building", "Floor", "Room", "Node", "Marker"};
+		"RoomJsonData.json", "NodeJsonData.json", "MarkerJsonData.json", "ConnectJsonData.json"};
+	public string[] structTag = {"Building", "Floor", "Room", "Node", "Marker", "Connect"};
 	private string path;
 	private string jsonString;
 
@@ -19,7 +19,8 @@ public class JsonReader : MonoBehaviour {
 		Floor = 1,
 		Room = 2,
 		Node = 3,
-		Marker = 4
+		Marker = 4,
+		Connect = 5
 	}
 
 	// Use this for initialization
@@ -33,10 +34,11 @@ public class JsonReader : MonoBehaviour {
 		{
 			LoadBuilding();
 			LoadFloor();
+			LoadRoom();
 		}
 		if(Input.GetKeyDown(KeyCode.LeftShift))
 		{
-			LoadRoom();
+			LoadNode();
 		}
 		if(Input.GetKeyDown(KeyCode.T))
 		{
@@ -99,7 +101,7 @@ public class JsonReader : MonoBehaviour {
 			fdt.floorID = floor.floorID;
 			fdt.floorName = floor.floorName;
 			fdt.floorIndex = Mathf.CeilToInt(floor.floorIndex);
-			fdt.fkBuildingID = floor.buildingID;
+			fdt.fkBuildingID = floor.fkBuildingID;
 
 			//find building parent and set localpos
 			FindObjectToAttract(emptyobj, StctType.Building, fdt.fkBuildingID);
@@ -147,7 +149,7 @@ public class JsonReader : MonoBehaviour {
 			rdt.roomName = room.roomName;
 			rdt.roomDescription = room.roomDescription;
 			rdt.isConnector = room.isConnector;
-			rdt.fkFloorID = room.floorID;
+			rdt.fkFloorID = room.fkFloorID;
 			//find parent
 			FindObjectToAttract(emptyobj, StctType.Floor, rdt.fkFloorID);
 			emptyobj.transform.localPosition = Vector3.zero;
@@ -159,10 +161,123 @@ public class JsonReader : MonoBehaviour {
 #region Node
 	private void LoadNode()
 	{
+		string nodeFileJsonName = fileToLoadName[(int)StctType.Node];
+		InitReading(nodeFileJsonName);
 
+		JNode[] nodes = JsonHelper.FromJson<JNode>(jsonString);
+		Debug.Log("Loading Node total:" + nodes.Length);
+
+		foreach (JNode node in nodes)
+		{
+			GameObject emptyobj = new GameObject(structTag[(int)StctType.Node] + node.nodeID);
+			emptyobj.tag = structTag[(int)StctType.Node];
+			//define position
+			emptyobj.AddComponent<NodeData>();
+			NodeData ndt = emptyobj.GetComponent<NodeData>();
+			ndt.nodeID = node.nodeID;
+			ndt.position = GetSplitValue(node.position);
+			ndt.referencePosition = GetSplitValue(node.referencePosition);
+			ndt.orientation = GetSplitValue(node.xyOrientation+" "+node.zOrientation);
+			ndt.fkRoomID = node.fkRoomID;
+			//find parent
+			Debug.Log("attract Node "+ ndt.nodeID + " to " + ndt.fkRoomID +" :" 
+				+ FindObjectToAttract(emptyobj, StctType.Room, ndt.fkRoomID));
+			emptyobj.transform.localPosition = ndt.position;
+			emptyobj.transform.localEulerAngles = ndt.orientation;
+		}
 	}
+
+	/* return 3 value. if no or error value will be return vec3.zero */
+	private Vector3 GetSplitValue(string vecstring)
+	{
+		string[] tempstring = vecstring.Split(' ');
+		if(tempstring.Length == 3)
+		{
+			float v1=0, v2=0, v3=0;
+			if(!Single.TryParse(tempstring[0], out v1))
+			{
+				Debug.Log("Error on value 1");
+				return Vector3.zero;
+			}
+			if(!Single.TryParse(tempstring[1], out v2))
+			{
+				Debug.Log("Error on value 2");
+				return Vector3.zero;
+			}
+			if(!Single.TryParse(tempstring[2], out v3))
+			{
+				Debug.Log("Error on value 3");
+				return Vector3.zero;
+			}
+			return new Vector3(v1, v2, v3);
+		}
+		else if(tempstring.Length == 2)
+		{
+			float v1=0, v2=0;
+			if(!Single.TryParse(tempstring[0], out v1))
+			{
+				Debug.Log("Error on value 1");
+				return Vector3.zero;
+			}
+			if(!Single.TryParse(tempstring[1], out v2))
+			{
+				Debug.Log("Error on value 2");
+				return Vector3.zero;
+			}
+			return new Vector3(v1, v2, 0);
+		}
+		return Vector3.zero;
+	}
+
 #endregion
 
+#region Connect
+	private void LoadConnect() /* this function must work after node has been worked */
+	{
+		string connectFileJsonName = fileToLoadName[(int)StctType.Connect];
+		InitReading(connectFileJsonName);
+
+		JConnect[] cons = JsonHelper.FromJson<JConnect>(jsonString);
+		Debug.Log("Loading Connect total:" + cons.Length);
+
+		GameObject[] nodeObjs = GameObject.FindGameObjectsWithTag(structTag[(int)StctType.Node]);
+
+		GameObject firstNode = null, secondNode = null;
+		NodeData noddt, firstNodeData, secondNodeData;
+		string firstNodeName, secondNodeName;
+		bool isfstfound, issecfound;
+
+		foreach (JConnect con in cons)
+		{
+			firstNode = null;
+			secondNode = null;
+			//find 2 node from all node that find
+			foreach (GameObject nod in nodeObjs)
+			{
+				if(nod.GetComponent<NodeData>() != null)
+				{
+					noddt = nod.GetComponent<NodeData>();
+					//check nodedata primarykey that equal fk
+					if(noddt.nodeID == con.nID1)
+					{
+						firstNode = nod;
+					}
+					if(noddt.nodeID == con.nID2)
+					{
+						secondNode = nod;
+					}
+				}
+				//check that we have found 2 node in system, then add data, and break loop all node
+				if(firstNode != null && secondNode != null && firstNode != secondNode)
+				{
+					//if firstnode.adj not have second node, add it
+					//if secondnode.adj not have first node, add it
+				}
+			}
+		}
+	}
+
+#endregion
 
 #region Object Tag Find
 	private bool FindObjectToAttract(GameObject objChild, StctType parentType, string parentName)
@@ -203,6 +318,22 @@ public class JsonReader : MonoBehaviour {
 #region Map Struct
 
 [System.Serializable]
+public class JMarker
+{
+	public string markerID;
+	public string markerImageName;
+	public int priority;
+}
+
+[System.Serializable]
+public class JConnect
+{
+	public string connectID;
+	public string nID1;
+	public string nID2;
+}
+
+[System.Serializable]
 public class JNode
 {
 	public string nodeID;
@@ -210,7 +341,7 @@ public class JNode
 	public string referencePosition;
 	public int zOrientation;
 	public string xyOrientation;
-	public string roomID;
+	public string fkRoomID;
 }
 
 [System.Serializable]
@@ -220,7 +351,7 @@ public class JRoom
 	public string roomName;
 	public string roomDescription;
 	public bool isConnector;
-	public string floorID;
+	public string fkFloorID;
 }
 
 [System.Serializable]
@@ -230,7 +361,7 @@ public class JFloor
 	public string floorName;
 	public float floorIndex;
 	public string floorImageName;
-	public string buildingID;
+	public string fkBuildingID;
 }
 
 [System.Serializable]

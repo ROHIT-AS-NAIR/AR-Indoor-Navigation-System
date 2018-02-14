@@ -159,18 +159,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95682584db8a27e41a34ebf73f7835fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  position: {x: 0, y: 0, z: 0}
-  referencePosition: {x: 0, y: 0, z: 0}
-  orientation: {x: 0, y: 0, z: 0}
-  floor: 0
-  markerName: 
-  description: 
-  roomName: 
-  IsConnector: 0
-  cost: Infinity
-  adjacentNodeList: []
-  predecessor: {fileID: 0}
-  successor: {fileID: 0}
+  markerID: 
+  markerImageName: 
+  priority: 10
+  fkNodeID: 
   nodeType: 0
 --- !u!33 &226138792
 MeshFilter:
@@ -349,18 +341,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95682584db8a27e41a34ebf73f7835fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  position: {x: 0, y: 0, z: 0}
-  referencePosition: {x: 0, y: 0, z: 0}
-  orientation: {x: 0, y: 0, z: 0}
-  floor: 0
-  markerName: 
-  description: 
-  roomName: 
-  IsConnector: 0
-  cost: Infinity
-  adjacentNodeList: []
-  predecessor: {fileID: 0}
-  successor: {fileID: 0}
+  markerID: 
+  markerImageName: 
+  priority: 10
+  fkNodeID: 
   nodeType: 0
 --- !u!33 &326125020
 MeshFilter:
@@ -1838,18 +1822,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95682584db8a27e41a34ebf73f7835fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  position: {x: 0, y: 0, z: 0}
-  referencePosition: {x: 0, y: 0, z: 0}
-  orientation: {x: 0, y: 0, z: 0}
-  floor: 0
-  markerName: 
-  description: 
-  roomName: 
-  IsConnector: 0
-  cost: Infinity
-  adjacentNodeList: []
-  predecessor: {fileID: 0}
-  successor: {fileID: 0}
+  markerID: 
+  markerImageName: 
+  priority: 10
+  fkNodeID: 
   nodeType: 0
 --- !u!1 &1573587881
 GameObject:
@@ -1981,18 +1957,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95682584db8a27e41a34ebf73f7835fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  position: {x: 0, y: 0, z: 0}
-  referencePosition: {x: 0, y: 0, z: 0}
-  orientation: {x: 0, y: 0, z: 0}
-  floor: 0
-  markerName: 
-  description: 
-  roomName: 
-  IsConnector: 0
-  cost: Infinity
-  adjacentNodeList: []
-  predecessor: {fileID: 0}
-  successor: {fileID: 0}
+  markerID: 
+  markerImageName: 
+  priority: 10
+  fkNodeID: 
   nodeType: 0
 --- !u!33 &1594992732
 MeshFilter:
@@ -2528,18 +2496,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95682584db8a27e41a34ebf73f7835fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  position: {x: 0, y: 0, z: 0}
-  referencePosition: {x: 0, y: 0, z: 0}
-  orientation: {x: 0, y: 0, z: 0}
-  floor: 0
-  markerName: 
-  description: 
-  roomName: 
-  IsConnector: 0
-  cost: Infinity
-  adjacentNodeList: []
-  predecessor: {fileID: 0}
-  successor: {fileID: 0}
+  markerID: 
+  markerImageName: 
+  priority: 10
+  fkNodeID: 
   nodeType: 0
 --- !u!33 &1830524740
 MeshFilter:
@@ -2718,18 +2678,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95682584db8a27e41a34ebf73f7835fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  position: {x: 0, y: 0, z: 0}
-  referencePosition: {x: 0, y: 0, z: 0}
-  orientation: {x: 0, y: 0, z: 0}
-  floor: 0
-  markerName: 
-  description: 
-  roomName: 
-  IsConnector: 0
-  cost: Infinity
-  adjacentNodeList: []
-  predecessor: {fileID: 0}
-  successor: {fileID: 0}
+  markerID: 
+  markerImageName: 
+  priority: 10
+  fkNodeID: 
   nodeType: 0
 --- !u!33 &1953036192
 MeshFilter:
@@ -3043,18 +2995,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95682584db8a27e41a34ebf73f7835fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  position: {x: 0, y: 0, z: 0}
-  referencePosition: {x: 0, y: 0, z: 0}
-  orientation: {x: 0, y: 0, z: 0}
-  floor: 0
-  markerName: 
-  description: 
-  roomName: 
-  IsConnector: 0
-  cost: Infinity
-  adjacentNodeList: []
-  predecessor: {fileID: 0}
-  successor: {fileID: 0}
+  markerID: 
+  markerImageName: 
+  priority: 10
+  fkNodeID: 
   nodeType: 0
 --- !u!33 &2132332880
 MeshFilter:
