@@ -2259,12 +2259,14 @@ MonoBehaviour:
   - RoomJsonData.json
   - NodeJsonData.json
   - MarkerJsonData.json
+  - ConnectJsonData.json
   structTag:
   - Building
   - Floor
   - Room
   - Node
   - Marker
+  - Connect
 --- !u!4 &1719744123
 Transform:
   m_ObjectHideFlags: 0

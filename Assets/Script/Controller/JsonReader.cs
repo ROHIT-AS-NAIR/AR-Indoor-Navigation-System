@@ -35,10 +35,11 @@ public class JsonReader : MonoBehaviour {
 			LoadBuilding();
 			LoadFloor();
 			LoadRoom();
+			LoadNode();
 		}
 		if(Input.GetKeyDown(KeyCode.LeftShift))
 		{
-			LoadNode();
+			LoadConnect();
 		}
 		if(Input.GetKeyDown(KeyCode.T))
 		{
@@ -244,8 +245,6 @@ public class JsonReader : MonoBehaviour {
 
 		GameObject firstNode = null, secondNode = null;
 		NodeData noddt, firstNodeData, secondNodeData;
-		string firstNodeName, secondNodeName;
-		bool isfstfound, issecfound;
 
 		foreach (JConnect con in cons)
 		{
@@ -270,8 +269,12 @@ public class JsonReader : MonoBehaviour {
 				//check that we have found 2 node in system, then add data, and break loop all node
 				if(firstNode != null && secondNode != null && firstNode != secondNode)
 				{
+					firstNodeData = firstNode.GetComponent<NodeData>();
+					secondNodeData = secondNode.GetComponent<NodeData>();
 					//if firstnode.adj not have second node, add it
+					firstNodeData.AddAdjacentNode(secondNode);
 					//if secondnode.adj not have first node, add it
+					secondNodeData.AddAdjacentNode(firstNode);
 				}
 			}
 		}
