@@ -33,7 +33,7 @@ public class MarkerData : MonoBehaviour, ICloneable {
 	}
 
 	/* get parent data  (NodeData) */
-	private NodeData GetParentObjectData()
+	public NodeData GetParentObjectData()
 	{
 		return this.transform.parent.gameObject.GetComponent<NodeData>();
 	}

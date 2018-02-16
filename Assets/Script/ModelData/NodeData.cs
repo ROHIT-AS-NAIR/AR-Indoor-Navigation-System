@@ -21,7 +21,7 @@ public class NodeData : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-		adjacentNodeList = new List<GameObject>(); // Warn: not start at here 
+
     }
 
     // Update is called once per frame
@@ -31,7 +31,7 @@ public class NodeData : MonoBehaviour
     }
 
     /* get parent data  (Roomdata) */
-    private RoomData GetParentObjectData()
+    public RoomData GetParentObjectData()
     {
         return this.transform.parent.gameObject.GetComponent<RoomData>();
     }
@@ -39,6 +39,11 @@ public class NodeData : MonoBehaviour
 	/* check all node in list. If we already have that given node. will not add this */
     public bool AddAdjacentNode(GameObject newNode)
     {
+        if(adjacentNodeList == null)
+        {
+            Debug.Log("Init adjnodelist of" +nodeID);
+            adjacentNodeList = new List<GameObject>();
+        }
         foreach (GameObject adjnode in adjacentNodeList)
         {
 			Debug.Log(" add node compare" + adjnode.name + " " + newNode.name);

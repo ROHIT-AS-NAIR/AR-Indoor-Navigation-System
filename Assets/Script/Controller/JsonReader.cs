@@ -36,10 +36,13 @@ public class JsonReader : MonoBehaviour {
 			LoadFloor();
 			LoadRoom();
 			LoadNode();
+			LoadConnect();
+			LoadMarker();
 		}
 		if(Input.GetKeyDown(KeyCode.LeftShift))
 		{
-			LoadConnect();
+			
+
 		}
 		if(Input.GetKeyDown(KeyCode.T))
 		{
@@ -282,6 +285,29 @@ public class JsonReader : MonoBehaviour {
 
 #endregion
 
+#region Marker
+	private void LoadMarker()
+	/* read marker data and add to markerConstructor's list */
+	{
+		string markerFileJsonName = fileToLoadName[(int)StctType.Marker];
+		InitReading(markerFileJsonName);
+
+		JMarker[] markers = JsonHelper.FromJson<JMarker>(jsonString);
+		Debug.Log("Loading Marker total:" + markers.Length);
+
+		MarkerConstructor markerConstructor =  GameObject.Find("ARCamera").GetComponent<MarkerConstructor>();
+		foreach (JMarker marker in markers)
+		{
+			markerConstructor.AddDraftMarker(new DraftMarkerData(
+				marker.markerID,
+				marker.markerImageName,
+				Mathf.CeilToInt(marker.priority),  //may not
+				marker.fkNodeID
+			));
+		}
+	}
+#endregion
+
 #region Object Tag Find
 	private bool FindObjectToAttract(GameObject objChild, StctType parentType, string parentName)
 	/* find all object from given tag and attract to object that similar name
@@ -326,6 +352,7 @@ public class JMarker
 	public string markerID;
 	public string markerImageName;
 	public int priority;
+	public string fkNodeID;
 }
 
 [System.Serializable]

@@ -2,38 +2,39 @@
     "Items": [
         {
             "markerID": "m1",
-            "markerImageName": "Marker01",
+            "markerImageName": "TestMarker01",
             "priority": 2,
+            "fkNodeID": "n001"
         },
         {
             "markerID": "m2",
-            "markerImageName": "Marker02",
+            "markerImageName": "TestMarker02",
             "priority": 7,
-            "fkNodeID": "n1"
+            "fkNodeID": "n001"
         },
         {
             "markerID": "m3",
-            "markerImageName": "Marker03",
+            "markerImageName": "TestMarker03",
             "priority": 6,
-            "fkNodeID": "n1"
+            "fkNodeID": "n001"
         },
         {
             "markerID": "m4",
-            "markerImageName": "Marker04",
+            "markerImageName": "TestMarker04",
             "priority": 0,
-            "fkNodeID": "n1"
+            "fkNodeID": "n001"
         },
         {
             "markerID": "m5",
-            "markerImageName": "Marker05",
+            "markerImageName": "TestMarker05",
             "priority": 5,
-            "fkNodeID": "n2"
+            "fkNodeID": "n002"
         },
         {
             "markerID": "m6",
-            "markerImageName": "Marker06",
+            "markerImageName": "TestMarker06",
             "priority": 1,
-            "fkNodeID": "n2"
+            "fkNodeID": "n002"
         }
     ]
 }
