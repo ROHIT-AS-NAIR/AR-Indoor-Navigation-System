@@ -8,6 +8,7 @@ public class MarkerData : MonoBehaviour, ICloneable {
 	public string markerID;
 	public string markerImageName = "";
 	public int priority = 10;
+	public float markerOrientation = 0f;
 	public string fkNodeID = "";
 
 	public enum NodeType

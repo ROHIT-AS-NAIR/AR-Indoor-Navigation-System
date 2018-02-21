@@ -181,13 +181,13 @@ public class JsonReader : MonoBehaviour {
 			ndt.nodeID = node.nodeID;
 			ndt.position = GetSplitValue(node.position);
 			ndt.referencePosition = GetSplitValue(node.referencePosition);
-			ndt.orientation = GetSplitValue(node.xyOrientation+" "+node.zOrientation);
+			ndt.orientation = GetSplitValue(node.xzOrientation+" "+node.yOrientation);
 			ndt.fkRoomID = node.fkRoomID;
 			//find parent
 			Debug.Log("attract Node "+ ndt.nodeID + " to " + ndt.fkRoomID +" :" 
 				+ FindObjectToAttract(emptyobj, StctType.Room, ndt.fkRoomID));
 			emptyobj.transform.localPosition = ndt.position;
-			emptyobj.transform.localEulerAngles = ndt.orientation;
+			//emptyobj.transform.localEulerAngles = ndt.orientation;
 		}
 	}
 
@@ -213,7 +213,7 @@ public class JsonReader : MonoBehaviour {
 				Debug.Log("Error on value 3");
 				return Vector3.zero;
 			}
-			return new Vector3(v1, v2, v3);
+			return new Vector3(v1, v3, v2);
 		}
 		else if(tempstring.Length == 2)
 		{
@@ -302,6 +302,7 @@ public class JsonReader : MonoBehaviour {
 				marker.markerID,
 				marker.markerImageName,
 				Mathf.CeilToInt(marker.priority),  //may not
+				marker.markerOrientation,
 				marker.fkNodeID
 			));
 		}
@@ -352,6 +353,7 @@ public class JMarker
 	public string markerID;
 	public string markerImageName;
 	public int priority;
+	public float markerOrientation;
 	public string fkNodeID;
 }
 
@@ -369,8 +371,8 @@ public class JNode
 	public string nodeID;
 	public string position;
 	public string referencePosition;
-	public int zOrientation;
-	public string xyOrientation;
+	public int yOrientation;
+	public string xzOrientation;
 	public string fkRoomID;
 }
 

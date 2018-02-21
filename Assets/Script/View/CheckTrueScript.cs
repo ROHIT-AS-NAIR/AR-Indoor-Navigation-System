@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CheckTrueScript : MonoBehaviour {
+public class CheckTrueScript : MonoBehaviour, IARObject {
+    
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
 		
 	}
 	
@@ -13,4 +14,10 @@ public class CheckTrueScript : MonoBehaviour {
 	void Update () {
 		
 	}
+	
+	public void InitAR()
+    {
+        gameObject.SetActive(false);
+        Debug.Log(transform.parent.name + " attract checkTrue to found dest");
+    }
 }

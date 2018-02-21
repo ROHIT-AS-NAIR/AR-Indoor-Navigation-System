@@ -4,37 +4,59 @@
             "markerID": "m1",
             "markerImageName": "TestMarker01",
             "priority": 2,
+            "markerOrientation": 0,
             "fkNodeID": "n001"
         },
         {
             "markerID": "m2",
             "markerImageName": "TestMarker02",
             "priority": 7,
+            "markerOrientation": 10,
             "fkNodeID": "n001"
         },
         {
             "markerID": "m3",
             "markerImageName": "TestMarker03",
             "priority": 6,
+            "markerOrientation": 0,
             "fkNodeID": "n001"
         },
         {
             "markerID": "m4",
             "markerImageName": "TestMarker04",
-            "priority": 0,
-            "fkNodeID": "n001"
+            "priority": 1,
+            "markerOrientation": -10,
+            "fkNodeID": "n002"
         },
         {
             "markerID": "m5",
             "markerImageName": "TestMarker05",
             "priority": 5,
+            "markerOrientation": 0,
             "fkNodeID": "n002"
         },
         {
             "markerID": "m6",
             "markerImageName": "TestMarker06",
             "priority": 1,
-            "fkNodeID": "n002"
+            "markerOrientation": 45,
+            "fkNodeID": "n003"
+        }
+        ,
+        {
+            "markerID": "m7",
+            "markerImageName": "TestMarker07",
+            "priority": 5,
+            "markerOrientation": -45,
+            "fkNodeID": "n003"
+        }
+        ,
+        {
+            "markerID": "m8",
+            "markerImageName": "TestMarker08",
+            "priority": 4,
+            "markerOrientation": 0,
+            "fkNodeID": "n003"
         }
     ]
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ArrowScript : MonoBehaviour {
+public class ArrowScript : MonoBehaviour , IARObject{
 
 	NodeData targetData;
 	private const int markerXRotation = 270;
@@ -16,6 +16,13 @@ public class ArrowScript : MonoBehaviour {
 	void Update () {
 		
 	}
+
+	public void InitAR()
+    {
+		gameObject.SetActive(false);
+		PointToZero();
+        Debug.Log(transform.parent.name + " attract arrow to nav");
+    }
 
 	/* get world coordinate that want to rotate. rotate to input */
 	public void RotateArrow(Vector3 eulerRotation)
@@ -38,8 +45,9 @@ public class ArrowScript : MonoBehaviour {
 
 	public void PointToZero()
 	{
-		transform.rotation = transform.parent.rotation;
-		Debug.Log("To Zero " + transform.rotation.eulerAngles);
+		//transform.rotation = transform.parent.rotation;
+		gameObject.transform.localEulerAngles = Vector3.zero;
+		Debug.Log("To Zero " + transform.localRotation); //transform.rotation.eulerAngles
 	}
 
 	public void PointToCoordinate(Vector3 destination) /* Get Destination of object to point, return degree and rotate arrow */
@@ -57,4 +65,6 @@ public class ArrowScript : MonoBehaviour {
 	public void PrintSmt(string p){
 		Debug.Log(p);
 	}
+
+    
 }
