@@ -75,17 +75,18 @@ public class MainController : MonoBehaviour
             else if (this.destinationPoint == null && this.reachedPoint != null)
             {
                 appState = AppState.Idle;
-                if(IsSameRoom(this.beginPoint, this.reachedPoint))
+                if (IsSameRoom(this.beginPoint, this.reachedPoint))
                 {
                     ar.ShowCheck(this.beginPoint);
                 }
-                else{
+                else
+                {
                     ar.ShowDescriprionBoard(this.beginPoint);
                 }
             }
             else if (this.destinationPoint != null)
             {
-                if(IsSameRoom(this.beginPoint, this.destinationPoint))
+                if (IsSameRoom(this.beginPoint, this.destinationPoint))
                 {
                     appState = AppState.Idle;
                     this.reachedPoint = this.destinationPoint;
@@ -96,7 +97,7 @@ public class MainController : MonoBehaviour
                 {
                     appState = AppState.Navigate;
                     Navigate();
-                    if(navigatable)
+                    if (navigatable)
                     {
                         ar.ShowArrow(this.beginPoint, navigatable);
                     }
@@ -105,59 +106,81 @@ public class MainController : MonoBehaviour
                         // process arrow direction
                         int beginfloor = this.beginPoint.GetComponent<NodeData>().GetParentObjectData().GetParentObjectData().floorIndex;
                         int destfloor = this.destinationPoint.GetComponent<NodeData>().GetParentObjectData().GetParentObjectData().floorIndex;
-                        if(beginfloor < destfloor)
+                        if (beginfloor < destfloor)
                         {
                             ar.ShowArrow(this.beginPoint, navigatable, ARDisplayController.ArrowDirection.Up);
                         }
-                        else if(beginfloor > destfloor)
+                        else if (beginfloor > destfloor)
                         {
                             ar.ShowArrow(this.beginPoint, navigatable, ARDisplayController.ArrowDirection.Down);
                         }
-                        else{
+                        else
+                        {
                             ar.ShowArrow(this.beginPoint, this.destinationPoint);
                         }
                     }
                 }
             }
-            //else if (this.destinationPoint != null && this.reachedPoint != null)
+            //another case    else if (this.destinationPoint != null && this.reachedPoint != null)
             #endregion
             oldBeginPoint = beginPoint;
         }
-        //ShowAR(beginPoint); //remove if user can set
     }
     public void SetDestinationPoint(GameObject destinationPoint)
+    /* get destination node from user set in find 
+    change appstate and point value
+    process and send to display*/
     {
-        //    IF from room, random or calculate from shortest path from beginpoint
-
-        //if (destinationPoint.GetComponent<MarkerData>() != null)
-        //{
-        this.destinationPoint = destinationPoint;
-        //Debug.Log("Set Destination Point to " + destinationPoint.GetComponent<MarkerData>().roomName);
-        //}
-        //canvasButton.OnDestinationPointChange(destinationPoint);
-        switch (appState)
+        if (destinationPoint.GetComponent<NodeData>() != null)
         {
-            case AppState.Idle:
-                if (this.beginPoint != null && this.destinationPoint != null)   // already has begin point, start navigate
-                {
-                    NavigateIfNotSamePoint();
-                }
-                break;
-            case AppState.Navigate:
-                if (this.destinationPoint == null)
-                {
-                    appState = AppState.Idle;
-                }
-                else if (this.beginPoint != null && this.destinationPoint != null)   // already has begin point, start navigate
-                {
-                    NavigateIfNotSamePoint();       // select dest same as current point false
-                }
-                break;
-            default:
-                appState = AppState.Navigate;
-                break;
+            this.destinationPoint = destinationPoint;
+            Debug.Log("Set Destination Point to room " + destinationPoint.GetComponent<NodeData>().GetParentObjectData().roomName + " @node"
+                     + destinationPoint.GetComponent<NodeData>().nodeID);
         }
-        //showState.OnDestinationPointChange(destinationPoint);
+
+        #region DestinationPoint process path
+        if (this.beginPoint == null && this.reachedPoint == null)
+        {
+            appState = AppState.Idle;
+        }
+        else if (this.beginPoint != null)
+        {
+            if (IsSameRoom(this.destinationPoint, this.beginPoint))
+            {
+                appState = AppState.Idle;
+                this.destinationPoint = null;
+                this.reachedPoint = null;
+                ar.ShowDescriprionBoard(this.beginPoint);
+            }
+            else
+            {
+                appState = AppState.Navigate;
+                Navigate();
+                if (navigatable)
+                {
+                    ar.ShowArrow(this.beginPoint, navigatable);
+                }
+                else
+                {
+                    // process arrow direction
+                    int beginfloor = this.beginPoint.GetComponent<NodeData>().GetParentObjectData().GetParentObjectData().floorIndex;
+                    int destfloor = this.destinationPoint.GetComponent<NodeData>().GetParentObjectData().GetParentObjectData().floorIndex;
+                    if (beginfloor < destfloor)
+                    {
+                        ar.ShowArrow(this.beginPoint, navigatable, ARDisplayController.ArrowDirection.Up);
+                    }
+                    else if (beginfloor > destfloor)
+                    {
+                        ar.ShowArrow(this.beginPoint, navigatable, ARDisplayController.ArrowDirection.Down);
+                    }
+                    else
+                    {
+                        ar.ShowArrow(this.beginPoint, this.destinationPoint);
+                    }
+                }
+            }
+        }
+        #endregion
         oldDestinationPoint = destinationPoint;
     }
     public void ClearDestinationPoint()
