@@ -12,14 +12,14 @@
             "markerImageName": "TestMarker02",
             "priority": 7,
             "markerOrientation": 10,
-            "fkNodeID": "n001"
+            "fkNodeID": "n002"
         },
         {
             "markerID": "m3",
             "markerImageName": "TestMarker03",
             "priority": 6,
             "markerOrientation": 0,
-            "fkNodeID": "n001"
+            "fkNodeID": "n003"
         },
         {
             "markerID": "m4",
@@ -33,22 +33,21 @@
             "markerImageName": "TestMarker05",
             "priority": 5,
             "markerOrientation": 0,
-            "fkNodeID": "n002"
+            "fkNodeID": "n005"
         },
         {
             "markerID": "m6",
             "markerImageName": "TestMarker06",
             "priority": 1,
             "markerOrientation": 45,
-            "fkNodeID": "n003"
-        }
-        ,
+            "fkNodeID": "n006"
+        },
         {
             "markerID": "m7",
             "markerImageName": "TestMarker07",
             "priority": 5,
             "markerOrientation": -45,
-            "fkNodeID": "n003"
+            "fkNodeID": "n007"
         }
         ,
         {
@@ -56,7 +55,7 @@
             "markerImageName": "TestMarker08",
             "priority": 4,
             "markerOrientation": 0,
-            "fkNodeID": "n003"
+            "fkNodeID": "n008"
         }
     ]
 }

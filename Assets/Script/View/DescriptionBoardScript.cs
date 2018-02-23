@@ -19,9 +19,14 @@ public class DescriptionBoardScript : MonoBehaviour, IARObject
     public void InitAR()
     {
         gameObject.SetActive(true);
+        SetData();
+        Debug.Log(transform.parent.name + " attract desrptboard to idle");
+    }
+
+    public void SetData()
+    {
         SetRoomName(transform.parent.GetComponent<MarkerData>().GetParentObjectData().GetParentObjectData().roomName);
         SetRoomDest(transform.parent.GetComponent<MarkerData>().GetParentObjectData().GetParentObjectData().roomDescription);
-        Debug.Log(transform.parent.name + " attract desrptboard to idle");
     }
 
     public void SetRoomName(string roomname)

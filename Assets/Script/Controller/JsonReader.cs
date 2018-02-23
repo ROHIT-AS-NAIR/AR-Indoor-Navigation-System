@@ -181,7 +181,7 @@ public class JsonReader : MonoBehaviour {
 			ndt.nodeID = node.nodeID;
 			ndt.position = GetSplitValue(node.position);
 			ndt.referencePosition = GetSplitValue(node.referencePosition);
-			ndt.orientation = GetSplitValue(node.xzOrientation+" "+node.yOrientation);
+			ndt.orientation = GetSplitValue(node.xzOrientation.Split(' ')[0]+ " " +node.yOrientation + " " +node.xzOrientation.Split(' ')[1]); //Warn xz lenght 1
 			ndt.fkRoomID = node.fkRoomID;
 			//find parent
 			Debug.Log("attract Node "+ ndt.nodeID + " to " + ndt.fkRoomID +" :" 
@@ -213,7 +213,7 @@ public class JsonReader : MonoBehaviour {
 				Debug.Log("Error on value 3");
 				return Vector3.zero;
 			}
-			return new Vector3(v1, v3, v2);
+			return new Vector3(v1, v2, v3);
 		}
 		else if(tempstring.Length == 2)
 		{

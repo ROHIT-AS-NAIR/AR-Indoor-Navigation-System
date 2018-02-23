@@ -4,7 +4,7 @@
         	"roomID": "r01",
             "roomName": "room1",
             "roomDescription": "room1 descript",
-            "isConnector": true,
+            "isConnector": false,
             "fkFloorID": "f00"
         },
         {
@@ -12,21 +12,29 @@
             "roomName": "room2",
             "roomDescription": "2 descript",
             "isConnector": false,
-            "fkFloorID": "f01"
+            "fkFloorID": "f00"
         },
         {
         	"roomID": "r03",
             "roomName": "room3",
             "roomDescription": "des cript tion",
             "isConnector": false,
-            "fkFloorID": "f03"
+            "fkFloorID": "f00"
         },
         {
         	"roomID": "r04",
             "roomName": "room404",
             "roomDescription": "room48",
             "isConnector": false,
-            "fkFloorID": "f03"
+            "fkFloorID": "f00"
+        }
+        ,
+        {
+        	"roomID": "r05",
+            "roomName": "room555+",
+            "roomDescription": "5555555555555555 \n ๕๕๕๕๕๕๕๕๕๕๕๕๕๕๕๕ ++",
+            "isConnector": true,
+            "fkFloorID": "f00"
         }
     ]
 }

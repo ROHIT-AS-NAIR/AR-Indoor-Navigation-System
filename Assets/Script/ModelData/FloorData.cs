@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class FloorData : MonoBehaviour {
 
-	public List<GameObject> markerList;
-	public List<GameObject> connectorList; //this list may check when remove
+	// public List<GameObject> markerList;
+	// public List<GameObject> connectorList; //this list may check when remove
 	public string floorID;
 	public string floorName = "0";
 	public int floorIndex = 0;
@@ -36,21 +36,40 @@ public class FloorData : MonoBehaviour {
 		
 	}
 
+	/* get parent data  (BuildingData) */
+	public BuildingData GetParentObjectData()
+	{
+		return this.transform.parent.gameObject.GetComponent<BuildingData>();
+	}
+
+	/* get parent object  (Building) */
+	public GameObject GetParentObject()
+	{
+		return this.transform.parent.gameObject;
+	}
+
+	/* get parent object  (Building) */
+	public GameObject GetParentBuildingObject()
+	{
+		return gameObject.transform.parent.gameObject;
+	}
+
 	public GameObject GetBuilding()
 	{
 		//if(this.transform.parent.gameObject.GetComponent<BuildingData>() != null)
 		return this.transform.parent.gameObject;
 	}
 
-	public GameObject GetConnector() /* no attribute, return first connector on list */
-	{
-		return connectorList[0];
-	}
+//moved to maincontroller GetConnectorNode()
+	// public GameObject GetConnector() /* no attribute, return first connector on list */
+	// {
+	// 	return connectorList[0];
+	// }
 
-	public GameObject GetConnector(GameObject node) /* has node, Get Nearest connector object | Fix later */
-	{
-		return GetConnector();
-	}
+	// public GameObject GetConnector(GameObject node) /* has node, Get Nearest connector object | Fix later */
+	// {
+	// 	return GetConnector();
+	// }
 
 	public static bool operator<(FloorData firstfloor, FloorData secondFloor)
 	{

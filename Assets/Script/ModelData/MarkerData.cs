@@ -38,6 +38,18 @@ public class MarkerData : MonoBehaviour, ICloneable {
 	{
 		return this.transform.parent.gameObject.GetComponent<NodeData>();
 	}
+
+	/* get parent object  (Node) */
+	public GameObject GetParentObject()
+	{
+		return this.transform.parent.gameObject;
+	}
+
+	/* get parent object  (Node) */
+	public GameObject GetParentNodeObject()
+	{
+		return gameObject.transform.parent.gameObject;
+	}
 	
 
 	#region Check Node Type

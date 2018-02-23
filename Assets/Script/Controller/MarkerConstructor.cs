@@ -58,6 +58,8 @@ public class MarkerConstructor : MonoBehaviour
             {
                 
                 CreateArObject(choosenMarker);
+                //send node
+                MainController.instance.SetBeginPoint(choosenMarker.GetComponent<MarkerData>().GetParentNodeObject());
                 //update begin point
                 //run dijkstra
                 // send to main controller to choose ar shown
@@ -68,6 +70,7 @@ public class MarkerConstructor : MonoBehaviour
         else if(choosenMarker != null && oldMarker == null)
         {
             CreateArObject(choosenMarker);
+            MainController.instance.SetBeginPoint(choosenMarker.GetComponent<MarkerData>().GetParentNodeObject());
             //instantiate like below
             oldMarker = choosenMarker;
         }
@@ -157,7 +160,7 @@ public class MarkerConstructor : MonoBehaviour
             arobj.transform.SetParent(markerObject.transform);
             arobj.GetComponent<IARObject>().InitAR();
             arobj.transform.localPosition = Vector3.zero;
-            arobj.transform.localEulerAngles = Vector3.zero;
+            arobj.transform.localEulerAngles = new Vector3(0, 0, markerObject.GetComponent<MarkerData>().markerOrientation);
             arobj.transform.localScale = Vector3.one;
         }
     }

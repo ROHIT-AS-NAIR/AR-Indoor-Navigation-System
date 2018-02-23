@@ -21,9 +21,21 @@ public class RoomData : MonoBehaviour {
 	}
 
 	/* get parent data  (FloorData) */
-	private FloorData GetParentObjectData()
+	public FloorData GetParentObjectData()
 	{
 		return this.transform.parent.gameObject.GetComponent<FloorData>();
+	}
+
+	/* get parent object  (Floor) */
+	public GameObject GetParentObject()
+	{
+		return this.transform.parent.gameObject;
+	}
+
+	/* get parent object  (Floor) */
+	public GameObject GetParentFloorObject()
+	{
+		return gameObject.transform.parent.gameObject;
 	}
 
 #region Floor Method

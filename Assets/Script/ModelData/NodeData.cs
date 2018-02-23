@@ -36,6 +36,18 @@ public class NodeData : MonoBehaviour
         return this.transform.parent.gameObject.GetComponent<RoomData>();
     }
 
+    /* get parent object  (Room) */
+	public GameObject GetParentObject()
+	{
+		return this.transform.parent.gameObject;
+	}
+
+    /* get parent object  (Room) */
+	public GameObject GetParentRoomObject()
+	{
+		return gameObject.transform.parent.gameObject;
+	}
+
 	/* check all node in list. If we already have that given node. will not add this */
     public bool AddAdjacentNode(GameObject newNode)
     {
@@ -66,7 +78,7 @@ public class NodeData : MonoBehaviour
         return this.transform.parent.gameObject;
     }
 
-    /* assume that get nodedata to compare */
+    /* assume that get nodedata object to compare */
     public bool IsSameFloorWith(GameObject compareFloorObj)
     {
         if (this.GetParentObjectData().fkFloorID == compareFloorObj.GetComponent<NodeData>().GetParentObjectData().fkFloorID)
