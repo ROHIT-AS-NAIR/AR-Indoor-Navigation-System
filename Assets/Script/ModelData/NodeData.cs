@@ -53,19 +53,19 @@ public class NodeData : MonoBehaviour
     {
         if(adjacentNodeList == null)
         {
-            Debug.Log("Init adjnodelist of" +nodeID);
+            //Debug.Log("Init adjnodelist of" +nodeID);
             adjacentNodeList = new List<GameObject>();
         }
         foreach (GameObject adjnode in adjacentNodeList)
         {
-			Debug.Log(" add node compare" + adjnode.name + " " + newNode.name);
+			//Debug.Log(" add node compare" + adjnode.name + " " + newNode.name);
             if (adjnode.name == newNode.name)
             {
-				Debug.Log("--duplicate found");
+				//Debug.Log("--duplicate found");
 				return false;
             }
         }
-		Debug.Log(" add node " + newNode.name);
+		//Debug.Log(" add node " + newNode.name);
 		adjacentNodeList.Add(newNode);
         return true;
     }
@@ -74,14 +74,17 @@ public class NodeData : MonoBehaviour
 
     public GameObject GetFloor() /* return gameObject of floorData */
     {
-        //if(this.transform.parent.gameObject.GetComponent<FloorData>() != null)
-        return this.transform.parent.gameObject;
+        if(this.transform.parent.parent.gameObject.GetComponent<FloorData>() != null)
+        {
+            return this.transform.parent.parent.gameObject;
+        }
+        return null;
     }
 
     /* assume that get nodedata object to compare */
-    public bool IsSameFloorWith(GameObject compareFloorObj)
+    public bool IsSameFloorWith(GameObject compareNodeObj)
     {
-        if (this.GetParentObjectData().fkFloorID == compareFloorObj.GetComponent<NodeData>().GetParentObjectData().fkFloorID)
+        if (this.GetParentObjectData().fkFloorID == compareNodeObj.GetComponent<NodeData>().GetParentObjectData().fkFloorID)
         {
             return true;
         }

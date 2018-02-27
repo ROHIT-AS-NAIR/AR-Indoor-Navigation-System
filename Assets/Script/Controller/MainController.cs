@@ -8,6 +8,8 @@ public class MainController : MonoBehaviour
     public static MainController instance;
     private DijsktraAlgorithm dijsktra;
     private ARDisplayController ar;
+    private JsonReader jsonReader;
+    private CanvasButtonScript canvas;
     //private CanvasButtonScript canvasButton;
     public GameObject beginPoint = null;
     public GameObject destinationPoint = null;
@@ -27,9 +29,13 @@ public class MainController : MonoBehaviour
     {
         if (instance == null)
         {
+            Debug.Log("Start MainController");
             instance = this;
             dijsktra = new DijsktraAlgorithm();
             ar = new ARDisplayController();
+            jsonReader = new JsonReader();
+            jsonReader.ReadJsonData();
+            GameObject.FindWithTag("Building").GetComponent<BuildingData>().GetAllFloorToList();
         }
         else if (instance != this)
         {
@@ -335,14 +341,13 @@ public class MainController : MonoBehaviour
     // }
     #endregion
 
-    #region Private calculate method
-
+    #region Public calculate method
     /* get connector node from nodeobject  currenly return first objectof roomobject
     return node that have room are connector */
-    private GameObject GetConnectorNode(GameObject nodeObj)
+    public GameObject GetConnectorNode(GameObject nodeObj)
     {
         //Transform[] roomlist = nodeObj.GetComponent<NodeData>().GetParentObjectData().GetParentObjectData().gameObject.transform;
-        foreach (GameObject room in nodeObj.GetComponent<NodeData>().GetParentObjectData().GetParentObjectData().gameObject.transform)
+        foreach (GameObject room in nodeObj.GetComponent<NodeData>().GetParentObjectData().GetParentFloorObject().transform)
         {
             if (room.GetComponent<RoomData>().isConnector)
             {
@@ -352,7 +357,9 @@ public class MainController : MonoBehaviour
         // return first child of floor, room
         return nodeObj.GetComponent<NodeData>().GetParentObjectData().GetParentObjectData().gameObject.transform.GetChild(0).GetChild(0).gameObject;
     }
+    #endregion
 
+    #region Private calculate method
     /* compare roomname from node data */
     private bool IsSameRoom(GameObject node1, GameObject node2)
     {
