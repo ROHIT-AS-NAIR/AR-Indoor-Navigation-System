@@ -30,6 +30,7 @@ public class NodeData : MonoBehaviour
 
     }
 
+    #region Parent Calling
     /* get parent data  (Roomdata) */
     public RoomData GetParentObjectData()
     {
@@ -47,6 +48,7 @@ public class NodeData : MonoBehaviour
 	{
 		return gameObject.transform.parent.gameObject;
 	}
+    #endregion
 
 	/* check all node in list. If we already have that given node. will not add this */
     public bool AddAdjacentNode(GameObject newNode)

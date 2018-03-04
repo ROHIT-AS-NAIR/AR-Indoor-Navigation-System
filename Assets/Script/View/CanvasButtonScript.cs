@@ -344,22 +344,19 @@ public class CanvasButtonScript : MonoBehaviour
         searchShowList.Clear();
         foreach (GameObject floor in building.floorList)
         {
-            foreach (Transform roomt in floor.transform)
+            foreach (GameObject nodet in floor.GetComponent<FloorData>().GetNodesList())
             {
-                foreach (Transform nodet in roomt)
+                NodeData markerData = nodet.GetComponent<NodeData>();
+                if (typingWord == "" && !IsDuplicateShowingRoom(searchShowList, markerData.GetParentObjectData().roomName))
                 {
-                    NodeData markerData = nodet.gameObject.GetComponent<NodeData>();
-                    if (typingWord == "" && !IsDuplicateShowingRoom(searchShowList, markerData.GetParentObjectData().roomName))
-                    {
-                        Debug.Log(typingWord + " In " + markerData.GetParentObjectData().roomName);
-                        searchShowList.Add(nodet.gameObject);
-                    }
-                    else if (markerData.GetParentObjectData().roomName.Contains(typingWord)
-                        && !IsDuplicateShowingRoom(searchShowList, markerData.GetParentObjectData().roomName))
-                    {
-                        Debug.Log(typingWord + " In " + markerData.GetParentObjectData().roomName);
-                        searchShowList.Add(nodet.gameObject);
-                    }
+                    Debug.Log(typingWord + " In " + markerData.GetParentObjectData().roomName);
+                    searchShowList.Add(nodet);
+                }
+                else if (markerData.GetParentObjectData().roomName.Contains(typingWord)
+                    && !IsDuplicateShowingRoom(searchShowList, markerData.GetParentObjectData().roomName))
+                {
+                    Debug.Log(typingWord + " In " + markerData.GetParentObjectData().roomName);
+                    searchShowList.Add(nodet);
                 }
             }
         }

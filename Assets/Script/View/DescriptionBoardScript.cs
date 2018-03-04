@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class DescriptionBoardScript : MonoBehaviour, IARObject
 {
+
+    private ARObject.Type artype = ARObject.Type.Board;
+
     // Use this for initialization
     void Start()
     {
@@ -18,9 +21,17 @@ public class DescriptionBoardScript : MonoBehaviour, IARObject
 
     public void InitAR()
     {
-        gameObject.SetActive(true);
+        gameObject.SetActive(false);
         SetData();
         Debug.Log(transform.parent.name + " attract desrptboard to idle");
+    }
+
+    public ARObject.Type Type
+    {
+        get
+        {
+            return artype;
+        }
     }
 
     public void SetData()

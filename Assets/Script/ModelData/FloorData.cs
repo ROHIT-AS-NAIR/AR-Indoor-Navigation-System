@@ -36,6 +36,7 @@ public class FloorData : MonoBehaviour {
 		
 	}
 
+	#region Parent Calling
 	/* get parent data  (BuildingData) */
 	public BuildingData GetParentObjectData()
 	{
@@ -59,6 +60,47 @@ public class FloorData : MonoBehaviour {
 		//if(this.transform.parent.gameObject.GetComponent<BuildingData>() != null)
 		return this.transform.parent.gameObject;
 	}
+	#endregion
+
+	#region Child Calling
+	/* return gameobject of room that in this floor */
+	public GameObject[] GetRoomsList()
+	{
+		Component[] roomdatalist = gameObject.GetComponentsInChildren(typeof(RoomData), true);
+		GameObject[] roomObj = new GameObject[roomdatalist.Length];
+		for (int i = 0; i < roomdatalist.Length; i++)
+		{
+			roomObj[i] = roomdatalist[i].gameObject;
+		}
+		return roomObj;
+	}
+
+	/* return gameobject of node that in this floor */
+	public GameObject[] GetNodesList()
+	{
+		//count node
+		GameObject[] roomlist = GetRoomsList();
+		int nodecount = 0;
+		foreach (GameObject rmm in roomlist)
+		{
+			nodecount += rmm.transform.childCount;
+		}
+
+		// put node to list
+		int i = 0;
+		GameObject[] nodeObj = new GameObject[nodecount];
+		foreach (GameObject room in roomlist)
+		{
+			foreach (Transform nodetrans in room.transform)
+			{
+				nodeObj[i] = nodetrans.gameObject;
+				i++;
+			}
+		}
+		return nodeObj;
+	}
+
+	#endregion
 
 //moved to maincontroller GetConnectorNode()
 	// public GameObject GetConnector() /* no attribute, return first connector on list */

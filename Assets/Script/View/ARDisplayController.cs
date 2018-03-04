@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Vuforia;
 
 public class ARDisplayController : MonoBehaviour {
 
@@ -18,6 +19,10 @@ public class ARDisplayController : MonoBehaviour {
 		Front
 	}
 
+	private ARObject.Type lastARType = ARObject.Type.Board;
+	private MarkerConstructor markerConstructor;
+
+
 	// Use this for initialization
 	void Start () {
 		
@@ -32,32 +37,34 @@ public class ARDisplayController : MonoBehaviour {
 	detect marker show/lost from markerConstructor
 	control arrow up/down*/
 
+#region Display AR
 	/* point arrow to successor's position.  if null, point to destination */
-	public void ShowArrow(GameObject objectNodeToAugment, bool navigatable)
+	public void ShowArrow(GameObject markerObject, bool navigatable)
 	{
-		GameObject markerObject = GetMarkerObjectToAugment(objectNodeToAugment);
-		GameObject arrowObj = GetARObjectOfType(markerObject, ARType.Arrow);
+		Debug.Log(markerObject.name);
+		GameObject objectNodeToAugment = markerObject.GetComponent<MarkerData>().GetParentNodeObject();
+		GameObject arrowObj = GetARObjectOfType(markerObject, ARObject.Type.Arrow);
 		ArrowScript arrowsc = arrowObj.GetComponent<ArrowScript>();
 		arrowsc.PointToCoordinate(objectNodeToAugment.GetComponent<NodeData>().successor.GetComponent<NodeData>().position);
 		arrowObj.SetActive(true);
 		PlusMarkerOrientation(arrowObj);
+		SendLastObject(arrowsc.Type);
 	}
 
 	/* point directly to node */
-	public void ShowArrow(GameObject objectNodeToAugment, GameObject destinationNode)
+	public void ShowArrow(GameObject markerObject, GameObject destinationNode)
 	{
-		GameObject markerObject = GetMarkerObjectToAugment(objectNodeToAugment);
-		GameObject arrowObj = GetARObjectOfType(markerObject, ARType.Arrow);
+		GameObject arrowObj = GetARObjectOfType(markerObject, ARObject.Type.Arrow);
 		ArrowScript arrowsc = arrowObj.GetComponent<ArrowScript>();
 		arrowsc.PointToCoordinate(destinationNode.GetComponent<NodeData>().position);
 		arrowObj.SetActive(true);
 		PlusMarkerOrientation(arrowObj);
+		SendLastObject(arrowsc.Type);
 	}
 
-	public void ShowArrow(GameObject objectNodeToAugment, bool navigatable, ArrowDirection arrowDirection)
+	public void ShowArrow(GameObject markerObject, bool navigatable, ArrowDirection arrowDirection)
 	{
-		GameObject markerObject = GetMarkerObjectToAugment(objectNodeToAugment);
-		GameObject arrowObj = GetARObjectOfType(markerObject, ARType.Arrow);
+		GameObject arrowObj = GetARObjectOfType(markerObject, ARObject.Type.Arrow);
 		ArrowScript arrowsc = arrowObj.GetComponent<ArrowScript>();
 		switch (arrowDirection)
 		{
@@ -68,44 +75,60 @@ public class ARDisplayController : MonoBehaviour {
 		}
 		arrowObj.SetActive(true);
 		PlusMarkerOrientation(arrowObj);
+		SendLastObject(arrowsc.Type);
 	}
 
-	public void ShowCheck(GameObject objectNodeToAugment)
+	public void ShowCheck(GameObject markerObject)
 	{
-		GameObject markerObject = GetMarkerObjectToAugment(objectNodeToAugment);
-		GameObject checkObj = GetARObjectOfType(markerObject, ARType.Check);
-		CheckTrueScript arrowsc = checkObj.GetComponent<CheckTrueScript>();
+		GameObject checkObj = GetARObjectOfType(markerObject, ARObject.Type.Check);
+		CheckTrueScript checksc = checkObj.GetComponent<CheckTrueScript>();
 		checkObj.SetActive(true);
+		SendLastObject(checksc.Type);
 	}
 	
-	public void ShowDescriprionBoard(GameObject objectNodeToAugment)
+	public void ShowDescriprionBoard(GameObject markerObject)
 	{
-		GameObject markerObject = GetMarkerObjectToAugment(objectNodeToAugment);
-		Debug.Log(markerObject.name + " is marker?  :" + (markerObject.GetComponent<MarkerData>()!=null));
-		GameObject boardObj = GetARObjectOfType(markerObject, ARType.Board);
+		//Debug.Log(markerObject.name + " is marker?  :" + (markerObject.GetComponent<MarkerData>()!=null));
+		GameObject boardObj = GetARObjectOfType(markerObject, ARObject.Type.Board);
 		DescriptionBoardScript boardsc = boardObj.GetComponent<DescriptionBoardScript>();
 		boardsc.SetData();
 		boardObj.SetActive(true);
+		SendLastObject(boardsc.Type);
 	}
+#endregion
+
+#region AR detect listener
+
+	/* get last object type and send to markerConstructor */
+	public void SendLastObject(ARObject.Type activeType)
+	{
+		if(markerConstructor == null)
+		{
+			markerConstructor = GameObject.Find("ARCamera").GetComponent<MarkerConstructor>();
+		}
+		markerConstructor.SetLastObjectType(activeType);
+	}
+
+#endregion
 
 #region Private Method
 	
 	/* find AR object from marker gameobject, marker may have child */
-	private GameObject GetARObjectOfType(GameObject objectMarkerToAugment, ARType artype)
+	private GameObject GetARObjectOfType(GameObject objectMarkerToAugment, ARObject.Type artype)
 	{
 		Debug.Log(objectMarkerToAugment.transform.childCount);
 		for (int i = 0; i < objectMarkerToAugment.transform.childCount; i++)
 		{
 			GameObject markertrans = objectMarkerToAugment.transform.GetChild(i).gameObject;
-			if(artype == ARType.Arrow && (markertrans.GetComponent<ArrowScript>() != null))
+			if(artype == ARObject.Type.Arrow && (markertrans.GetComponent<ArrowScript>() != null))
 			{
 				return markertrans.gameObject;
 			}
-			else if(artype == ARType.Check && (markertrans.GetComponent<CheckTrueScript>() != null))
+			else if(artype == ARObject.Type.Check && (markertrans.GetComponent<CheckTrueScript>() != null))
 			{
 				return markertrans.gameObject;
 			}
-			else if(artype == ARType.Board && (markertrans.GetComponent<DescriptionBoardScript>() != null))
+			else if(artype == ARObject.Type.Board && (markertrans.GetComponent<DescriptionBoardScript>() != null))
 			{
 				return markertrans.gameObject;
 			}

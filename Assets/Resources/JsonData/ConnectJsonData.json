@@ -1,0 +1,95 @@
+{
+    "Items": [
+        {
+            "connectID": "c001",
+            "nID1": "n001",
+            "nID1": "n002"
+        },
+        {
+            "connectID": "c003",
+            "nID1": "n001",
+            "nID2": "n003"
+        },
+        {
+            "connectID": "c002",
+            "nID1": "n002",
+            "nID2": "n001"
+        },
+        {
+            "connectID": "c004",
+            "nID1": "n002",
+            "nID2": "n003"
+        },
+        {
+            "connectID": "c00",
+            "nID1": "n003",
+            "nID2": "n001"
+        },
+        {
+            "connectID": "c00",
+            "nID1": "n003",
+            "nID2": "n002"
+        },
+        {
+            "connectID": "c00",
+            "nID1": "n003",
+            "nID2": "n004"
+        },
+        {
+            "connectID": "c00",
+            "nID1": "n003",
+            "nID2": "n005"
+        },
+        {
+            "connectID": "c00",
+            "nID1": "n004",
+            "nID2": "n003"
+        },
+        {
+            "connectID": "c00",
+            "nID1": "n004",
+            "nID2": "n007"
+        },
+        {
+            "connectID": "c00",
+            "nID1": "n004",
+            "nID2": "n008"
+        },
+        {
+            "connectID": "c00",
+            "nID1": "n005",
+            "nID2": "n003"
+        },
+        {
+            "connectID": "c00",
+            "nID1": "n005",
+            "nID2": "n006"
+        },
+        {
+            "connectID": "c00",
+            "nID1": "n006",
+            "nID2": "n005"
+        },
+        {
+            "connectID": "c00",
+            "nID1": "n006",
+            "nID2": "n007"
+        },
+        {
+            "connectID": "c00",
+            "nID1": "n007",
+            "nID2": "n006"
+        },
+        {
+            "connectID": "c00",
+            "nID1": "n007",
+            "nID2": "n004"
+        },
+        {
+            "connectID": "c00",
+            "nID1": "n008",
+            "nID2": "n004"
+        }
+        
+    ]
+}

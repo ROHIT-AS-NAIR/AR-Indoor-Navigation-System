@@ -15,6 +15,7 @@ public class MainController : MonoBehaviour
     public GameObject destinationPoint = null;
     public GameObject reachedPoint = null;
     private GameObject oldBeginPoint = null, oldDestinationPoint = null, oldReachePoint = null;
+    private GameObject lastMarker = null;
     public enum AppState
     {
         Idle,
@@ -51,14 +52,38 @@ public class MainController : MonoBehaviour
         if (appState != oldAppState)
         {
             //call observer
+            SetDisplay();
             oldAppState = appState;
         }
     }
 
     #region SetPoint
 
+    public void SetBeginMarker(GameObject getedMarker)
+    /* get new detect marker and check that have node parent 
+    if yes, set new node point and process*/
+    {
+        if (this.lastMarker != getedMarker)
+        {
+            if (getedMarker.GetComponent<MarkerData>() != null) //is real marker
+            {
+                if (getedMarker.GetComponent<MarkerData>().GetParentNodeObject().GetComponent<NodeData>() != null) //is real node
+                {
+                    //change beginpoint
+                    this.lastMarker = getedMarker;
+                    this.beginPoint = getedMarker.GetComponent<MarkerData>().GetParentNodeObject();
+                    Debug.Log("Set Begin Point from marker" + beginPoint.GetComponent<NodeData>().GetParentObjectData().roomName
+                        + " @node" + beginPoint.GetComponent<NodeData>().nodeID);
+                    ProcessBeginPoint();
+                }
+            }
+            this.lastMarker = getedMarker;
+        }
+
+    }
     public void SetBeginPoint(GameObject beginPoint)
     /* get node object from markerConstructor
+    for user custom set beginpoint
     change appstate and point value
     process and send to display */
     {
@@ -71,67 +96,50 @@ public class MainController : MonoBehaviour
                      + beginPoint.GetComponent<NodeData>().nodeID);
             }
 
-            /* brgonpoint process part */
-            #region Beginpoint Process path
-            if (this.destinationPoint == null && this.reachedPoint == null)
-            {
-                appState = AppState.Idle;
-                ar.ShowDescriprionBoard(this.beginPoint);
-            }
-            else if (this.destinationPoint == null && this.reachedPoint != null)
-            {
-                appState = AppState.Idle;
-                if (IsSameRoom(this.beginPoint, this.reachedPoint))
-                {
-                    ar.ShowCheck(this.beginPoint);
-                }
-                else
-                {
-                    ar.ShowDescriprionBoard(this.beginPoint);
-                }
-            }
-            else if (this.destinationPoint != null)
-            {
-                if (IsSameRoom(this.beginPoint, this.destinationPoint))
-                {
-                    appState = AppState.Idle;
-                    this.reachedPoint = this.destinationPoint;
-                    this.destinationPoint = null;
-                    ar.ShowDescriprionBoard(this.beginPoint);
-                }
-                else
-                {
-                    appState = AppState.Navigate;
-                    Navigate();
-                    if (navigatable)
-                    {
-                        ar.ShowArrow(this.beginPoint, navigatable);
-                    }
-                    else
-                    {
-                        // process arrow direction
-                        int beginfloor = this.beginPoint.GetComponent<NodeData>().GetParentObjectData().GetParentObjectData().floorIndex;
-                        int destfloor = this.destinationPoint.GetComponent<NodeData>().GetParentObjectData().GetParentObjectData().floorIndex;
-                        if (beginfloor < destfloor)
-                        {
-                            ar.ShowArrow(this.beginPoint, navigatable, ARDisplayController.ArrowDirection.Up);
-                        }
-                        else if (beginfloor > destfloor)
-                        {
-                            ar.ShowArrow(this.beginPoint, navigatable, ARDisplayController.ArrowDirection.Down);
-                        }
-                        else
-                        {
-                            ar.ShowArrow(this.beginPoint, this.destinationPoint);
-                        }
-                    }
-                }
-            }
-            //another case    else if (this.destinationPoint != null && this.reachedPoint != null)
-            #endregion
+            ProcessBeginPoint();
             oldBeginPoint = beginPoint;
         }
     }
+
+    private void ProcessBeginPoint()
+    /* process state and sent display 
+    trigger when got new marker, app state change (for call display)*/
+    {
+        if (this.destinationPoint == null && this.reachedPoint == null)
+        {
+            appState = AppState.Idle;
+
+        }
+        else if (this.destinationPoint == null && this.reachedPoint != null)
+        {
+            appState = AppState.Idle;
+            if (IsSameRoom(this.beginPoint, this.reachedPoint))
+            {
+
+            }
+            else
+            {
+
+            }
+        }
+        else if (this.destinationPoint != null)
+        {
+            if (IsSameRoom(this.beginPoint, this.destinationPoint))
+            {
+                appState = AppState.Idle;
+                this.reachedPoint = this.destinationPoint;
+                this.destinationPoint = null;
+            }
+            else
+            {
+                appState = AppState.Navigate;
+                Navigate();
+            }
+        }
+        //another case    else if (this.destinationPoint != null && this.reachedPoint != null)
+        SetDisplay();
+    }
+
     public void SetDestinationPoint(GameObject destinationPoint)
     /* get destination node from user set in find 
     change appstate and point value
@@ -144,7 +152,14 @@ public class MainController : MonoBehaviour
                      + destinationPoint.GetComponent<NodeData>().nodeID);
         }
 
-        #region DestinationPoint process path
+        ProcessDestinationPoint();
+        oldDestinationPoint = destinationPoint;
+    }
+
+    private void ProcessDestinationPoint()
+    /* process state, commane navigate and sent display 
+    trigger when got new marker, app state change (for call display)*/
+    {
         if (this.beginPoint == null && this.reachedPoint == null)
         {
             appState = AppState.Idle;
@@ -156,38 +171,14 @@ public class MainController : MonoBehaviour
                 appState = AppState.Idle;
                 this.destinationPoint = null;
                 this.reachedPoint = null;
-                ar.ShowDescriprionBoard(this.beginPoint);
             }
             else
             {
                 appState = AppState.Navigate;
                 Navigate();
-                if (navigatable)
-                {
-                    ar.ShowArrow(this.beginPoint, navigatable);
-                }
-                else
-                {
-                    // process arrow direction
-                    int beginfloor = this.beginPoint.GetComponent<NodeData>().GetParentObjectData().GetParentObjectData().floorIndex;
-                    int destfloor = this.destinationPoint.GetComponent<NodeData>().GetParentObjectData().GetParentObjectData().floorIndex;
-                    if (beginfloor < destfloor)
-                    {
-                        ar.ShowArrow(this.beginPoint, navigatable, ARDisplayController.ArrowDirection.Up);
-                    }
-                    else if (beginfloor > destfloor)
-                    {
-                        ar.ShowArrow(this.beginPoint, navigatable, ARDisplayController.ArrowDirection.Down);
-                    }
-                    else
-                    {
-                        ar.ShowArrow(this.beginPoint, this.destinationPoint);
-                    }
-                }
             }
         }
-        #endregion
-        oldDestinationPoint = destinationPoint;
+        SetDisplay();
     }
     public void ClearDestinationPoint()
     {
@@ -275,70 +266,162 @@ public class MainController : MonoBehaviour
 
     #endregion
 
-    #region ShowAR
-    //function recive prefabType loop all child if met active it and flag as met, if meet more than one destroy it
-    // public void ShowAR(GameObject objectToAugment)
-    // /* show AR depending on state, works with ArControlScript, navigate before show */
-    // {
-    //     ArControlScript arControl = objectToAugment.GetComponent<ArControlScript>();
-    //     foreach (Transform child in objectToAugment.transform)
-    //     {
-    //         child.gameObject.SetActive(false);
-    //     }
+    #region Display
+    private void SetDisplay()
+    /* set display from state and current node
+    trigger when appstate change and after process new point finish */
+    {
+        if (appState == AppState.Idle)
+        {
+            // header blue
+            if (this.beginPoint == null && this.destinationPoint == null && this.reachedPoint == null) //startapp
+            {
 
-    //     if (appState == AppState.Idle) //set desboard if not in old node or navigated to destination
-    //     {
-    //         if (this.beginPoint != null && this.reachedPoint != null)
-    //         {
-    //             if (objectToAugment.GetComponent<MarkerData>().roomName == this.reachedPoint.GetComponent<MarkerData>().roomName)
-    //             {
-    //                 arControl.CreateCheckTrue();
-    //                 Debug.Log(" Reach at Main ShowAR Idle Mode and idle");
-    //             }
-    //             else
-    //             {
-    //                 arControl.CreateDescriptionBoard();
-    //             }
-    //         }
-    //         else if (this.beginPoint != null)
-    //         {
-    //             arControl.CreateDescriptionBoard();
-    //         }
-    //     }
-    //     else if (appState == AppState.Navigate)  //set arrow
-    //     {
-    //         arControl.CreateArrow();
-    //         if (navigatable)
-    //         {
-    //             Debug.Log("navigatable point to " + objectToAugment.GetComponent<MarkerData>().successor.GetComponent<MarkerData>().position);
-    //             arControl.GetArrow().GetComponent<ArrowScript>().PointToCoordinate(
-    //                 objectToAugment.GetComponent<MarkerData>().successor.GetComponent<MarkerData>().position);
-    //         }
-    //         else
-    //         {
-    //             int beginfloor = this.beginPoint.GetComponent<MarkerData>().GetFloor().GetComponent<FloorData>().floorIndex;
-    //             int destfloor = this.destinationPoint.GetComponent<MarkerData>().GetFloor().GetComponent<FloorData>().floorIndex;
-    //             if (beginfloor < destfloor)
-    //             {
-    //                 Debug.Log("point down");
-    //                 arControl.GetArrow().GetComponent<ArrowScript>().PointArrowUp();
-    //             }
-    //             else if (beginfloor > destfloor)
-    //             {
-    //                 Debug.Log("point up");
-    //                 arControl.GetArrow().GetComponent<ArrowScript>().PointArrowDown();
-    //             }
-    //             else
-    //             {
-    //                 Debug.Log("ObjecttoAugmnt " + objectToAugment.name + " pointing");
-    //                 arControl.GetArrow().GetComponent<ArrowScript>()
-    //                         .PointToCoordinate(this.destinationPoint.GetComponent<MarkerData>().position);
-    //                 objectToAugment.GetComponentInChildren<ArrowScript>()
-    //                         .PointToCoordinate(this.destinationPoint.GetComponent<MarkerData>().position);
-    //             }
-    //         }
-    //     }
-    // }
+            }
+            else if (this.beginPoint != null && this.destinationPoint == null && this.reachedPoint == null)
+            {
+                ar.ShowDescriprionBoard(this.lastMarker);
+            }
+            else if (this.beginPoint != null && this.destinationPoint != null && this.reachedPoint == null) //idle unreach
+            {
+                if (IsSameRoom(this.beginPoint, this.destinationPoint))
+                {
+                    ar.ShowCheck(this.lastMarker);
+                }
+                else
+                {
+                    DisplayArrowToAR();
+                }
+            }
+            else if (this.beginPoint != null && this.destinationPoint == null && this.reachedPoint != null)
+            {
+                if (IsSameRoom(this.beginPoint, this.reachedPoint))
+                {
+                    ar.ShowCheck(this.lastMarker);
+                }
+                else
+                {
+                    ar.ShowDescriprionBoard(this.lastMarker);
+                }
+            }
+            else if (this.beginPoint == null && this.destinationPoint != null && this.reachedPoint == null) //has select destpoint
+            {
+                //toast find marker
+            }
+            else if (this.beginPoint == null && this.destinationPoint != null && this.reachedPoint != null) //all case unreach
+            {
+                if (IsSameRoom(this.destinationPoint, this.reachedPoint))
+                {
+                    ar.ShowDescriprionBoard(this.lastMarker);
+                }
+                else
+                {
+                    ar.ShowDescriprionBoard(this.lastMarker);
+                }
+            }
+            else if (this.beginPoint == null && this.destinationPoint == null && this.reachedPoint != null) //all case unreach
+            {
+                ar.ShowDescriprionBoard(this.lastMarker);
+            }
+            else if (this.beginPoint != null && this.destinationPoint != null && this.reachedPoint != null)
+            {
+                // three point can't be equal in result
+                DisplayArrowToAR();
+                if (IsSameRoom(this.beginPoint, this.destinationPoint))
+                {
+                    ar.ShowCheck(this.lastMarker);
+                }
+            }
+        }
+        else if (appState == AppState.Navigate)
+        {
+            // header violet
+            if (this.beginPoint == null && this.destinationPoint == null && this.reachedPoint == null) //startapp navigate unreach
+            {
+
+            }
+            else if (this.beginPoint != null && this.destinationPoint == null && this.reachedPoint == null) //navigate unreach
+            {
+                ar.ShowDescriprionBoard(this.lastMarker);
+            }
+            else if (this.beginPoint != null && this.destinationPoint != null && this.reachedPoint == null) 
+            {
+                if (IsSameRoom(this.beginPoint, this.destinationPoint))
+                {
+                    ar.ShowCheck(this.lastMarker);
+                }
+                else
+                {
+                    DisplayArrowToAR();
+                }
+            }
+            else if (this.beginPoint != null && this.destinationPoint == null && this.reachedPoint != null) //navigate unreach
+            {
+                if (IsSameRoom(this.beginPoint, this.reachedPoint))
+                {
+                    ar.ShowCheck(this.lastMarker);
+                }
+                else
+                {
+                    ar.ShowDescriprionBoard(this.lastMarker);
+                }
+            }
+            else if (this.beginPoint == null && this.destinationPoint != null && this.reachedPoint == null) //has select destpoint nav unreach
+            {
+                //toast find marker
+            }
+            else if (this.beginPoint == null && this.destinationPoint != null && this.reachedPoint != null) //all case unreach
+            {
+                if (IsSameRoom(this.destinationPoint, this.reachedPoint))
+                {
+                    ar.ShowDescriprionBoard(this.lastMarker);
+                }
+                else
+                {
+                    ar.ShowDescriprionBoard(this.lastMarker);
+                }
+            }
+            else if (this.beginPoint == null && this.destinationPoint == null && this.reachedPoint != null) //all case unreach
+            {
+                ar.ShowDescriprionBoard(this.lastMarker);
+            }
+            else if (this.beginPoint != null && this.destinationPoint != null && this.reachedPoint != null)
+            {
+                // three point can't be equal in result
+                DisplayArrowToAR();
+                if (IsSameRoom(this.beginPoint, this.destinationPoint))
+                {
+                    ar.ShowCheck(this.lastMarker);
+                }
+            }
+        }
+    }
+
+    private void DisplayArrowToAR()
+    {
+        if (navigatable)
+        {
+            ar.ShowArrow(this.lastMarker, navigatable);
+        }
+        else
+        {
+            // process arrow direction
+            int beginfloor = this.beginPoint.GetComponent<NodeData>().GetParentObjectData().GetParentObjectData().floorIndex;
+            int destfloor = this.destinationPoint.GetComponent<NodeData>().GetParentObjectData().GetParentObjectData().floorIndex;
+            if (beginfloor < destfloor)
+            {
+                ar.ShowArrow(this.lastMarker, navigatable, ARDisplayController.ArrowDirection.Up);
+            }
+            else if (beginfloor > destfloor)
+            {
+                ar.ShowArrow(this.lastMarker, navigatable, ARDisplayController.ArrowDirection.Down);
+            }
+            else
+            {
+                ar.ShowArrow(this.lastMarker, this.destinationPoint);
+            }
+        }
+    }
     #endregion
 
     #region Public calculate method

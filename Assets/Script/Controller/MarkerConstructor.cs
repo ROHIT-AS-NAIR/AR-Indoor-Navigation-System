@@ -10,6 +10,7 @@ public class MarkerConstructor : MonoBehaviour
     public List<DraftMarkerData> draftMarkerList;
     private GameObject[] allNodeList;
     private GameObject choosenMarker, oldMarker;
+    private ARObject.Type lastObjectType = ARObject.Type.Board;
     private float mostPriority = 0;
     private int markerCount = 0;
     public enum ObjectType
@@ -47,7 +48,7 @@ public class MarkerConstructor : MonoBehaviour
                 choosenMarker = markerObj;
                 mostPriority = markerObj.GetComponent<MarkerData>().priority;
             }
-            markerCount =+ 1;
+            markerCount = +1;
         }
 
         /* take action with choosen marker */
@@ -56,10 +57,11 @@ public class MarkerConstructor : MonoBehaviour
             //Debug.Log(choosenMarker.name + " " + oldMarker.name);
             if (choosenMarker.name != oldMarker.name) //triger once when have new marker
             {
-                
+
                 CreateArObject(choosenMarker);
                 //send node
-                MainController.instance.SetBeginPoint(choosenMarker.GetComponent<MarkerData>().GetParentNodeObject());
+                MainController.instance.SetBeginMarker(choosenMarker);
+                //MainController.instance.SetBeginPoint(choosenMarker.GetComponent<MarkerData>().GetParentNodeObject());
                 //update begin point
                 //run dijkstra
                 // send to main controller to choose ar shown
@@ -67,16 +69,17 @@ public class MarkerConstructor : MonoBehaviour
                 oldMarker = choosenMarker;
             }
         }
-        else if(choosenMarker != null && oldMarker == null)
+        else if (choosenMarker != null && oldMarker == null)
         {
             CreateArObject(choosenMarker);
-            MainController.instance.SetBeginPoint(choosenMarker.GetComponent<MarkerData>().GetParentNodeObject());
+            MainController.instance.SetBeginMarker(choosenMarker);
+            //MainController.instance.SetBeginPoint(choosenMarker.GetComponent<MarkerData>().GetParentNodeObject());
             //instantiate like below
             oldMarker = choosenMarker;
         }
 
         //will move to ARControlScript
-        if(markerCount == 0) //target Lost
+        if (markerCount == 0) //target Lost
         {
             foreach (GameObject arobj in arObjectList)
             {
@@ -84,18 +87,45 @@ public class MarkerConstructor : MonoBehaviour
                 choosenMarker = null;
             }
         }
-        else{
+        else
+        {
             foreach (GameObject arobj in arObjectList)
             {
-                if(arobj.GetComponent<DescriptionBoardScript>() != null)
+                switch (this.lastObjectType)
                 {
-                    arobj.SetActive(true);
+                    case ARObject.Type.Arrow:
+                        if (arobj.GetComponent<ArrowScript>() != null)
+                        {
+                            arobj.SetActive(true);
+                        }
+                        break;
+                    case ARObject.Type.Check:
+                        if (arobj.GetComponent<CheckTrueScript>() != null)
+                        {
+                            arobj.SetActive(true);
+                        }
+                        break;
+                    case ARObject.Type.Board:
+                        if (arobj.GetComponent<DescriptionBoardScript>() != null)
+                        {
+                            arobj.SetActive(true);
+                        }
+                        break;
+                    default:
+                        if (arobj.GetComponent<DescriptionBoardScript>() != null)
+                        {
+                            arobj.SetActive(true);
+                        }
+                        break;
                 }
             }
         }
     }
 
-    
+    public void SetLastObjectType(ARObject.Type objtype)
+    {
+        this.lastObjectType = objtype;
+    }
 
     public void AddDraftMarker(DraftMarkerData draftmarker)
     /* add draft data from jsonReader */
@@ -165,13 +195,13 @@ public class MarkerConstructor : MonoBehaviour
         }
     }
 
-    private void CreateArObject(GameObject markerObject, ObjectType otype)
+    private void CreateArObject(GameObject markerObject, ARObject.Type otype)
     /* unused */
     {
         GameObject arObj;
         // find all child and check that only one have arobjectScript and currenly activated
 
-        if (otype == ObjectType.Arrow)
+        if (otype == ARObject.Type.Arrow)
         {
             List<ArrowScript> arrowList = new List<ArrowScript>();
             markerObject.GetComponentsInChildren<ArrowScript>(true, arrowList);
@@ -193,7 +223,7 @@ public class MarkerConstructor : MonoBehaviour
                 }
             }
         }
-        else if (otype == ObjectType.Check)
+        else if (otype == ARObject.Type.Check)
         {
             List<CheckTrueScript> checkList = new List<CheckTrueScript>();
             markerObject.GetComponentsInChildren<CheckTrueScript>(true, checkList);
