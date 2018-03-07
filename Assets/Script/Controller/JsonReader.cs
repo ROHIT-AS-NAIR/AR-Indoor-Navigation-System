@@ -203,7 +203,6 @@ public class JsonReader : MonoBehaviour
             Debug.Log("attract Node " + ndt.nodeID + " to " + ndt.fkRoomID + " :"
                 + FindObjectToAttract(emptyobj, StctType.Room, ndt.fkRoomID));
             emptyobj.transform.localPosition = ndt.position;
-            //emptyobj.transform.localEulerAngles = ndt.orientation;
         }
     }
 

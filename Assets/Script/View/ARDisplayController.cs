@@ -45,7 +45,16 @@ public class ARDisplayController : MonoBehaviour {
 		GameObject objectNodeToAugment = markerObject.GetComponent<MarkerData>().GetParentNodeObject();
 		GameObject arrowObj = GetARObjectOfType(markerObject, ARObject.Type.Arrow);
 		ArrowScript arrowsc = arrowObj.GetComponent<ArrowScript>();
-		arrowsc.PointToCoordinate(objectNodeToAugment.GetComponent<NodeData>().successor.GetComponent<NodeData>().position);
+		if(navigatable || objectNodeToAugment.GetComponent<NodeData>().successor != null)
+		{
+			arrowsc.PointToCoordinate(objectNodeToAugment.GetComponent<NodeData>().successor.GetComponent<NodeData>().position);
+			Debug.Log("Point to " + objectNodeToAugment.GetComponent<NodeData>().successor.name);
+		}
+		else
+		{
+			Debug.Log("Can't navigatable");
+			arrowsc.PointToCoordinate(objectNodeToAugment.GetComponent<NodeData>().position);
+		}
 		arrowObj.SetActive(true);
 		SendLastObject(arrowsc.Type);
 	}
@@ -148,15 +157,15 @@ public class ARDisplayController : MonoBehaviour {
 
 	/* plus marker orientation to local euler rotation
 	for arrow */
-	private void PlusMarkerOrientation(GameObject augmentObject)
-	{
-		augmentObject.transform.localEulerAngles = new Vector3(
-			augmentObject.transform.localEulerAngles.x,
-			augmentObject.transform.localEulerAngles.y,
-			augmentObject.transform.localEulerAngles.z 
-				+ augmentObject.transform.parent.gameObject.GetComponent<MarkerData>().markerOrientation
-		);
-	}
+	// private void PlusMarkerOrientation(GameObject augmentObject)
+	// {
+	// 	augmentObject.transform.localEulerAngles = new Vector3(
+	// 		augmentObject.transform.localEulerAngles.x,
+	// 		augmentObject.transform.localEulerAngles.y,
+	// 		augmentObject.transform.localEulerAngles.z 
+	// 			+ augmentObject.transform.parent.gameObject.GetComponent<MarkerData>().markerOrientation
+	// 	);
+	// }
 #endregion
 
 }

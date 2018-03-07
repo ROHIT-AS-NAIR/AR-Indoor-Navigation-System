@@ -24,7 +24,6 @@ public class ArrowScript : MonoBehaviour, IARObject
     public void InitAR()
     {
         gameObject.SetActive(false);
-        PointToZero();
         Debug.Log(transform.parent.name + " attract arrow to nav");
     }
 

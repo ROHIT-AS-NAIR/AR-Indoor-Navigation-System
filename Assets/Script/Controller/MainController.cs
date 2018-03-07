@@ -8,8 +8,10 @@ public class MainController : MonoBehaviour
     public static MainController instance;
     private DijsktraAlgorithm dijsktra;
     private ARDisplayController ar;
+    private StateDisplayController stateDisplay;
     private JsonReader jsonReader;
     private CanvasButtonScript canvas;
+    
     public GameObject beginPoint = null;
     public GameObject destinationPoint = null;
     public GameObject reachedPoint = null;
@@ -24,6 +26,7 @@ public class MainController : MonoBehaviour
     public AppState appState = AppState.Idle;
     private AppState oldAppState = AppState.Idle;
     public bool navigatable = false; //due arcontrolscr use
+    string toastmsg = "";
 
     void Awake()
     {
@@ -35,6 +38,7 @@ public class MainController : MonoBehaviour
             ar = new ARDisplayController();
             jsonReader = new JsonReader();
             jsonReader.ReadJsonData();
+            stateDisplay = GameObject.Find("Canvas").GetComponent<StateDisplayController>();
             GameObject.FindWithTag("Building").GetComponent<BuildingData>().GetAllFloorToList();
         }
         else if (instance != this)
@@ -104,10 +108,10 @@ public class MainController : MonoBehaviour
     /* process state and sent display 
     trigger when got new marker, app state change (for call display)*/
     {
+        toastmsg = "ขณะนี้คุณอยู่ที่: " + this.beginPoint.GetComponent<NodeData>().GetParentObjectData().roomName;
         if (this.destinationPoint == null && this.reachedPoint == null)
         {
             appState = AppState.Idle;
-
         }
         else if (this.destinationPoint == null && this.reachedPoint != null)
         {
@@ -137,6 +141,7 @@ public class MainController : MonoBehaviour
         }
         //another case    else if (this.destinationPoint != null && this.reachedPoint != null)
         SetDisplay();
+        stateDisplay.ShowToastMessage(toastmsg);
     }
 
     public void SetDestinationPoint(GameObject destinationPoint)
@@ -149,12 +154,14 @@ public class MainController : MonoBehaviour
             if (destinationPoint.GetComponent<NodeData>() != null)
             {
                 this.destinationPoint = destinationPoint;
+                toastmsg = "เริ่มการนำทางไปยัง" + this.destinationPoint.GetComponent<NodeData>().GetParentObjectData().roomName;
                 Debug.Log("Set Destination Point to room " + destinationPoint.GetComponent<NodeData>().GetParentObjectData().roomName + " @node"
                         + destinationPoint.GetComponent<NodeData>().nodeID);
             }
         }
         else //from clearpoint
         {
+            toastmsg = "ยกเลิกการนำทางแล้ว";
             this.destinationPoint = destinationPoint;
         }
 
@@ -163,7 +170,7 @@ public class MainController : MonoBehaviour
     }
 
     private void ProcessDestinationPoint()
-    /* process state, commane navigate and sent display 
+    /* process state, command navigate and sent display 
     trigger when got new marker, app state change (for call display)*/
     {
         if (this.beginPoint == null && this.reachedPoint == null)
@@ -189,6 +196,7 @@ public class MainController : MonoBehaviour
             }
         }
         SetDisplay();
+        stateDisplay.ShowToastMessage(toastmsg);
     }
     public void ClearDestinationPoint()
     {
@@ -281,9 +289,9 @@ public class MainController : MonoBehaviour
     /* set display from state and current node
     trigger when appstate change and after process new point finish */
     {
+        stateDisplay.ChangeActionBarColor(appState);
         if (appState == AppState.Idle)
         {
-            // header blue
             if (this.beginPoint == null && this.destinationPoint == null && this.reachedPoint == null) //startapp
             {
 
@@ -297,6 +305,8 @@ public class MainController : MonoBehaviour
                 if (IsSameRoom(this.beginPoint, this.destinationPoint))
                 {
                     ar.ShowCheck(this.lastMarker);
+                    string roomname = this.beginPoint.GetComponent<NodeData>().GetParentObjectData().roomName;
+                    toastmsg = ("มาถึงปลายทางแล้ว: " + roomname);
                 }
                 else
                 {
@@ -308,6 +318,8 @@ public class MainController : MonoBehaviour
                 if (IsSameRoom(this.beginPoint, this.reachedPoint))
                 {
                     ar.ShowCheck(this.lastMarker);
+                    string roomname = this.beginPoint.GetComponent<NodeData>().GetParentObjectData().roomName;
+                    toastmsg = ("มาถึงปลายทางแล้ว: " + roomname);
                 }
                 else
                 {
@@ -320,6 +332,7 @@ public class MainController : MonoBehaviour
             }
             else if (this.beginPoint == null && this.destinationPoint != null && this.reachedPoint != null) //all case unreach
             {
+                toastmsg = ("Error case: no Begin point but have destination and reachpoint");
                 if (IsSameRoom(this.destinationPoint, this.reachedPoint))
                 {
                     ar.ShowDescriprionBoard(this.lastMarker);
@@ -331,6 +344,7 @@ public class MainController : MonoBehaviour
             }
             else if (this.beginPoint == null && this.destinationPoint == null && this.reachedPoint != null) //all case unreach
             {
+                toastmsg = ("Error case: no Begin point and Destination point but have reachpoint");
                 ar.ShowDescriprionBoard(this.lastMarker);
             }
             else if (this.beginPoint != null && this.destinationPoint != null && this.reachedPoint != null)
@@ -340,6 +354,8 @@ public class MainController : MonoBehaviour
                 if (IsSameRoom(this.beginPoint, this.destinationPoint))
                 {
                     ar.ShowCheck(this.lastMarker);
+                    string roomname = this.beginPoint.GetComponent<NodeData>().GetParentObjectData().roomName;
+                    toastmsg = ("มาถึงปลายทางแล้ว: " + roomname);
                 }
             }
         }
@@ -359,6 +375,8 @@ public class MainController : MonoBehaviour
                 if (IsSameRoom(this.beginPoint, this.destinationPoint))
                 {
                     ar.ShowCheck(this.lastMarker);
+                    string roomname = this.beginPoint.GetComponent<NodeData>().GetParentObjectData().roomName;
+                    toastmsg = ("มาถึงปลายทางแล้ว: " + roomname);
                 }
                 else
                 {
@@ -370,6 +388,8 @@ public class MainController : MonoBehaviour
                 if (IsSameRoom(this.beginPoint, this.reachedPoint))
                 {
                     ar.ShowCheck(this.lastMarker);
+                    string roomname = this.beginPoint.GetComponent<NodeData>().GetParentObjectData().roomName;
+                    toastmsg = ("มาถึงปลายทางแล้ว: " + roomname);
                 }
                 else
                 {
@@ -402,6 +422,8 @@ public class MainController : MonoBehaviour
                 if (IsSameRoom(this.beginPoint, this.destinationPoint))
                 {
                     ar.ShowCheck(this.lastMarker);
+                    string roomname = this.beginPoint.GetComponent<NodeData>().GetParentObjectData().roomName;
+                    toastmsg = ("มาถึงปลายทางแล้ว: " + roomname);
                 }
             }
         }
@@ -412,6 +434,7 @@ public class MainController : MonoBehaviour
         if (navigatable)
         {
             ar.ShowArrow(this.lastMarker, navigatable);
+            Debug.Log("navgatable " +navigatable);
         }
         else
         {
@@ -429,6 +452,7 @@ public class MainController : MonoBehaviour
             else
             {
                 ar.ShowArrow(this.lastMarker, this.destinationPoint);
+                Debug.Log("point directly cause " +navigatable);
             }
         }
     }

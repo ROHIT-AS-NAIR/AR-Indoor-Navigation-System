@@ -257,7 +257,6 @@ public class CanvasButtonScript : MonoBehaviour
             roomNavigateButton.transform.GetChild(0).gameObject.GetComponent<Text>().text = "Cancle Navigate";
             roomNavigateButton.GetComponent<Button>().onClick.RemoveAllListeners();
             roomNavigateButton.GetComponent<Button>().onClick.AddListener(ClearPoint);
-            Debug.Log("ClearPoint listener");
         }
 
         //mark point and navigate draw line to destination
@@ -283,7 +282,6 @@ public class CanvasButtonScript : MonoBehaviour
 
     private void ClearPoint()
     {
-        Debug.Log("ClearPoint fn");
         MainController.instance.ClearDestinationPoint();
         OnCloseRoomDialog();
         OnCloseSearch();
