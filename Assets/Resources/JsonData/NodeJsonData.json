@@ -3,7 +3,7 @@
         {
             "nodeID": "n001",
             "position": "456 0 731",
-            "referencePosition": "0 0 0",
+            "referencePosition": "456 0 701",
             "yOrientation": 0,
             "xzOrientation": "0 0",
             "fkRoomID": "r01"
@@ -11,7 +11,7 @@
         {
             "nodeID": "n002",
             "position": "689 0 736",
-            "referencePosition": "0 0 0",
+            "referencePosition": "689 0 697",
             "yOrientation": 0,
             "xzOrientation": "0 0",
             "fkRoomID": "r01"
@@ -19,7 +19,7 @@
         {
             "nodeID": "n003",
             "position": "721 0 427",
-            "referencePosition": "0 0 0",
+            "referencePosition": "696.4 0 450.1",
             "yOrientation": 134.247,
             "xzOrientation": "0 0",
             "fkRoomID": "r02"
@@ -27,7 +27,7 @@
         {
             "nodeID": "n004",
             "position": "628 0 345",
-            "referencePosition": "0 0 0",
+            "referencePosition": "584.5 0 345",
             "yOrientation": 84,
             "xzOrientation": "0 0",
             "fkRoomID": "r02"
@@ -35,7 +35,7 @@
         {
             "nodeID": "n005",
             "position": "954 0 658",
-            "referencePosition": "0 0 0",
+            "referencePosition": "910 0 658",
             "yOrientation": 90,
             "xzOrientation": "0 0",
             "fkRoomID": "r03"
@@ -43,7 +43,7 @@
         {
             "nodeID": "n006",
             "position": "836 0 317",
-            "referencePosition": "0 0 0",
+            "referencePosition": "881 0 292.6",
             "yOrientation": 297.9,
             "xzOrientation": "0 0",
             "fkRoomID": "r02"
@@ -51,7 +51,7 @@
         {
             "nodeID": "n007",
             "position": "795 0 125.9",
-            "referencePosition": "0 0 0",
+            "referencePosition": "758.8 0 162.1",
             "yOrientation": 139.5,
             "xzOrientation": "0 0",
             "fkRoomID": "r04"
@@ -59,7 +59,7 @@
         {
             "nodeID": "n008",
             "position": "545 0 436.5",
-            "referencePosition": "0 0 0",
+            "referencePosition": "503.4 0 407.5",
             "yOrientation": 44.723,
             "xzOrientation": "0 0",
             "fkRoomID": "r05"

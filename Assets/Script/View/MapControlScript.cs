@@ -31,23 +31,11 @@ public class MapControlScript : MonoBehaviour, IPointerClickHandler
     void Start()
     {
         StartMapControl();
-        // mapImage = this.gameObject.GetComponent<RectTransform>();
-        // navline = this.transform.Find("Line").gameObject;
-        // userDot = this.transform.Find("UserDot").gameObject;
-        // // !!! warn !!!  showingfloor change when change bulding
-        // building = GameObject.Find("IT Buiding").GetComponent<BuildingData>();
-        // showingFloor = building.floorList[0];
     }
 
     void Awake()
     {
         StartMapControl();
-        // mapImage = this.gameObject.GetComponent<RectTransform>();
-        // navline = this.transform.Find("Line").gameObject;
-        // userDot = this.transform.Find("UserDot").gameObject;
-        // // !!! warn !!!  showingfloor change when change bulding
-        // building = GameObject.Find("IT Buiding").GetComponent<BuildingData>();
-        // showingFloor = building.floorList[0];
     }
 
     // Update is called once per frame
@@ -77,7 +65,6 @@ public class MapControlScript : MonoBehaviour, IPointerClickHandler
         if (Input.touchCount == 1)
         {
             Touch touch = Input.GetTouch(0);
-            //Debug.Log("  hasmoved:" +hasMovedFlag + " |" +touch.phase);
             if (touch.phase == TouchPhase.Moved)
             {
                 hasMovedFlag = true;

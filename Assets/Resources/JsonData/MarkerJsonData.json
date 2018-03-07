@@ -11,7 +11,7 @@
             "markerID": "m2",
             "markerImageName": "TestMarker02",
             "priority": 7,
-            "markerOrientation": 10,
+            "markerOrientation": 0,
             "fkNodeID": "n002"
         },
         {
@@ -25,7 +25,7 @@
             "markerID": "m4",
             "markerImageName": "TestMarker04",
             "priority": 1,
-            "markerOrientation": -10,
+            "markerOrientation": 45,
             "fkNodeID": "n002"
         },
         {
@@ -39,14 +39,14 @@
             "markerID": "m6",
             "markerImageName": "TestMarker06",
             "priority": 1,
-            "markerOrientation": 45,
+            "markerOrientation": 0,
             "fkNodeID": "n006"
         },
         {
             "markerID": "m7",
             "markerImageName": "TestMarker07",
             "priority": 5,
-            "markerOrientation": -45,
+            "markerOrientation": 0,
             "fkNodeID": "n007"
         }
         ,

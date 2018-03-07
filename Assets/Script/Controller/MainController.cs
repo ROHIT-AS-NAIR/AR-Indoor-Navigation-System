@@ -10,7 +10,6 @@ public class MainController : MonoBehaviour
     private ARDisplayController ar;
     private JsonReader jsonReader;
     private CanvasButtonScript canvas;
-    //private CanvasButtonScript canvasButton;
     public GameObject beginPoint = null;
     public GameObject destinationPoint = null;
     public GameObject reachedPoint = null;
@@ -145,11 +144,18 @@ public class MainController : MonoBehaviour
     change appstate and point value
     process and send to display*/
     {
-        if (destinationPoint.GetComponent<NodeData>() != null)
+        if (destinationPoint != null)
+        {
+            if (destinationPoint.GetComponent<NodeData>() != null)
+            {
+                this.destinationPoint = destinationPoint;
+                Debug.Log("Set Destination Point to room " + destinationPoint.GetComponent<NodeData>().GetParentObjectData().roomName + " @node"
+                        + destinationPoint.GetComponent<NodeData>().nodeID);
+            }
+        }
+        else //from clearpoint
         {
             this.destinationPoint = destinationPoint;
-            Debug.Log("Set Destination Point to room " + destinationPoint.GetComponent<NodeData>().GetParentObjectData().roomName + " @node"
-                     + destinationPoint.GetComponent<NodeData>().nodeID);
         }
 
         ProcessDestinationPoint();
@@ -164,7 +170,11 @@ public class MainController : MonoBehaviour
         {
             appState = AppState.Idle;
         }
-        else if (this.beginPoint != null)
+        else if(this.destinationPoint == null && this.reachedPoint == null)
+        {
+            appState = AppState.Idle;
+        }
+        else if (this.beginPoint != null && this.destinationPoint != null)
         {
             if (IsSameRoom(this.destinationPoint, this.beginPoint))
             {
@@ -344,7 +354,7 @@ public class MainController : MonoBehaviour
             {
                 ar.ShowDescriprionBoard(this.lastMarker);
             }
-            else if (this.beginPoint != null && this.destinationPoint != null && this.reachedPoint == null) 
+            else if (this.beginPoint != null && this.destinationPoint != null && this.reachedPoint == null)
             {
                 if (IsSameRoom(this.beginPoint, this.destinationPoint))
                 {

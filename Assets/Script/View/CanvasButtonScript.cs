@@ -40,51 +40,7 @@ public class CanvasButtonScript : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        Debug.Log("Start canvas");
         StartCanvas();
-
-        // building = GameObject.Find("IT Buiding").GetComponent<BuildingData>();
-        // showingFloor = building.floorList[0];
-        // searchShowList = new List<GameObject>();
-
-        // canvasResolutionScript = gameObject.GetComponent<CanvasResolutionScript>();
-        // toastMessageScript = gameObject.GetComponent<ToastMessageScript>();
-        // toastMessageScript.showToastOnUiThread("ส่องกล้องไปยังจุดต่างๆ เช่น ป้ายบอกทาง เลขห้อง เพื่อเริ่มต้นระบุตำแหน่งของคุณ", false);
-
-        // hambergerButton = actionBar.gameObject.transform.Find("HambergerButton").gameObject;
-        // mapButton = actionBar.gameObject.transform.Find("MapButton").gameObject;
-        // searchButton = actionBar.gameObject.transform.Find("SearchButton").gameObject;
-        // appName = actionBar.gameObject.transform.Find("AppName").gameObject;
-        // appNameText = appName.GetComponent<Text>();
-
-        // backButton = actionBar.gameObject.transform.Find("BackButton").gameObject;
-        // searchInputField = actionBar.gameObject.transform.Find("SearchInputField").gameObject;
-        // clearButton = actionBar.gameObject.transform.Find("ClearSearchButton").gameObject;
-
-        // /* search */
-        // searchHelpText = searchPanel.transform.Find("HelpText").gameObject;
-        // searchList = searchPanel.transform.Find("Scroll View").gameObject;
-        // viewPort = searchList.gameObject.transform.Find("Viewport").gameObject;
-        // scrollbar = searchList.gameObject.transform.Find("Scrollbar Vertical").gameObject;
-        // searchContent = viewPort.gameObject.transform.Find("Content").gameObject;
-        // roomDataPanel = searchPanel.transform.Find("RoomDataPanel").gameObject;
-        // roomDataDialog = roomDataPanel.transform.Find("RoomDataDialog").gameObject;
-        // roomNameTitle = roomDataDialog.transform.Find("RoomNameTitle").gameObject;
-        // roomMapImage = roomDataDialog.transform.Find("RoomMapImage").gameObject;
-        // roomDesData = roomDataDialog.transform.Find("RoomData").gameObject;
-        // roomNavigateButton = roomDataDialog.transform.Find("NavigateButton").gameObject;
-
-        // /* map */
-        // mapImage = mapPanel.transform.Find("MapScrollViewArea").gameObject;
-        // rightButton = mapPanel.transform.Find("RightButton").gameObject;
-        // leftButton = mapPanel.transform.Find("LeftButton").gameObject;
-        // mapControl = mapImage.transform.Find("Mask/MapImage").gameObject.GetComponent<MapControlScript>();
-        // // navline = mapImage.transform.Find("Line").gameObject;
-        // // userDot = mapImage.transform.Find("UserDot").gameObject;
-
-        // backButton.SetActive(false);
-        // searchInputField.SetActive(false);
-        // clearButton.SetActive(false);
     }
 
     // Update is called once per frame
@@ -151,8 +107,6 @@ public class CanvasButtonScript : MonoBehaviour
         rightButton = mapPanel.transform.Find("RightButton").gameObject;
         leftButton = mapPanel.transform.Find("LeftButton").gameObject;
         mapControl = mapImage.transform.Find("Mask/MapImage").gameObject.GetComponent<MapControlScript>();
-        // navline = mapImage.transform.Find("Line").gameObject;
-        // userDot = mapImage.transform.Find("UserDot").gameObject;
 
         backButton.SetActive(false);
         searchInputField.SetActive(false);
@@ -303,6 +257,7 @@ public class CanvasButtonScript : MonoBehaviour
             roomNavigateButton.transform.GetChild(0).gameObject.GetComponent<Text>().text = "Cancle Navigate";
             roomNavigateButton.GetComponent<Button>().onClick.RemoveAllListeners();
             roomNavigateButton.GetComponent<Button>().onClick.AddListener(ClearPoint);
+            Debug.Log("ClearPoint listener");
         }
 
         //mark point and navigate draw line to destination
@@ -328,6 +283,7 @@ public class CanvasButtonScript : MonoBehaviour
 
     private void ClearPoint()
     {
+        Debug.Log("ClearPoint fn");
         MainController.instance.ClearDestinationPoint();
         OnCloseRoomDialog();
         OnCloseSearch();
@@ -402,7 +358,7 @@ public class CanvasButtonScript : MonoBehaviour
                 {
                     roomButtonText.text = "ต้นทาง: " + nodedata.GetParentObjectData().roomName;
                     roomButtonText.fontStyle = FontStyle.Bold;
-                    roomButtonText.fontSize = canvasResolutionScript.GetScaledFontSize(47); // gray
+                    roomButtonText.fontSize = canvasResolutionScript.GetScaledFontSize(40); // gray
                     beginColored = true;
                 }
             }

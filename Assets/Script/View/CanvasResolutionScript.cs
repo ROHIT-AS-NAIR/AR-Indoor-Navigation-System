@@ -26,8 +26,6 @@ public class CanvasResolutionScript : MonoBehaviour {
 	private RectTransform searchHelpText, searchList, viewPort, scrollbar;
 	private GridLayoutGroup searchContent;
 	private RectTransform mapImage, rightButton, leftButton, navline, userDot;
-
-	private List<GameObject> markerList; //not use now
 	
 
 	// Use this for initialization
@@ -66,8 +64,6 @@ public class CanvasResolutionScript : MonoBehaviour {
 		mapImage = mapPanel.transform.Find("MapScrollViewArea").GetComponent<RectTransform>();
 		rightButton = mapPanel.transform.Find("RightButton").GetComponent<RectTransform>();
 		leftButton = mapPanel.transform.Find("LeftButton").GetComponent<RectTransform>();
-		// navline = mapImage.gameObject.transform.Find("Line").GetComponent<RectTransform>();
-		// userDot = mapImage.gameObject.transform.Find("UserDot").GetComponent<RectTransform>();
 	}
 	
 	// Update is called once per frame

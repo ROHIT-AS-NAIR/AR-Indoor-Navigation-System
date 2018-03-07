@@ -47,7 +47,6 @@ public class ARDisplayController : MonoBehaviour {
 		ArrowScript arrowsc = arrowObj.GetComponent<ArrowScript>();
 		arrowsc.PointToCoordinate(objectNodeToAugment.GetComponent<NodeData>().successor.GetComponent<NodeData>().position);
 		arrowObj.SetActive(true);
-		PlusMarkerOrientation(arrowObj);
 		SendLastObject(arrowsc.Type);
 	}
 
@@ -58,7 +57,6 @@ public class ARDisplayController : MonoBehaviour {
 		ArrowScript arrowsc = arrowObj.GetComponent<ArrowScript>();
 		arrowsc.PointToCoordinate(destinationNode.GetComponent<NodeData>().position);
 		arrowObj.SetActive(true);
-		PlusMarkerOrientation(arrowObj);
 		SendLastObject(arrowsc.Type);
 	}
 
@@ -74,7 +72,6 @@ public class ARDisplayController : MonoBehaviour {
 			default: arrowsc.PointToZero(); break;
 		}
 		arrowObj.SetActive(true);
-		PlusMarkerOrientation(arrowObj);
 		SendLastObject(arrowsc.Type);
 	}
 
@@ -116,7 +113,6 @@ public class ARDisplayController : MonoBehaviour {
 	/* find AR object from marker gameobject, marker may have child */
 	private GameObject GetARObjectOfType(GameObject objectMarkerToAugment, ARObject.Type artype)
 	{
-		Debug.Log(objectMarkerToAugment.transform.childCount);
 		for (int i = 0; i < objectMarkerToAugment.transform.childCount; i++)
 		{
 			GameObject markertrans = objectMarkerToAugment.transform.GetChild(i).gameObject;

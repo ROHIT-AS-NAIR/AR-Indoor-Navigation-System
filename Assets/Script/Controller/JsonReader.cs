@@ -8,8 +8,6 @@ public class JsonReader : MonoBehaviour
 {
 
     public string fileroomname = "RoomJsonData.json";
-    // public string[] fileToLoadName = {"BuildingJsonData.json", "FloorJsonData.json",
-    //     "RoomJsonData.json", "NodeJsonData.json", "MarkerJsonData.json", "ConnectJsonData.json"};
     public string[] fileToLoadName = {"BuildingJsonData", "FloorJsonData",
         "RoomJsonData", "NodeJsonData", "MarkerJsonData", "ConnectJsonData"};
     public string[] structTag = { "Building", "Floor", "Room", "Node", "Marker", "Connect" };
@@ -68,17 +66,10 @@ public class JsonReader : MonoBehaviour
 
     public void InitReading(string filename)
     {
-        // path = "/JsonData/" + filename;
-        // TextAsset targetFile = Resources.Load<TextAsset>(path);
         Debug.Log("initreading " + filename);
 
         TextAsset jsonStringresource = Resources.Load("JsonData/" + filename) as TextAsset;
         jsonString = jsonStringresource.text;
-
-        // path = Application.streamingAssetsPath + "/JsonData/";
-		// jsonString = File.ReadAllText(path + filename + ".json");
-
-        //Debug.Log(jsonString);
     }
 
     #region Building
@@ -206,7 +197,6 @@ public class JsonReader : MonoBehaviour
             ndt.nodeID = node.nodeID;
             ndt.position = GetSplitValue(node.position);
             ndt.referencePosition = GetSplitValue(node.referencePosition);
-            ndt.referencePosition = ndt.referencePosition + ndt.position;
             ndt.orientation = GetSplitValue(node.xzOrientation.Split(' ')[0] + " " + node.yOrientation + " " + node.xzOrientation.Split(' ')[1]); //Warn xz lenght 1
             ndt.fkRoomID = node.fkRoomID;
             //find parent
