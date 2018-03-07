@@ -428,9 +428,18 @@ public class CanvasButtonScript : MonoBehaviour
         //BuildingData building = showingFloor.GetComponent<FloorData>().GetBuilding().GetComponent<BuildingData>();
 
         //get next floor from buildingData
-        GameObject floorObject = isForward ?
-            building.GetNextFloor(showingFloor.GetComponent<FloorData>().floorName) :
-            building.GetPreviousFloor(showingFloor.GetComponent<FloorData>().floorName);
+        // GameObject floorObject = isForward ?
+        //     building.GetNextFloor(showingFloor.GetComponent<FloorData>().floorName) :
+        //     building.GetPreviousFloor(showingFloor.GetComponent<FloorData>().floorName);
+        GameObject floorObject; // = building.floorList[(int)Random.Range(0,4)];
+        if(isForward)
+        {
+            floorObject = building.GetNextFloor(showingFloor.GetComponent<FloorData>().floorName);
+        }
+        else{
+            floorObject = building.GetPreviousFloor(showingFloor.GetComponent<FloorData>().floorName);
+        }
+        
         mapControl.UpdateMap(floorObject);
         showingFloor = floorObject;
     }

@@ -5,7 +5,7 @@ using Vuforia;
 
 public class MarkerConstructor : MonoBehaviour
 {
-    public GameObject arrowPrefab, checkTruePrefab, descriptionBoardPrefab;
+    //public GameObject arrowPrefab, checkTruePrefab, descriptionBoardPrefab;
     public GameObject[] arObjectList = new GameObject[3];
     public List<DraftMarkerData> draftMarkerList;
     private GameObject[] allNodeList;
@@ -187,6 +187,7 @@ public class MarkerConstructor : MonoBehaviour
         Debug.Log("Create AR Object to " + markerObject.name);
         foreach (GameObject arobj in arObjectList)
         {
+            Debug.Log(markerObject.name);
             arobj.transform.SetParent(markerObject.transform);
             arobj.GetComponent<IARObject>().InitAR();
             arobj.transform.localPosition = Vector3.zero;
@@ -195,84 +196,84 @@ public class MarkerConstructor : MonoBehaviour
         }
     }
 
-    private void CreateArObject(GameObject markerObject, ARObject.Type otype)
-    /* unused */
-    {
-        GameObject arObj;
-        // find all child and check that only one have arobjectScript and currenly activated
+    // private void CreateArObject(GameObject markerObject, ARObject.Type otype)
+    // /* unused */
+    // {
+    //     GameObject arObj;
+    //     // find all child and check that only one have arobjectScript and currenly activated
 
-        if (otype == ARObject.Type.Arrow)
-        {
-            List<ArrowScript> arrowList = new List<ArrowScript>();
-            markerObject.GetComponentsInChildren<ArrowScript>(true, arrowList);
-            if (arrowList.Count < 1) //no objeect
-            {
-                arObj = Instantiate(arrowPrefab);
-                arObj.name = "Arrow";
-            }
-            else //at least 1
-            {
-                arObj = arrowList[0].gameObject;
-                arObj.SetActive(true);
-                if (arrowList.Count > 1)
-                {
-                    for (int a = 1; a < arrowList.Count; a++)
-                    {
-                        Destroy(arrowList[a].gameObject);
-                    }
-                }
-            }
-        }
-        else if (otype == ARObject.Type.Check)
-        {
-            List<CheckTrueScript> checkList = new List<CheckTrueScript>();
-            markerObject.GetComponentsInChildren<CheckTrueScript>(true, checkList);
-            if (checkList.Count < 1) //no objeect
-            {
-                arObj = Instantiate(arrowPrefab);
-                arObj.name = "Check";
-            }
-            else //at least 1
-            {
-                arObj = checkList[0].gameObject;
-                arObj.SetActive(true);
-                if (checkList.Count > 1)
-                {
-                    for (int c = 1; c < checkList.Count; c++)
-                    {
-                        Destroy(checkList[c].gameObject);
-                    }
-                }
-            }
-        }
-        else
-        {
-            List<DescriptionBoardScript> boardList = new List<DescriptionBoardScript>();
-            markerObject.GetComponentsInChildren<DescriptionBoardScript>(true, boardList);
-            if (boardList.Count < 1) //no objeect
-            {
-                arObj = Instantiate(arrowPrefab);
-                arObj.name = "Board";
-            }
-            else //at least 1
-            {
-                arObj = boardList[0].gameObject;
-                arObj.SetActive(true);
-                if (boardList.Count > 1)
-                {
-                    for (int c = 1; c < boardList.Count; c++)
-                    {
-                        Destroy(boardList[c].gameObject);
-                    }
-                }
-            }
-            DescriptionBoardScript desBoard = arObj.GetComponent<DescriptionBoardScript>();
-            desBoard.SetRoomName(markerObject.GetComponent<MarkerData>().GetParentObjectData().GetParentObjectData().roomName);
-            desBoard.SetRoomDest(markerObject.GetComponent<MarkerData>().GetParentObjectData().GetParentObjectData().roomDescription);
-        }
-        arObj.transform.SetParent(markerObject.transform);
-        arObj.transform.localPosition = Vector3.zero;
-        arObj.transform.localEulerAngles = Vector3.zero;
-        arObj.transform.localScale = Vector3.one;
-    }
+    //     if (otype == ARObject.Type.Arrow)
+    //     {
+    //         List<ArrowScript> arrowList = new List<ArrowScript>();
+    //         markerObject.GetComponentsInChildren<ArrowScript>(true, arrowList);
+    //         if (arrowList.Count < 1) //no objeect
+    //         {
+    //             arObj = Instantiate(arrowPrefab);
+    //             arObj.name = "Arrow";
+    //         }
+    //         else //at least 1
+    //         {
+    //             arObj = arrowList[0].gameObject;
+    //             arObj.SetActive(true);
+    //             if (arrowList.Count > 1)
+    //             {
+    //                 for (int a = 1; a < arrowList.Count; a++)
+    //                 {
+    //                     Destroy(arrowList[a].gameObject);
+    //                 }
+    //             }
+    //         }
+    //     }
+    //     else if (otype == ARObject.Type.Check)
+    //     {
+    //         List<CheckTrueScript> checkList = new List<CheckTrueScript>();
+    //         markerObject.GetComponentsInChildren<CheckTrueScript>(true, checkList);
+    //         if (checkList.Count < 1) //no objeect
+    //         {
+    //             arObj = Instantiate(arrowPrefab);
+    //             arObj.name = "Check";
+    //         }
+    //         else //at least 1
+    //         {
+    //             arObj = checkList[0].gameObject;
+    //             arObj.SetActive(true);
+    //             if (checkList.Count > 1)
+    //             {
+    //                 for (int c = 1; c < checkList.Count; c++)
+    //                 {
+    //                     Destroy(checkList[c].gameObject);
+    //                 }
+    //             }
+    //         }
+    //     }
+    //     else
+    //     {
+    //         List<DescriptionBoardScript> boardList = new List<DescriptionBoardScript>();
+    //         markerObject.GetComponentsInChildren<DescriptionBoardScript>(true, boardList);
+    //         if (boardList.Count < 1) //no objeect
+    //         {
+    //             arObj = Instantiate(arrowPrefab);
+    //             arObj.name = "Board";
+    //         }
+    //         else //at least 1
+    //         {
+    //             arObj = boardList[0].gameObject;
+    //             arObj.SetActive(true);
+    //             if (boardList.Count > 1)
+    //             {
+    //                 for (int c = 1; c < boardList.Count; c++)
+    //                 {
+    //                     Destroy(boardList[c].gameObject);
+    //                 }
+    //             }
+    //         }
+    //         DescriptionBoardScript desBoard = arObj.GetComponent<DescriptionBoardScript>();
+    //         desBoard.SetRoomName(markerObject.GetComponent<MarkerData>().GetParentObjectData().GetParentObjectData().roomName);
+    //         desBoard.SetRoomDest(markerObject.GetComponent<MarkerData>().GetParentObjectData().GetParentObjectData().roomDescription);
+    //     }
+    //     arObj.transform.SetParent(markerObject.transform);
+    //     arObj.transform.localPosition = Vector3.zero;
+    //     arObj.transform.localEulerAngles = Vector3.zero;
+    //     arObj.transform.localScale = Vector3.one;
+    // }
 }

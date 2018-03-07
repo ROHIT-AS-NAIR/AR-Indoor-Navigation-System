@@ -48,13 +48,15 @@ public class BuildingData : MonoBehaviour {
 
 	/* return gemeobject of cycled floor  if not found return null */
 	public GameObject GetNextFloor(string floorName)
-	{
+	{		
 		for (int i = 0; i < floorList.Count; i++)
 		{
 			FloorData fl = floorList[i].GetComponent<FloorData>();
 			if (floorName == fl.floorName && i >= floorList.Count-1) { 	// last index return first
+				//Debug.Log(i + ">" + (floorList.Count-1) +" is Last index   RETURN " + floorList[0].GetComponent<FloorData>().floorName + " @"+floorList[0].GetComponent<FloorData>().floorIndex);
 				return floorList[0]; 
 			} else if (floorName == fl.floorName) { 					//name ard equal return next index
+				//Debug.Log(i + "=" + fl.floorName +" name equal  RETURN " + floorList[i+1].GetComponent<FloorData>().floorName + " @"+floorList[i+1].GetComponent<FloorData>().floorIndex);
 				return floorList[i+1];
 			}
 		}
@@ -67,9 +69,10 @@ public class BuildingData : MonoBehaviour {
 		{
 			FloorData fl = floorList[i].GetComponent<FloorData>();
 			if (floorName == fl.floorName && i <= 0) {
+				//Debug.Log(i + "<" + 0 +" is First index   RETURN " + floorList[floorList.Count-1].GetComponent<FloorData>().floorName + " @"+floorList[floorList.Count-1].GetComponent<FloorData>().floorIndex);
 				return floorList[floorList.Count-1];
 			} else if (floorName == fl.floorName) { 					//name ard equal return previous index
-				
+				//Debug.Log(i + "=" + fl.floorName +" name equal  RETURN " + floorList[i-1].GetComponent<FloorData>().floorName + " @"+floorList[i-1].GetComponent<FloorData>().floorIndex);
 				return floorList[i-1];
 			}
 		}

@@ -187,20 +187,19 @@ public class MapControlScript : MonoBehaviour, IPointerClickHandler
             FloorData beginFloorData = beginFloor.GetComponent<FloorData>();
             FloorData destinationFloorData = destinationFloor.GetComponent<FloorData>();
 
-            if (beginPointData.IsSameFloorWith(destinationPoint) && beginFloor == floorObject)
-            //building.IsSameFloor(MainController.instance.beginPoint, MainController.instance.destinationPoint) //loking fl in same
+            if (beginPointData.IsSameFloorWith(destinationPoint) && beginFloorData.floorIndex == floorObjectData.floorIndex) //loking fl in same
             {
                 nodeForLineArr[0] = beginPoint;
                 nodeForLineArr[1] = destinationPoint;
             }
             else
             {
-                if (beginFloor == floorObject)
+                if (beginFloorData.floorIndex == floorObjectData.floorIndex)
                 { //swap to begin fl
                     nodeForLineArr[0] = beginPoint;
                     nodeForLineArr[1] = MainController.instance.GetConnectorNode(beginPoint);
                 }
-                else if (destinationFloor == floorObject)
+                else if (destinationFloorData.floorIndex == floorObjectData.floorIndex)
                 { //swap in dest fl
                     nodeForLineArr[0] = MainController.instance.GetConnectorNode(destinationPoint);
                     nodeForLineArr[1] = destinationPoint;
@@ -231,13 +230,16 @@ public class MapControlScript : MonoBehaviour, IPointerClickHandler
                     //if no, will not show line in 
                 }
             }
+             
         }
         else if (MainController.instance.appState == MainController.AppState.Idle)
         {
             nodeForLineArr[0] = null;
             nodeForLineArr[1] = null;
         }
+        
         DrawLine();
+        
         //check floor and current position for user dot
         userDot.SetActive(false);
         isUserInThisFloor = false;
@@ -248,7 +250,7 @@ public class MapControlScript : MonoBehaviour, IPointerClickHandler
                 ShowUserDot(MainController.instance.beginPoint);
                 isUserInThisFloor = true;
             }
-        }
+        }  
         showingFloor = floorObject;
     }
 
