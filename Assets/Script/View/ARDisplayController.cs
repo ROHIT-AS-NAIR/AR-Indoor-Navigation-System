@@ -39,7 +39,7 @@ public class ARDisplayController : MonoBehaviour {
 
 #region Display AR
 	/* point arrow to successor's position.  if null, point to destination */
-	public void ShowArrow(GameObject markerObject, bool navigatable)
+	public float ShowArrow(GameObject markerObject, bool navigatable)
 	{
 		Debug.Log(markerObject.name);
 		GameObject objectNodeToAugment = markerObject.GetComponent<MarkerData>().GetParentNodeObject();
@@ -57,19 +57,21 @@ public class ARDisplayController : MonoBehaviour {
 		}
 		arrowObj.SetActive(true);
 		SendLastObject(arrowsc.Type);
+		return arrowObj.transform.localRotation.eulerAngles.z;
 	}
 
 	/* point directly to node */
-	public void ShowArrow(GameObject markerObject, GameObject destinationNode)
+	public float ShowArrow(GameObject markerObject, GameObject destinationNode)
 	{
 		GameObject arrowObj = GetARObjectOfType(markerObject, ARObject.Type.Arrow);
 		ArrowScript arrowsc = arrowObj.GetComponent<ArrowScript>();
 		arrowsc.PointToCoordinate(destinationNode.GetComponent<NodeData>().position);
 		arrowObj.SetActive(true);
 		SendLastObject(arrowsc.Type);
+		return arrowObj.transform.localRotation.eulerAngles.z;
 	}
 
-	public void ShowArrow(GameObject markerObject, bool navigatable, ArrowDirection arrowDirection)
+	public float ShowArrow(GameObject markerObject, bool navigatable, ArrowDirection arrowDirection)
 	{
 		GameObject arrowObj = GetARObjectOfType(markerObject, ARObject.Type.Arrow);
 		ArrowScript arrowsc = arrowObj.GetComponent<ArrowScript>();
@@ -82,6 +84,7 @@ public class ARDisplayController : MonoBehaviour {
 		}
 		arrowObj.SetActive(true);
 		SendLastObject(arrowsc.Type);
+		return arrowObj.transform.localRotation.eulerAngles.z;
 	}
 
 	public void ShowCheck(GameObject markerObject)

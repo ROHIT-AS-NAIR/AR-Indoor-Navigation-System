@@ -33,6 +33,7 @@ public class CanvasButtonScript : MonoBehaviour
     private CanvasResolutionScript canvasResolutionScript;
     private MapControlScript mapControl;
     private BuildingData building;
+    private StateDisplayController stateDisplay;
     private ToastMessageScript toastMessageScript;
 
     private bool canQuitApp = true;
@@ -77,7 +78,9 @@ public class CanvasButtonScript : MonoBehaviour
 
         canvasResolutionScript = gameObject.GetComponent<CanvasResolutionScript>();
         toastMessageScript = gameObject.GetComponent<ToastMessageScript>();
-        toastMessageScript.showToastOnUiThread("ส่องกล้องไปยังจุดต่างๆ เช่น ป้ายบอกทาง เลขห้อง เพื่อเริ่มต้นระบุตำแหน่งของคุณ", false);
+        stateDisplay = gameObject.GetComponent<StateDisplayController>();
+        stateDisplay.ShowToastMessage("ส่องกล้องไปยังจุดต่างๆ เช่น ป้ายบอกทาง เลขห้อง เพื่อเริ่มต้นระบุตำแหน่งของคุณ", false);
+        stateDisplay.PlaySound(SoundManager.SoundType.InitApp);
 
         hambergerButton = actionBar.gameObject.transform.Find("HambergerButton").gameObject;
         mapButton = actionBar.gameObject.transform.Find("MapButton").gameObject;
@@ -247,7 +250,7 @@ public class CanvasButtonScript : MonoBehaviour
                     roomNavigateButton.GetComponent<Button>().onClick.RemoveAllListeners();
                     roomNavigateButton.GetComponent<Button>().onClick.AddListener(delegate
                     {
-                        toastMessageScript.showToastOnUiThread("จุดล่าสุดของคุณคือจุดที่คุณเลือกอยู่ กรุณาเลือกปลายทางที่อื่น", true);
+                        stateDisplay.ShowToastMessage("จุดล่าสุดของคุณคือจุดที่คุณเลือกอยู่ กรุณาเลือกปลายทางที่อื่น");
                     });
                 }
             }

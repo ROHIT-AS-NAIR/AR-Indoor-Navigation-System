@@ -61,7 +61,19 @@ public class ArrowScript : MonoBehaviour, IARObject
         Debug.Log("To Zero " + transform.localRotation); //transform.rotation.eulerAngles
     }
 
-    public void PointToCoordinate(Vector3 destination) /* Get Destination of object to point, return degree and rotate arrow */
+    // public void PointToCoordinate(Vector3 destination) /* Get Destination of object to point, return degree and rotate arrow */
+    // {
+    //     targetData = transform.parent.gameObject.GetComponent<MarkerData>().GetParentObjectData().GetComponent<NodeData>();
+    //     float planeDistance = Vector2.Distance(targetData.position, destination);
+    //     float deltaX = targetData.position.x - destination.x;
+    //     float deltaY = targetData.position.z - destination.z;
+
+    //     transform.Rotate(0, 0, (((Mathf.Atan2(deltaY, -deltaX)) * 180 / Mathf.PI) + markerXRotation) + (360 - targetData.orientation.y));
+    //     Debug.Log("-- " + targetData.position + " " + destination);
+    //     Debug.Log("-- Point ToCoorDinate -- " + deltaY + " " + deltaX + " " + (((Mathf.Atan2(deltaY, -deltaX)) * 180 / Mathf.PI) + 270));
+    // }
+
+    public float PointToCoordinate(Vector3 destination) /* Get Destination of object to point, return degree and rotate arrow */
     {
         targetData = transform.parent.gameObject.GetComponent<MarkerData>().GetParentObjectData().GetComponent<NodeData>();
         float planeDistance = Vector2.Distance(targetData.position, destination);
@@ -70,7 +82,7 @@ public class ArrowScript : MonoBehaviour, IARObject
 
         transform.Rotate(0, 0, (((Mathf.Atan2(deltaY, -deltaX)) * 180 / Mathf.PI) + markerXRotation) + (360 - targetData.orientation.y));
         Debug.Log("-- " + targetData.position + " " + destination);
-        Debug.Log("-- Point ToCoorDinate -- " + deltaY + " " + deltaX + " " + (((Mathf.Atan2(deltaY, -deltaX)) * 180 / Mathf.PI) + 270));
+        return (((Mathf.Atan2(deltaY, -deltaX)) * 180 / Mathf.PI) + markerXRotation) + (360 - targetData.orientation.y);
     }
 
     public void PrintSmt(string p)

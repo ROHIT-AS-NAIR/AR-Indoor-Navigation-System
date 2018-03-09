@@ -7484,6 +7484,9 @@ MonoBehaviour:
   beginPoint: {fileID: 0}
   destinationPoint: {fileID: 0}
   reachedPoint: {fileID: 0}
+  oldBeginPoint: {fileID: 0}
+  oldDestinationPoint: {fileID: 0}
+  oldReachePoint: {fileID: 0}
   appState: 0
   navigatable: 0
 --- !u!1 &1720503824
@@ -8533,9 +8536,11 @@ GameObject:
   - component: {fileID: 1980198765}
   - component: {fileID: 1980198764}
   - component: {fileID: 1980198763}
+  - component: {fileID: 1980198770}
   - component: {fileID: 1980198762}
   - component: {fileID: 1980198767}
   - component: {fileID: 1980198768}
+  - component: {fileID: 1980198769}
   m_Layer: 0
   m_Name: ARCamera
   m_TagString: Untagged
@@ -8649,6 +8654,109 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69ae4632387516a48907d6d45461cdf0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1980198769
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1980198761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f675597cf725f74aadf21ecefb988ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioFileToLoadName:
+  - 01 init_app
+  - 02 init_fornav
+  - 03 located
+  - 04 start_nav
+  - 08 cancle_nav
+  - 09 reached
+  - 10 end_nav
+  - 11 turn_right
+  - 12 turn_left
+  - 13 go_back
+  - 14 go_ahead
+--- !u!82 &1980198770
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1980198761}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!1 &2055806911
 GameObject:
   m_ObjectHideFlags: 0
@@ -8663,7 +8771,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2055806912
 Transform:
   m_ObjectHideFlags: 0

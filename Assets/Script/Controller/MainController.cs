@@ -11,11 +11,11 @@ public class MainController : MonoBehaviour
     private StateDisplayController stateDisplay;
     private JsonReader jsonReader;
     private CanvasButtonScript canvas;
-    
+
     public GameObject beginPoint = null;
     public GameObject destinationPoint = null;
     public GameObject reachedPoint = null;
-    private GameObject oldBeginPoint = null, oldDestinationPoint = null, oldReachePoint = null;
+    public GameObject oldBeginPoint = null, oldDestinationPoint = null, oldReachePoint = null;
     private GameObject lastMarker = null;
     public enum AppState
     {
@@ -26,7 +26,10 @@ public class MainController : MonoBehaviour
     public AppState appState = AppState.Idle;
     private AppState oldAppState = AppState.Idle;
     public bool navigatable = false; //due arcontrolscr use
-    string toastmsg = "";
+
+    private SoundManager.SoundType sound;
+    private string appstring = "AR Indoor Navigation";
+    private string toastmsg = "";
 
     void Awake()
     {
@@ -55,7 +58,7 @@ public class MainController : MonoBehaviour
         if (appState != oldAppState)
         {
             //call observer
-            SetDisplay();
+            //SetDisplay();
             oldAppState = appState;
         }
     }
@@ -81,6 +84,7 @@ public class MainController : MonoBehaviour
                 }
             }
             this.lastMarker = getedMarker;
+            this.oldBeginPoint = beginPoint;
         }
 
     }
@@ -100,7 +104,7 @@ public class MainController : MonoBehaviour
             }
 
             ProcessBeginPoint();
-            oldBeginPoint = beginPoint;
+            this.oldBeginPoint = beginPoint;
         }
     }
 
@@ -109,6 +113,7 @@ public class MainController : MonoBehaviour
     trigger when got new marker, app state change (for call display)*/
     {
         toastmsg = "ขณะนี้คุณอยู่ที่: " + this.beginPoint.GetComponent<NodeData>().GetParentObjectData().roomName;
+        sound = SoundManager.SoundType.Located;
         if (this.destinationPoint == null && this.reachedPoint == null)
         {
             appState = AppState.Idle;
@@ -132,6 +137,7 @@ public class MainController : MonoBehaviour
                 appState = AppState.Idle;
                 this.reachedPoint = this.destinationPoint;
                 this.destinationPoint = null;
+                this.oldDestinationPoint = null;
             }
             else
             {
@@ -142,6 +148,8 @@ public class MainController : MonoBehaviour
         //another case    else if (this.destinationPoint != null && this.reachedPoint != null)
         SetDisplay();
         stateDisplay.ShowToastMessage(toastmsg);
+        stateDisplay.ChangeActionText(appstring);
+        stateDisplay.PlaySound(sound);
     }
 
     public void SetDestinationPoint(GameObject destinationPoint)
@@ -155,6 +163,7 @@ public class MainController : MonoBehaviour
             {
                 this.destinationPoint = destinationPoint;
                 toastmsg = "เริ่มการนำทางไปยัง" + this.destinationPoint.GetComponent<NodeData>().GetParentObjectData().roomName;
+                sound = SoundManager.SoundType.StartNav;
                 Debug.Log("Set Destination Point to room " + destinationPoint.GetComponent<NodeData>().GetParentObjectData().roomName + " @node"
                         + destinationPoint.GetComponent<NodeData>().nodeID);
             }
@@ -162,11 +171,13 @@ public class MainController : MonoBehaviour
         else //from clearpoint
         {
             toastmsg = "ยกเลิกการนำทางแล้ว";
+            sound = SoundManager.SoundType.CancleNav;
+            appstring = "AR Indoor Navigation";
             this.destinationPoint = destinationPoint;
         }
 
         ProcessDestinationPoint();
-        oldDestinationPoint = destinationPoint;
+        this.oldDestinationPoint = destinationPoint;
     }
 
     private void ProcessDestinationPoint()
@@ -177,7 +188,7 @@ public class MainController : MonoBehaviour
         {
             appState = AppState.Idle;
         }
-        else if(this.destinationPoint == null && this.reachedPoint == null)
+        else if (this.destinationPoint == null && this.reachedPoint == null)
         {
             appState = AppState.Idle;
         }
@@ -187,6 +198,7 @@ public class MainController : MonoBehaviour
             {
                 appState = AppState.Idle;
                 this.destinationPoint = null;
+                this.oldDestinationPoint = null; // may unknow old point
                 this.reachedPoint = null;
             }
             else
@@ -197,6 +209,8 @@ public class MainController : MonoBehaviour
         }
         SetDisplay();
         stateDisplay.ShowToastMessage(toastmsg);
+        stateDisplay.ChangeActionText(appstring);
+        stateDisplay.PlaySound(sound);
     }
     public void ClearDestinationPoint()
     {
@@ -225,6 +239,7 @@ public class MainController : MonoBehaviour
                 {
                     this.reachedPoint = this.destinationPoint;
                     this.destinationPoint = null;
+                    this.oldDestinationPoint = null;
                     appState = AppState.Idle;
                     return false;
                 }
@@ -298,6 +313,11 @@ public class MainController : MonoBehaviour
             }
             else if (this.beginPoint != null && this.destinationPoint == null && this.reachedPoint == null)
             {
+                if (toastmsg != "ยกเลิกการนำทางแล้ว") //is pass canclenav
+                {
+                    appstring = "You are AT: " + this.beginPoint.GetComponent<NodeData>().GetParentObjectData().roomName;
+                    sound = SoundManager.SoundType.Located;
+                }
                 ar.ShowDescriprionBoard(this.lastMarker);
             }
             else if (this.beginPoint != null && this.destinationPoint != null && this.reachedPoint == null) //idle unreach
@@ -306,10 +326,14 @@ public class MainController : MonoBehaviour
                 {
                     ar.ShowCheck(this.lastMarker);
                     string roomname = this.beginPoint.GetComponent<NodeData>().GetParentObjectData().roomName;
+                    sound = SoundManager.SoundType.Reached;
+                    appstring = "Reached: " + this.beginPoint.GetComponent<NodeData>().GetParentObjectData().roomName;
                     toastmsg = ("มาถึงปลายทางแล้ว: " + roomname);
                 }
                 else
                 {
+                    appstring = "You are AT: " + this.beginPoint.GetComponent<NodeData>().GetParentObjectData().roomName;
+                    sound = SoundManager.SoundType.Located;
                     DisplayArrowToAR();
                 }
             }
@@ -319,15 +343,26 @@ public class MainController : MonoBehaviour
                 {
                     ar.ShowCheck(this.lastMarker);
                     string roomname = this.beginPoint.GetComponent<NodeData>().GetParentObjectData().roomName;
+                    sound = SoundManager.SoundType.Reached;
+                    appstring = "Reached: " + this.beginPoint.GetComponent<NodeData>().GetParentObjectData().roomName;
                     toastmsg = ("มาถึงปลายทางแล้ว: " + roomname);
                 }
                 else
                 {
+                    if (this.oldBeginPoint == null || this.oldDestinationPoint == null)
+                    {
+                        sound = SoundManager.SoundType.StartNav;
+                    }
+                    else //may unreach due displayarrow
+                    {
+                        sound = SoundManager.SoundType.Located;
+                    }
                     ar.ShowDescriprionBoard(this.lastMarker);
                 }
             }
             else if (this.beginPoint == null && this.destinationPoint != null && this.reachedPoint == null) //has select destpoint
             {
+                sound = SoundManager.SoundType.InitFornav;
                 //toast find marker
             }
             else if (this.beginPoint == null && this.destinationPoint != null && this.reachedPoint != null) //all case unreach
@@ -350,11 +385,22 @@ public class MainController : MonoBehaviour
             else if (this.beginPoint != null && this.destinationPoint != null && this.reachedPoint != null)
             {
                 // three point can't be equal in result
+                if (this.oldBeginPoint == null || this.oldDestinationPoint == null)
+                {
+                    sound = SoundManager.SoundType.StartNav;
+                }
+                else //may unreach due displayarrow
+                {
+                    sound = SoundManager.SoundType.Located;
+                }
+                appstring = "You are AT: " + this.beginPoint.GetComponent<NodeData>().GetParentObjectData().roomName;
                 DisplayArrowToAR();
                 if (IsSameRoom(this.beginPoint, this.destinationPoint))
                 {
                     ar.ShowCheck(this.lastMarker);
                     string roomname = this.beginPoint.GetComponent<NodeData>().GetParentObjectData().roomName;
+                    sound = SoundManager.SoundType.Reached;
+                    appstring = "Reached: " + this.beginPoint.GetComponent<NodeData>().GetParentObjectData().roomName;
                     toastmsg = ("มาถึงปลายทางแล้ว: " + roomname);
                 }
             }
@@ -368,6 +414,7 @@ public class MainController : MonoBehaviour
             }
             else if (this.beginPoint != null && this.destinationPoint == null && this.reachedPoint == null) //navigate unreach
             {
+                appstring = "You are AT: " + this.destinationPoint.GetComponent<NodeData>().GetParentObjectData().roomName;
                 ar.ShowDescriprionBoard(this.lastMarker);
             }
             else if (this.beginPoint != null && this.destinationPoint != null && this.reachedPoint == null)
@@ -376,10 +423,21 @@ public class MainController : MonoBehaviour
                 {
                     ar.ShowCheck(this.lastMarker);
                     string roomname = this.beginPoint.GetComponent<NodeData>().GetParentObjectData().roomName;
+                    sound = SoundManager.SoundType.Reached;
+                    appstring = "Reached: " + this.destinationPoint.GetComponent<NodeData>().GetParentObjectData().roomName;
                     toastmsg = ("มาถึงปลายทางแล้ว: " + roomname);
                 }
                 else
                 {
+                    if (this.oldBeginPoint == null || this.oldDestinationPoint == null)
+                    {
+                        sound = SoundManager.SoundType.StartNav;
+                    }
+                    else //may unreach due displayarrow
+                    {
+                        sound = SoundManager.SoundType.Located;
+                    }
+                    appstring = "Going To: " + this.destinationPoint.GetComponent<NodeData>().GetParentObjectData().roomName;
                     DisplayArrowToAR();
                 }
             }
@@ -389,25 +447,31 @@ public class MainController : MonoBehaviour
                 {
                     ar.ShowCheck(this.lastMarker);
                     string roomname = this.beginPoint.GetComponent<NodeData>().GetParentObjectData().roomName;
+                    sound = SoundManager.SoundType.Reached;
+                    appstring = "Reached: " + this.beginPoint.GetComponent<NodeData>().GetParentObjectData().roomName;
                     toastmsg = ("มาถึงปลายทางแล้ว: " + roomname);
                 }
                 else
                 {
+                    sound = SoundManager.SoundType.Located;
                     ar.ShowDescriprionBoard(this.lastMarker);
                 }
             }
             else if (this.beginPoint == null && this.destinationPoint != null && this.reachedPoint == null) //has select destpoint nav unreach
             {
                 //toast find marker
+                appstring = "Going To: " + this.destinationPoint.GetComponent<NodeData>().GetParentObjectData().roomName;
             }
             else if (this.beginPoint == null && this.destinationPoint != null && this.reachedPoint != null) //all case unreach
             {
                 if (IsSameRoom(this.destinationPoint, this.reachedPoint))
                 {
+                    appstring = "Going To: " + this.destinationPoint.GetComponent<NodeData>().GetParentObjectData().roomName;
                     ar.ShowDescriprionBoard(this.lastMarker);
                 }
                 else
                 {
+                    appstring = "Going To: " + this.destinationPoint.GetComponent<NodeData>().GetParentObjectData().roomName;
                     ar.ShowDescriprionBoard(this.lastMarker);
                 }
             }
@@ -418,11 +482,22 @@ public class MainController : MonoBehaviour
             else if (this.beginPoint != null && this.destinationPoint != null && this.reachedPoint != null)
             {
                 // three point can't be equal in result
+                if (this.oldBeginPoint == null || this.oldDestinationPoint == null)
+                {
+                    sound = SoundManager.SoundType.StartNav;
+                }
+                else //may unreach due displayarrow
+                {
+                    sound = SoundManager.SoundType.Located;
+                }
                 DisplayArrowToAR();
+                appstring = "Going To: " + this.destinationPoint.GetComponent<NodeData>().GetParentObjectData().roomName;
                 if (IsSameRoom(this.beginPoint, this.destinationPoint))
                 {
                     ar.ShowCheck(this.lastMarker);
                     string roomname = this.beginPoint.GetComponent<NodeData>().GetParentObjectData().roomName;
+                    sound = SoundManager.SoundType.Reached;
+                    appstring = "Reached: " + this.destinationPoint.GetComponent<NodeData>().GetParentObjectData().roomName;
                     toastmsg = ("มาถึงปลายทางแล้ว: " + roomname);
                 }
             }
@@ -431,10 +506,10 @@ public class MainController : MonoBehaviour
 
     private void DisplayArrowToAR()
     {
+        float arrowZrotation = 0f;
         if (navigatable)
         {
-            ar.ShowArrow(this.lastMarker, navigatable);
-            Debug.Log("navgatable " +navigatable);
+            arrowZrotation = ar.ShowArrow(this.lastMarker, navigatable);
         }
         else
         {
@@ -443,18 +518,18 @@ public class MainController : MonoBehaviour
             int destfloor = this.destinationPoint.GetComponent<NodeData>().GetParentObjectData().GetParentObjectData().floorIndex;
             if (beginfloor < destfloor)
             {
-                ar.ShowArrow(this.lastMarker, navigatable, ARDisplayController.ArrowDirection.Up);
+                arrowZrotation = ar.ShowArrow(this.lastMarker, navigatable, ARDisplayController.ArrowDirection.Up);
             }
             else if (beginfloor > destfloor)
             {
-                ar.ShowArrow(this.lastMarker, navigatable, ARDisplayController.ArrowDirection.Down);
+                arrowZrotation = ar.ShowArrow(this.lastMarker, navigatable, ARDisplayController.ArrowDirection.Down);
             }
             else
             {
-                ar.ShowArrow(this.lastMarker, this.destinationPoint);
-                Debug.Log("point directly cause " +navigatable);
+                arrowZrotation = ar.ShowArrow(this.lastMarker, this.destinationPoint);
             }
         }
+        sound = stateDisplay.GetSoundDirection(arrowZrotation);
     }
     #endregion
 
