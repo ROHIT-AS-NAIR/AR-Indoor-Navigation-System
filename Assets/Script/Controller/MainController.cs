@@ -113,7 +113,6 @@ public class MainController : MonoBehaviour
     trigger when got new marker, app state change (for call display)*/
     {
         toastmsg = "ขณะนี้คุณอยู่ที่: " + this.beginPoint.GetComponent<NodeData>().GetParentObjectData().roomName;
-        sound = SoundManager.SoundType.Located;
         if (this.destinationPoint == null && this.reachedPoint == null)
         {
             appState = AppState.Idle;
@@ -149,7 +148,7 @@ public class MainController : MonoBehaviour
         SetDisplay();
         stateDisplay.ShowToastMessage(toastmsg);
         stateDisplay.ChangeActionText(appstring);
-        stateDisplay.PlaySound(sound);
+        stateDisplay.PlaySoundQueue();
     }
 
     public void SetDestinationPoint(GameObject destinationPoint)
@@ -163,7 +162,7 @@ public class MainController : MonoBehaviour
             {
                 this.destinationPoint = destinationPoint;
                 toastmsg = "เริ่มการนำทางไปยัง" + this.destinationPoint.GetComponent<NodeData>().GetParentObjectData().roomName;
-                sound = SoundManager.SoundType.StartNav;
+                stateDisplay.AddSound(SoundManager.SoundType.StartNav, 0);
                 Debug.Log("Set Destination Point to room " + destinationPoint.GetComponent<NodeData>().GetParentObjectData().roomName + " @node"
                         + destinationPoint.GetComponent<NodeData>().nodeID);
             }
@@ -171,7 +170,7 @@ public class MainController : MonoBehaviour
         else //from clearpoint
         {
             toastmsg = "ยกเลิกการนำทางแล้ว";
-            sound = SoundManager.SoundType.CancleNav;
+            stateDisplay.AddSound(SoundManager.SoundType.CancleNav, 0);
             appstring = "AR Indoor Navigation";
             this.destinationPoint = destinationPoint;
         }
@@ -210,7 +209,7 @@ public class MainController : MonoBehaviour
         SetDisplay();
         stateDisplay.ShowToastMessage(toastmsg);
         stateDisplay.ChangeActionText(appstring);
-        stateDisplay.PlaySound(sound);
+        stateDisplay.PlaySoundQueue();
     }
     public void ClearDestinationPoint()
     {
@@ -316,7 +315,7 @@ public class MainController : MonoBehaviour
                 if (toastmsg != "ยกเลิกการนำทางแล้ว") //is pass canclenav
                 {
                     appstring = "You are AT: " + this.beginPoint.GetComponent<NodeData>().GetParentObjectData().roomName;
-                    sound = SoundManager.SoundType.Located;
+                    stateDisplay.AddSound(SoundManager.SoundType.Located, 1);
                 }
                 ar.ShowDescriprionBoard(this.lastMarker);
             }
@@ -326,14 +325,15 @@ public class MainController : MonoBehaviour
                 {
                     ar.ShowCheck(this.lastMarker);
                     string roomname = this.beginPoint.GetComponent<NodeData>().GetParentObjectData().roomName;
-                    sound = SoundManager.SoundType.Reached;
+                    stateDisplay.AddSound(SoundManager.SoundType.Reached, 1);
+                    stateDisplay.AddSound(SoundManager.SoundType.EndNav, 2);
                     appstring = "Reached: " + this.beginPoint.GetComponent<NodeData>().GetParentObjectData().roomName;
                     toastmsg = ("มาถึงปลายทางแล้ว: " + roomname);
                 }
                 else
                 {
                     appstring = "You are AT: " + this.beginPoint.GetComponent<NodeData>().GetParentObjectData().roomName;
-                    sound = SoundManager.SoundType.Located;
+                    stateDisplay.AddSound(SoundManager.SoundType.Located, 1);
                     DisplayArrowToAR();
                 }
             }
@@ -343,7 +343,8 @@ public class MainController : MonoBehaviour
                 {
                     ar.ShowCheck(this.lastMarker);
                     string roomname = this.beginPoint.GetComponent<NodeData>().GetParentObjectData().roomName;
-                    sound = SoundManager.SoundType.Reached;
+                    stateDisplay.AddSound(SoundManager.SoundType.Reached, 1);
+                    stateDisplay.AddSound(SoundManager.SoundType.EndNav, 2);
                     appstring = "Reached: " + this.beginPoint.GetComponent<NodeData>().GetParentObjectData().roomName;
                     toastmsg = ("มาถึงปลายทางแล้ว: " + roomname);
                 }
@@ -351,18 +352,18 @@ public class MainController : MonoBehaviour
                 {
                     if (this.oldBeginPoint == null || this.oldDestinationPoint == null)
                     {
-                        sound = SoundManager.SoundType.StartNav;
+                        stateDisplay.AddSound(SoundManager.SoundType.StartNav, 0);
                     }
                     else //may unreach due displayarrow
                     {
-                        sound = SoundManager.SoundType.Located;
+                        stateDisplay.AddSound(SoundManager.SoundType.Located, 1);
                     }
                     ar.ShowDescriprionBoard(this.lastMarker);
                 }
             }
             else if (this.beginPoint == null && this.destinationPoint != null && this.reachedPoint == null) //has select destpoint
             {
-                sound = SoundManager.SoundType.InitFornav;
+                stateDisplay.AddSound(SoundManager.SoundType.InitFornav, 0);
                 //toast find marker
             }
             else if (this.beginPoint == null && this.destinationPoint != null && this.reachedPoint != null) //all case unreach
@@ -387,11 +388,11 @@ public class MainController : MonoBehaviour
                 // three point can't be equal in result
                 if (this.oldBeginPoint == null || this.oldDestinationPoint == null)
                 {
-                    sound = SoundManager.SoundType.StartNav;
+                    stateDisplay.AddSound(SoundManager.SoundType.StartNav, 0);
                 }
                 else //may unreach due displayarrow
                 {
-                    sound = SoundManager.SoundType.Located;
+                    stateDisplay.AddSound(SoundManager.SoundType.Located, 1);
                 }
                 appstring = "You are AT: " + this.beginPoint.GetComponent<NodeData>().GetParentObjectData().roomName;
                 DisplayArrowToAR();
@@ -399,7 +400,8 @@ public class MainController : MonoBehaviour
                 {
                     ar.ShowCheck(this.lastMarker);
                     string roomname = this.beginPoint.GetComponent<NodeData>().GetParentObjectData().roomName;
-                    sound = SoundManager.SoundType.Reached;
+                    stateDisplay.AddSound(SoundManager.SoundType.Reached, 1);
+                    stateDisplay.AddSound(SoundManager.SoundType.EndNav, 2);
                     appstring = "Reached: " + this.beginPoint.GetComponent<NodeData>().GetParentObjectData().roomName;
                     toastmsg = ("มาถึงปลายทางแล้ว: " + roomname);
                 }
@@ -423,7 +425,8 @@ public class MainController : MonoBehaviour
                 {
                     ar.ShowCheck(this.lastMarker);
                     string roomname = this.beginPoint.GetComponent<NodeData>().GetParentObjectData().roomName;
-                    sound = SoundManager.SoundType.Reached;
+                    stateDisplay.AddSound(SoundManager.SoundType.Reached, 1);
+                    stateDisplay.AddSound(SoundManager.SoundType.EndNav, 2);
                     appstring = "Reached: " + this.destinationPoint.GetComponent<NodeData>().GetParentObjectData().roomName;
                     toastmsg = ("มาถึงปลายทางแล้ว: " + roomname);
                 }
@@ -431,11 +434,11 @@ public class MainController : MonoBehaviour
                 {
                     if (this.oldBeginPoint == null || this.oldDestinationPoint == null)
                     {
-                        sound = SoundManager.SoundType.StartNav;
+                        stateDisplay.AddSound(SoundManager.SoundType.StartNav, 0);
                     }
                     else //may unreach due displayarrow
                     {
-                        sound = SoundManager.SoundType.Located;
+                        stateDisplay.AddSound(SoundManager.SoundType.Located, 1);
                     }
                     appstring = "Going To: " + this.destinationPoint.GetComponent<NodeData>().GetParentObjectData().roomName;
                     DisplayArrowToAR();
@@ -447,13 +450,14 @@ public class MainController : MonoBehaviour
                 {
                     ar.ShowCheck(this.lastMarker);
                     string roomname = this.beginPoint.GetComponent<NodeData>().GetParentObjectData().roomName;
-                    sound = SoundManager.SoundType.Reached;
+                    stateDisplay.AddSound(SoundManager.SoundType.Reached, 1);
+                    stateDisplay.AddSound(SoundManager.SoundType.EndNav, 2);
                     appstring = "Reached: " + this.beginPoint.GetComponent<NodeData>().GetParentObjectData().roomName;
                     toastmsg = ("มาถึงปลายทางแล้ว: " + roomname);
                 }
                 else
                 {
-                    sound = SoundManager.SoundType.Located;
+                    stateDisplay.AddSound(SoundManager.SoundType.Located, 1);
                     ar.ShowDescriprionBoard(this.lastMarker);
                 }
             }
@@ -484,11 +488,11 @@ public class MainController : MonoBehaviour
                 // three point can't be equal in result
                 if (this.oldBeginPoint == null || this.oldDestinationPoint == null)
                 {
-                    sound = SoundManager.SoundType.StartNav;
+                    stateDisplay.AddSound(SoundManager.SoundType.StartNav, 0);
                 }
                 else //may unreach due displayarrow
                 {
-                    sound = SoundManager.SoundType.Located;
+                    stateDisplay.AddSound(SoundManager.SoundType.Located, 1);
                 }
                 DisplayArrowToAR();
                 appstring = "Going To: " + this.destinationPoint.GetComponent<NodeData>().GetParentObjectData().roomName;
@@ -496,7 +500,8 @@ public class MainController : MonoBehaviour
                 {
                     ar.ShowCheck(this.lastMarker);
                     string roomname = this.beginPoint.GetComponent<NodeData>().GetParentObjectData().roomName;
-                    sound = SoundManager.SoundType.Reached;
+                    stateDisplay.AddSound(SoundManager.SoundType.Reached, 1);
+                    stateDisplay.AddSound(SoundManager.SoundType.EndNav, 2);
                     appstring = "Reached: " + this.destinationPoint.GetComponent<NodeData>().GetParentObjectData().roomName;
                     toastmsg = ("มาถึงปลายทางแล้ว: " + roomname);
                 }
@@ -510,6 +515,7 @@ public class MainController : MonoBehaviour
         if (navigatable)
         {
             arrowZrotation = ar.ShowArrow(this.lastMarker, navigatable);
+            stateDisplay.AddSound(stateDisplay.GetSoundDirection(arrowZrotation), 1);
         }
         else
         {
@@ -519,17 +525,20 @@ public class MainController : MonoBehaviour
             if (beginfloor < destfloor)
             {
                 arrowZrotation = ar.ShowArrow(this.lastMarker, navigatable, ARDisplayController.ArrowDirection.Up);
+                stateDisplay.AddSound(SoundManager.SoundType.Upstairs, 1);
             }
             else if (beginfloor > destfloor)
             {
                 arrowZrotation = ar.ShowArrow(this.lastMarker, navigatable, ARDisplayController.ArrowDirection.Down);
+                stateDisplay.AddSound(SoundManager.SoundType.Downstairs, 1);
             }
             else
             {
                 arrowZrotation = ar.ShowArrow(this.lastMarker, this.destinationPoint);
+                stateDisplay.AddSound(stateDisplay.GetSoundDirection(arrowZrotation), 1);
             }
         }
-        sound = stateDisplay.GetSoundDirection(arrowZrotation);
+        
     }
     #endregion
 

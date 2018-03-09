@@ -1145,6 +1145,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 979d486979cded74db83aad3d0e7814b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  soundqueue: 
 --- !u!1001 &308177222
 Prefab:
   m_ObjectHideFlags: 0
@@ -8666,6 +8667,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioFileToLoadName:
+  - 00 silence
   - 01 init_app
   - 02 init_fornav
   - 03 located
@@ -8677,6 +8679,10 @@ MonoBehaviour:
   - 12 turn_left
   - 13 go_back
   - 14 go_ahead
+  - 15 upstairs
+  - 16 downstairs
+  soundQueue: 
+  playindex: 0
 --- !u!82 &1980198770
 AudioSource:
   m_ObjectHideFlags: 0

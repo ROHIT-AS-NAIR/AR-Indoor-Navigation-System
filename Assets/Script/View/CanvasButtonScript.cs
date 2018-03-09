@@ -80,7 +80,8 @@ public class CanvasButtonScript : MonoBehaviour
         toastMessageScript = gameObject.GetComponent<ToastMessageScript>();
         stateDisplay = gameObject.GetComponent<StateDisplayController>();
         stateDisplay.ShowToastMessage("ส่องกล้องไปยังจุดต่างๆ เช่น ป้ายบอกทาง เลขห้อง เพื่อเริ่มต้นระบุตำแหน่งของคุณ", false);
-        stateDisplay.PlaySound(SoundManager.SoundType.InitApp);
+        stateDisplay.AddSound(SoundManager.SoundType.InitApp, 0);
+        stateDisplay.PlaySoundQueue();
 
         hambergerButton = actionBar.gameObject.transform.Find("HambergerButton").gameObject;
         mapButton = actionBar.gameObject.transform.Find("MapButton").gameObject;
