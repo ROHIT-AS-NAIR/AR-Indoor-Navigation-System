@@ -2,7 +2,7 @@
 Indoor navigation using Unity and Vuforia SDK. Prototype at Faculty of Information Technology, KMITL
 This project is in development. | Senior project for Bachelor of Science (Information Technology) King Mongkut's Institute of Technology Ladkrabang 
 -sorry for my bad English
-
+<br>
 ## Description Overall
 This project are navigation system on android. Point your mobile's camera to building for find marker images taht resamble with image in database. When found, it will show AR that contains data of that position (if not in navigate mode).
 User can known thier position and rotation direction from Top-view map. and can start navigate mode by choosing destination of that building from Search page. When in navigation mode and point your camera to marker, It will show AR red arrow point to next node. And will show AR green checked when reach destination.
@@ -11,27 +11,33 @@ User can known thier position and rotation direction from Top-view map. and can 
 – Augmented reality based indoor navigation system running on a smartphone is proposed to be used for in-building navigation. The system uses a built-in camera to capture the image of surroundings, detects a natural marker in the image, and calculates the pose of the camera with respect to the marker. The position and orientation of the camera (which are the same as the smartphone itself) with respect to the indoor map are then determined using the pose information of that marker—note that each marker must be pre-registered with pose information in the system. Once the destination is specified by the user, the shortest path to that destination will be calculated and the arrow pointing along the path to the destination will be augmented on the scene. The information message explaining the route will also be annotated on the screen and be read out to help guide users to the destination. In addition, the system can display a top view map of building showing current position and facing direction of the user, and drawing the route to the destination—the top-view mode makes a better understanding and experience for the user. 
 
 ## ScreenShot
-on start app[1] and found marker[2] marker will show like [3] in Top-view page
-![start](https://raw.githubusercontent.com/fasterac/AR-Indoor-Navigation-System/master/ReadmeComponents/arnav04board.jpg =250x355) ![marker show data of that pos](https://raw.githubusercontent.com/fasterac/AR-Indoor-Navigation-System/master/ReadmeComponents/arnav05board.jpg =250x355) ![top view in idle mode](https://raw.githubusercontent.com/fasterac/AR-Indoor-Navigation-System/master/ReadmeComponents/arnav08top.jpg =250x355)
-
-Search page (I Search for room 317)
+on start app[1] and found marker[2] marker will show like [3] in Top-view <br>
+<img src="https://raw.githubusercontent.com/fasterac/AR-Indoor-Navigation-System/master/ReadmeComponents/arnav04board.jpg" alt="on start app" width="150"/> <img src="https://raw.githubusercontent.com/fasterac/AR-Indoor-Navigation-System/master/ReadmeComponents/arnav05board.jpg" alt="search page" width="150"/>  <img src="https://raw.githubusercontent.com/fasterac/AR-Indoor-Navigation-System/master/ReadmeComponents/arnav08top.jpg" alt="search page" width="150"/>
+<br>
+Search page (I Search for room 317) <br>
 <img src="https://raw.githubusercontent.com/fasterac/AR-Indoor-Navigation-System/master/ReadmeComponents/arnav06search.jpg" alt="search page" width="150"/> <img src="https://raw.githubusercontent.com/fasterac/AR-Indoor-Navigation-System/master/ReadmeComponents/arnav07search.jpg" alt="search page when type something" width="150"/>
-
-before navigate will have dialog of destination's data and navigate button
+<br>
+before navigate will have dialog of destination's data and navigate button <br>
 <img src="https://raw.githubusercontent.com/fasterac/AR-Indoor-Navigation-System/master/ReadmeComponents/arnav11beforechoose.png" alt="first room" width="150"/>
-
-in navigate mode (purple)
+<br>
+in navigate mode (purple) <br>
 <img src="https://raw.githubusercontent.com/fasterac/AR-Indoor-Navigation-System/master/ReadmeComponents/arnav01arrow.jpg" alt="first room" width="150"/> <img src="https://raw.githubusercontent.com/fasterac/AR-Indoor-Navigation-System/master/ReadmeComponents/arnav02arrow.jpg" alt="second room" width="150"/>
-
-Top-wiew map (relate below)
-<img src="https://raw.githubusercontent.com/fasterac/AR-Indoor-Navigation-System/master/ReadmeComponents/arnav09top.jpg" alt="top view first room" width="150""/> <img src="https://raw.githubusercontent.com/fasterac/AR-Indoor-Navigation-System/master/ReadmeComponents/arnav10top.jpg" alt="top view second room" width="150"/>
-
-when reached destination
+<br>
+Top-view map (are relate below) <br>
+<img src="https://raw.githubusercontent.com/fasterac/AR-Indoor-Navigation-System/master/ReadmeComponents/arnav09top.jpg" alt="second room" width="150"/> <img src="https://raw.githubusercontent.com/fasterac/AR-Indoor-Navigation-System/master/ReadmeComponents/arnav10top.jpg" alt="top view second room" width="150"/>
+<br>
+when reached destination <br>
 <img src="https://raw.githubusercontent.com/fasterac/AR-Indoor-Navigation-System/master/ReadmeComponents/arnav03tick.jpg" alt="reached" width="150"/>
-
-we can also navigate complex map using dijkstra's algorithm (this is my test map)
+<br>
+we can also navigate complex map using dijkstra's algorithm (this is my test map) <br>
 <img src="https://raw.githubusercontent.com/fasterac/AR-Indoor-Navigation-System/master/ReadmeComponents/complex1.png" alt="reached" width="150"/> <img src="https://raw.githubusercontent.com/fasterac/AR-Indoor-Navigation-System/master/ReadmeComponents/complex2.png" alt="reached" width="150"/>
 
+## Feature
+ - [x] One node can have more than one marker for better detecting (You can add image form other angle)
+ - [x] Assistance sound 
+ - [x] Can input data from .json file through Resource folder in unity
+ - [ ] Web app for create .json file (under development)
+ >   https://github.com/fasterac/Web-app-for-AR-Indoor-Navigation-System
 
 ------------------------------------------
 
@@ -57,7 +63,13 @@ we can also navigate complex map using dijkstra's algorithm (this is my test map
 6. เลือกรูปของตำแหน่งนั้นๆในฐานข้อมูลของ vuforia
 
 ## ฟีเจอร์ในอนาคต
-- [ ] แก้ไขฐานข้อมูลให้ใน 1 จุด มีมาร์กเกอร์ได้มากกว่า 1 ภาพ เพื่อให้ตรวจจับตำแหน่งได้ดีขึ้น
-- [ ] เสียงอัตโนมัติ ช่วยในการนำทาง
-- [ ] สามารถนำเข้าข้อมูลจุดต่างๆผ่านไฟล์ .json (ไม่ต้องเชื่อมโหนดเอง)
-- [ ] เว็บสำหรับช่วยในการนำเข้าข้อมูล และสร้างไฟล์ .json 
+ - [x] แก้ไขฐานข้อมูลให้ใน 1 จุด มีมาร์กเกอร์ได้มากกว่า 1 ภาพ เพื่อให้ตรวจจับตำแหน่งได้ดีขึ้น
+ - [x] เสียงอัตโนมัติ ช่วยในการนำทาง
+ - [x] สามารถนำเข้าข้อมูลจุดต่างๆผ่านไฟล์ .json (ไม่ต้องเชื่อมโหนดเอง)
+ - [ ] เว็บสำหรับช่วยในการนำเข้าข้อมูล และสร้างไฟล์ .json (ลิงค์ด้านล่าง)
+
+>   https://github.com/fasterac/Web-app-for-AR-Indoor-Navigation-System
+
+## เปเปอร์/บทความ
+เปเปอร์จากงานประชุมวิชาการ NCIT 2016
+https://drive.google.com/file/d/1XpQZbrix6hKCR1xzTfTp9rGuaftdiytz/view?usp=sharing
