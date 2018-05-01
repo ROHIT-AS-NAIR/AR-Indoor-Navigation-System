@@ -86,8 +86,9 @@ public class CanvasResolutionScript : MonoBehaviour {
 	}
 	public void SetHambergerButtonInMain()
 	{
+		Debug.Log("  -- "+topButtonPosition());
 		hambergerButton.sizeDelta = new Vector2(topButtonSize(), topButtonSize());
-		hambergerButton.anchoredPosition = new Vector2(topButtonPosition(), topButtonPosition()*-1);
+		hambergerButton.anchoredPosition = new Vector2(50, 0);
 	}
 
 	public void SetAppNameInMain()
@@ -100,8 +101,10 @@ public class CanvasResolutionScript : MonoBehaviour {
 	#region Set Search UI
 	public void SetBackButtonInSearch()
 	{
+		Debug.Log("  +- "+topButtonPosition());
 		backButton.sizeDelta = new Vector2(topButtonSize(), topButtonSize());
-		searchButton.anchoredPosition = new Vector2((topButtonPosition()*-1), topButtonPosition()*-1);
+		searchButton.anchoredPosition = new Vector2(50, 0);
+		//searchButton.anchoredPosition = new Vector2((topButtonPosition()*-1), topButtonPosition()*-1);
 	}
 	public void SetClearButtonInSearch()
 	{
@@ -115,7 +118,7 @@ public class CanvasResolutionScript : MonoBehaviour {
 		searchInputField.anchoredPosition = new Vector2(searchInputField.sizeDelta.x/2 + actionBarHeight, 0);
 		foreach (Text tx in GetComponentsInChildren<Text>())
 		{
-			tx.fontSize = GetScaledFontSize(48);
+			tx.fontSize = GetScaledFontSize(40);
 		}
 	}
 	public void SetHelpTextInSearch()
@@ -123,7 +126,7 @@ public class CanvasResolutionScript : MonoBehaviour {
 		float helpTextPadding = 20f;
 		searchHelpText.sizeDelta = new Vector2(Screen.width - helpTextPadding, 50); //<< 50
 		searchHelpText.anchoredPosition = new Vector2(0, -1*(actionBarHeight + (helpTextPadding/2f) + (searchHelpText.sizeDelta.y/2f)));
-		searchHelpText.gameObject.GetComponent<Text>().fontSize = GetScaledFontSize(36);
+		searchHelpText.gameObject.GetComponent<Text>().fontSize = GetScaledFontSize(30);
 	}
 	public void SetScrollListInSearch()
 	{

@@ -9,11 +9,13 @@ public class StateDisplayController : MonoBehaviour
     /* change app bar, app text, toast and sound */
 
 	private GameObject actionBar;
+    private Image iconState;
     private ToastMessageScript toastMessageScript;
     private SoundManager soundManager;
 	private Image actionBarImg;
 	private Text appNameText;
     public SoundManager.SoundType[] soundqueue;
+    public Sprite IconIdleSprite, IconNavigateSprite;
     private int currentSoundIndex = 0;
 
     // Use this for initialization
@@ -36,6 +38,7 @@ public class StateDisplayController : MonoBehaviour
     private void InitStateDisplay()
     {
 		actionBar = gameObject.GetComponent<CanvasButtonScript>().actionBar;
+        iconState = actionBar.transform.Find("HambergerButton").gameObject.GetComponent<Image>();
         toastMessageScript = gameObject.GetComponent<ToastMessageScript>();
         soundManager = GameObject.Find("ARCamera").GetComponent<SoundManager>();
         actionBarImg = actionBar.GetComponent<Image>();
@@ -49,11 +52,16 @@ public class StateDisplayController : MonoBehaviour
         {
             case MainController.AppState.Idle:
                 actionBarImg.color = new Color32(60, 126, 255, 255);
+                iconState.sprite = IconIdleSprite;
                 break;
             case MainController.AppState.Navigate:
                 actionBarImg.color = new Color32(126, 60, 255, 255);
+                iconState.sprite = IconNavigateSprite;
                 break;
-            default: actionBarImg.color = new Color32(60, 126, 255, 255); break;
+            default: 
+                actionBarImg.color = new Color32(60, 126, 255, 255); 
+                iconState.sprite = IconIdleSprite;
+                break;
         }
     }
 

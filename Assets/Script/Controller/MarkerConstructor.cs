@@ -70,7 +70,7 @@ public class MarkerConstructor : MonoBehaviour
             oldMarker = choosenMarker;
         }
 
-        //will move to ARControlScript
+        //Detect on or off marker
         if (markerCount == 0) //target Lost
         {
             foreach (GameObject arobj in arObjectList)

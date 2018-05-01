@@ -19,7 +19,7 @@ public class MapControlScript : MonoBehaviour, IPointerClickHandler
     private bool IsNormalSize;
     private bool hasMovedFlag = false;
     private bool isUserInThisFloor = false;
-    float mapPadding = 30.0f;
+    float mapPadding = 0;
 
     private GameObject[] nodeForLineArr = new GameObject[3];
     private GameObject showingFloor;
@@ -143,7 +143,7 @@ public class MapControlScript : MonoBehaviour, IPointerClickHandler
     private void RestoreMap()
     {
         int mapsize = Mathf.FloorToInt(Screen.width - mapPadding);
-        ChangeMapSize(Screen.width - mapPadding, Screen.width - mapPadding);
+        ChangeMapSize(700, 700); //Screen.width - mapPadding, Screen.width - mapPadding
         mapImage.anchoredPosition = new Vector2(0, 0);
         IsNormalSize = true;
     }

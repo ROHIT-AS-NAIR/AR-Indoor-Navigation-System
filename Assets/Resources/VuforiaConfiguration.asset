@@ -44,12 +44,18 @@ MonoBehaviour:
       ContainsMagnet: 0
   databaseLoad:
     dataSetsToLoad:
-    - VuforiaMars_Images
-    - VuforiaMars_VuMark
+    - ITFloor6
+    - ITFloor5
+    - ITFloor3
+    - ITFloor2
+    - ITFloor1
     - TestMarkerDB
     dataSetsToActivate:
-    - VuforiaMars_Images
-    - VuforiaMars_VuMark
+    - ITFloor6
+    - ITFloor5
+    - ITFloor3
+    - ITFloor2
+    - ITFloor1
     - TestMarkerDB
   videoBackground:
     clippingMode: 0

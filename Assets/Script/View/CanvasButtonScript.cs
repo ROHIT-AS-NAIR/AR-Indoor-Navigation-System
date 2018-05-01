@@ -30,7 +30,7 @@ public class CanvasButtonScript : MonoBehaviour
     }
     private Page page = Page.Main;
 
-    private CanvasResolutionScript canvasResolutionScript;
+    //private CanvasResolutionScript canvasResolutionScript;
     private MapControlScript mapControl;
     private BuildingData building;
     private StateDisplayController stateDisplay;
@@ -76,7 +76,7 @@ public class CanvasButtonScript : MonoBehaviour
         showingFloor = building.floorList[0];
         searchShowList = new List<GameObject>();
 
-        canvasResolutionScript = gameObject.GetComponent<CanvasResolutionScript>();
+        //canvasResolutionScript = gameObject.GetComponent<CanvasResolutionScript>();
         toastMessageScript = gameObject.GetComponent<ToastMessageScript>();
         stateDisplay = gameObject.GetComponent<StateDisplayController>();
         stateDisplay.ShowToastMessage("ส่องกล้องไปยังจุดต่างๆ เช่น ป้ายบอกทาง เลขห้อง เพื่อเริ่มต้นระบุตำแหน่งของคุณ", false);
@@ -99,6 +99,7 @@ public class CanvasButtonScript : MonoBehaviour
         viewPort = searchList.gameObject.transform.Find("Viewport").gameObject;
         scrollbar = searchList.gameObject.transform.Find("Scrollbar Vertical").gameObject;
         searchContent = viewPort.gameObject.transform.Find("Content").gameObject;
+        searchContent.GetComponent<GridLayoutGroup>().cellSize = new Vector2(Screen.width - 50, 100);
         roomDataPanel = searchPanel.transform.Find("RoomDataPanel").gameObject;
         roomDataDialog = roomDataPanel.transform.Find("RoomDataDialog").gameObject;
         roomNameTitle = roomDataDialog.transform.Find("RoomNameTitle").gameObject;
@@ -149,13 +150,13 @@ public class CanvasButtonScript : MonoBehaviour
         searchInputField.SetActive(true);
         clearButton.SetActive(true);
 
-        canvasResolutionScript.SetBackButtonInSearch();
-        canvasResolutionScript.SetClearButtonInSearch();
-        canvasResolutionScript.SetSearchFieldInSearch();
+        // canvasResolutionScript.SetBackButtonInSearch();
+        // canvasResolutionScript.SetClearButtonInSearch();
+        // canvasResolutionScript.SetSearchFieldInSearch();
 
-        canvasResolutionScript.SetHelpTextInSearch();
-        canvasResolutionScript.SetScrollListInSearch();
-        canvasResolutionScript.SetContentInSearch();
+        // canvasResolutionScript.SetHelpTextInSearch();
+        // canvasResolutionScript.SetScrollListInSearch();
+        // canvasResolutionScript.SetContentInSearch();
         OnTyping();
     }
 
@@ -164,7 +165,7 @@ public class CanvasButtonScript : MonoBehaviour
         page = Page.Main;
         mapPanel.SetActive(false);
         searchPanel.SetActive(false);
-        hambergerButton.SetActive(false);
+        hambergerButton.SetActive(true);
         mapButton.SetActive(true);
         searchButton.SetActive(true);
         appName.SetActive(true);
@@ -174,10 +175,10 @@ public class CanvasButtonScript : MonoBehaviour
         searchInputField.SetActive(false);
         clearButton.SetActive(false);
 
-        //canvasResolutionScript.SetHambergerButtonInMain();
-        canvasResolutionScript.SetMapButtonInMain();
-        canvasResolutionScript.SetSearchButtonInMain();
-        canvasResolutionScript.SetAppNameInMain();
+        // canvasResolutionScript.SetHambergerButtonInMain();
+        // canvasResolutionScript.SetMapButtonInMain();
+        // canvasResolutionScript.SetSearchButtonInMain();
+        // canvasResolutionScript.SetAppNameInMain();
     }
 
     public void OnOpenMap()
@@ -195,11 +196,11 @@ public class CanvasButtonScript : MonoBehaviour
         searchInputField.SetActive(false);
         clearButton.SetActive(false);
 
-        canvasResolutionScript.SetAppNameInMap();
-        canvasResolutionScript.SetAppNameInMap();
+        // canvasResolutionScript.SetAppNameInMap();
+        // canvasResolutionScript.SetAppNameInMap();
 
-        canvasResolutionScript.SetMapImageInMap();
-        canvasResolutionScript.SetArrowButtonInMap();
+        // canvasResolutionScript.SetMapImageInMap();
+        // canvasResolutionScript.SetArrowButtonInMap();
         if (MainController.instance.beginPoint != null)
         {
             showingFloor = MainController.instance.beginPoint.GetComponent<NodeData>().GetParentObjectData().GetParentFloorObject();
@@ -212,7 +213,7 @@ public class CanvasButtonScript : MonoBehaviour
         page = Page.Main;
         mapPanel.SetActive(false);
         searchPanel.SetActive(false);
-        hambergerButton.SetActive(false);
+        hambergerButton.SetActive(true);
         mapButton.SetActive(true);
         searchButton.SetActive(true);
         appName.SetActive(true);
@@ -222,10 +223,10 @@ public class CanvasButtonScript : MonoBehaviour
         searchInputField.SetActive(false);
         clearButton.SetActive(false);
 
-        //canvasResolutionScript.SetHambergerButtonInMain();
-        canvasResolutionScript.SetMapButtonInMain();
-        canvasResolutionScript.SetSearchButtonInMain();
-        canvasResolutionScript.SetAppNameInMain();
+        // canvasResolutionScript.SetHambergerButtonInMain();
+        // canvasResolutionScript.SetMapButtonInMain();
+        // canvasResolutionScript.SetSearchButtonInMain();
+        // canvasResolutionScript.SetAppNameInMain();
     }
 
     public void OnOpenRoomDialoge(GameObject roomObj, bool isDestination)
@@ -339,6 +340,7 @@ public class CanvasButtonScript : MonoBehaviour
         //if system have begin point, need to color it, set to false
         bool beginColored = !(MainController.instance.beginPoint != null);
         bool destColored = !(MainController.instance.destinationPoint != null);
+        
         //destroy all list
         foreach (Transform ch in searchContent.transform)
         {
@@ -352,7 +354,7 @@ public class CanvasButtonScript : MonoBehaviour
             roomButton.transform.SetParent(searchContent.transform);
             Text roomButtonText = roomButton.transform.GetChild(0).gameObject.GetComponent<Text>();
             roomButtonText.text = nodedata.GetParentObjectData().roomName;
-            roomButtonText.fontSize = canvasResolutionScript.GetScaledFontSize(40);
+            //roomButtonText.fontSize = canvasResolutionScript.GetScaledFontSize(40);
             if (!beginColored)
             {
                 if (MainController.instance.beginPoint.GetComponent<NodeData>().GetParentObjectData().roomName
@@ -360,7 +362,7 @@ public class CanvasButtonScript : MonoBehaviour
                 {
                     roomButtonText.text = "ต้นทาง: " + nodedata.GetParentObjectData().roomName;
                     roomButtonText.fontStyle = FontStyle.Bold;
-                    roomButtonText.fontSize = canvasResolutionScript.GetScaledFontSize(40); // gray
+                    //roomButtonText.fontSize = canvasResolutionScript.GetScaledFontSize(40); // gray
                     beginColored = true;
                 }
             }
