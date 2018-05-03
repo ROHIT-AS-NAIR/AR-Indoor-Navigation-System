@@ -71,6 +71,7 @@ public class CanvasButtonScript : MonoBehaviour
 
     public void StartCanvas()
     {
+        Screen.fullScreen = false;
         building = GameObject.FindWithTag("Building").GetComponent<BuildingData>();
         Debug.Log(building.name);
         showingFloor = building.floorList[0];
@@ -99,7 +100,7 @@ public class CanvasButtonScript : MonoBehaviour
         viewPort = searchList.gameObject.transform.Find("Viewport").gameObject;
         scrollbar = searchList.gameObject.transform.Find("Scrollbar Vertical").gameObject;
         searchContent = viewPort.gameObject.transform.Find("Content").gameObject;
-        searchContent.GetComponent<GridLayoutGroup>().cellSize = new Vector2(Screen.width - 50, 100);
+        //searchContent.GetComponent<GridLayoutGroup>().cellSize = new Vector2(Screen.width - 50, 100);
         roomDataPanel = searchPanel.transform.Find("RoomDataPanel").gameObject;
         roomDataDialog = roomDataPanel.transform.Find("RoomDataDialog").gameObject;
         roomNameTitle = roomDataDialog.transform.Find("RoomNameTitle").gameObject;
@@ -351,18 +352,20 @@ public class CanvasButtonScript : MonoBehaviour
             GameObject roomButton = Instantiate(roomButtonPrefab);
             roomButton.GetComponent<RoomButtonScript>().room = nodeob;
             NodeData nodedata = nodeob.GetComponent<NodeData>();
-            roomButton.transform.SetParent(searchContent.transform);
-            Text roomButtonText = roomButton.transform.GetChild(0).gameObject.GetComponent<Text>();
-            roomButtonText.text = nodedata.GetParentObjectData().roomName;
-            //roomButtonText.fontSize = canvasResolutionScript.GetScaledFontSize(40);
+            roomButton.transform.SetParent(searchContent.transform, false);
+            Text RoomNameContent = roomButton.transform.GetChild(0).gameObject.GetComponent<Text>();
+            RoomNameContent.text = nodedata.GetParentObjectData().roomName;
+            Text RoomDescriptionContent = roomButton.transform.GetChild(1).gameObject.GetComponent<Text>();
+            RoomDescriptionContent.text = nodedata.GetParentObjectData().roomDescription;
             if (!beginColored)
             {
                 if (MainController.instance.beginPoint.GetComponent<NodeData>().GetParentObjectData().roomName
                     == nodedata.GetParentObjectData().roomName)
                 {
-                    roomButtonText.text = "ต้นทาง: " + nodedata.GetParentObjectData().roomName;
-                    roomButtonText.fontStyle = FontStyle.Bold;
-                    //roomButtonText.fontSize = canvasResolutionScript.GetScaledFontSize(40); // gray
+                    roomButton.GetComponent<Image>().color = new Color32(0, 0, 0, 255);
+                    RoomNameContent.color = Color.white;
+                    RoomDescriptionContent.color = Color.white;
+                    RoomNameContent.text = " ⦿ ต้นทาง: " + nodedata.GetParentObjectData().roomName;
                     beginColored = true;
                 }
             }
@@ -372,8 +375,11 @@ public class CanvasButtonScript : MonoBehaviour
                     == nodedata.GetParentObjectData().roomName)
                 {
                     roomButton.GetComponent<RoomButtonScript>().isDestination = true;
-                    roomButton.GetComponent<Image>().color = new Color32(126, 60, 255, 255); // purple
-                    roomButtonText.text = "ปลายทาง: " + nodedata.GetParentObjectData().roomName;
+                    roomButton.GetComponent<Image>().color = new Color32(0, 0, 0, 255);
+                    RoomNameContent.color = Color.white;
+                    RoomDescriptionContent.color = Color.white;
+                    //roomButton.GetComponent<Image>().color = new Color32(126, 60, 255, 255); // purple
+                    RoomNameContent.text = " ⦿ ปลายทาง: " + nodedata.GetParentObjectData().roomName;
                     destColored = true;
                 }
             }
