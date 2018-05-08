@@ -41,7 +41,8 @@ public class DijsktraAlgorithm : MonoBehaviour
 
         Debug.Log(" first node cost 0");
 
-        Debug.Log(" - - - - " + (unVisitedList.Count > 0));
+        //Debug.Log(" - - - - " + (unVisitedList.Count > 0));
+        Debug.Log(" - - - - " + currentNode.name + " : " + finishNode.name);
         while (currentNode != finishNode && (unVisitedList.Count >= 0)) //unVisitedList.Count.CompareTo(0)  ||  (unvisitedLeft > 0)   
         {
             //check adjacentNode
@@ -58,7 +59,8 @@ public class DijsktraAlgorithm : MonoBehaviour
                     unVisitedList.Remove(currentNode);
                     unVisitedList.Remove(adjacentObject);
                     adjacentNodeData.predecessor = currentNode;
-                    currentNode = adjacentObject;
+                    finishNode = adjacentObject;
+                    currentNode = adjacentObject; 
                     currentNodeData = currentNode.GetComponent<NodeData>();
                     isFounded = true;
                     Debug.Log(" - - Break - -");
@@ -89,8 +91,8 @@ public class DijsktraAlgorithm : MonoBehaviour
                 {
                     leastCostNode = unVisitedObj;
                 }
-                Debug.Log("Compare " + unVisitedNode.nodeID + "-  " + unVisitedNode.cost + "<" + leastCostNode.GetComponent<NodeData>().cost
-                    + "  Least cost are:" + leastCostNode.GetComponent<NodeData>().nodeID + " cost:" + leastCostNode.GetComponent<NodeData>().cost);
+                // Debug.Log("Compare " + unVisitedNode.nodeID + "-  " + unVisitedNode.cost + "<" + leastCostNode.GetComponent<NodeData>().cost
+                //     + "  Least cost are:" + leastCostNode.GetComponent<NodeData>().nodeID + " cost:" + leastCostNode.GetComponent<NodeData>().cost);
             }
             unVisitedList.Remove(currentNode);
             Debug.Log("change predecessor of leastcostnode|" + leastCostNode.GetComponent<NodeData>().nodeID +
@@ -104,14 +106,15 @@ public class DijsktraAlgorithm : MonoBehaviour
 
         /* set successor from reverse finishNode's preDecessor */
         currentNode = finishNode;
+        currentNodeData = currentNode.GetComponent<NodeData>();
         Debug.Log(" From : " + finishNode.GetComponent<NodeData>().nodeID);
         while (currentNode != startNode)
         {
             currentNode.GetComponent<NodeData>().predecessor.GetComponent<NodeData>().successor = currentNode;
             currentNode = currentNode.GetComponent<NodeData>().predecessor;
-            Debug.Log(currentNode.GetComponent<NodeData>().nodeID);
+            Debug.Log(" |--- : " + currentNode.GetComponent<NodeData>().nodeID);
         }
-        Debug.Log(" To : " + startNode.GetComponent<NodeData>().nodeID);
+        Debug.Log("   To : " + startNode.GetComponent<NodeData>().nodeID);
 
         return isFounded;
     }

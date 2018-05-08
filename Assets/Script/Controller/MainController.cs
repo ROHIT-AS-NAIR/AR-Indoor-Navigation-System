@@ -544,19 +544,27 @@ public class MainController : MonoBehaviour
 
     #region Public calculate method
     /* get connector node from nodeobject  currenly return first objectof roomobject
-    return node that have room are connector */
+    return node that have room are connector 
+    return null if no nodes in floor*/
     public GameObject GetConnectorNode(GameObject nodeObj)
     {
         //Transform[] roomlist = nodeObj.GetComponent<NodeData>().GetParentObjectData().GetParentObjectData().gameObject.transform;
-        foreach (GameObject room in nodeObj.GetComponent<NodeData>().GetParentObjectData().GetParentFloorObject().transform)
+        GameObject[] roomInFloorOfThisNode = nodeObj.GetComponent<NodeData>().GetFloor().GetComponent<FloorData>().GetRoomsList();
+
+        foreach (GameObject room in roomInFloorOfThisNode)
         {
-            if (room.GetComponent<RoomData>().isConnector)
+            if(room.GetComponent<RoomData>() != null)
             {
-                return room.transform.GetChild(0).gameObject;
+                if (room.GetComponent<RoomData>().isConnector)
+                {
+                    Debug.Log("found connector at room " +room.gameObject.name);
+                    return room.transform.GetChild(0).gameObject;
+                }
             }
         }
         // return first child of floor, room
-        return nodeObj.GetComponent<NodeData>().GetParentObjectData().GetParentObjectData().gameObject.transform.GetChild(0).GetChild(0).gameObject;
+        Debug.Log("can't found connector  use " +roomInFloorOfThisNode[0]);
+        return roomInFloorOfThisNode[0] != null ? roomInFloorOfThisNode[0]: null;
     }
     #endregion
 

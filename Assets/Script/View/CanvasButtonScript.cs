@@ -309,13 +309,13 @@ public class CanvasButtonScript : MonoBehaviour
                 NodeData markerData = nodet.GetComponent<NodeData>();
                 if (typingWord == "" && !IsDuplicateShowingRoom(searchShowList, markerData.GetParentObjectData().roomName))
                 {
-                    Debug.Log(typingWord + " In " + markerData.GetParentObjectData().roomName);
+                    //Debug.Log(typingWord + " In " + markerData.GetParentObjectData().roomName);
                     searchShowList.Add(nodet);
                 }
                 else if (markerData.GetParentObjectData().roomName.Contains(typingWord)
                     && !IsDuplicateShowingRoom(searchShowList, markerData.GetParentObjectData().roomName))
                 {
-                    Debug.Log(typingWord + " In " + markerData.GetParentObjectData().roomName);
+                    //Debug.Log(typingWord + " In " + markerData.GetParentObjectData().roomName);
                     searchShowList.Add(nodet);
                 }
             }

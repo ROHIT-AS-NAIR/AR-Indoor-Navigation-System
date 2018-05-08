@@ -43,6 +43,7 @@ public class StateDisplayController : MonoBehaviour
         soundManager = GameObject.Find("ARCamera").GetComponent<SoundManager>();
         actionBarImg = actionBar.GetComponent<Image>();
         appNameText = actionBar.gameObject.transform.Find("AppName").gameObject.GetComponent<Text>();
+        appNameText.text = "AR Indoor Navigation"; 
         soundqueue = new SoundManager.SoundType[3];
     }
 

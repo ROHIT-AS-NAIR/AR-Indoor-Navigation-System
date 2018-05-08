@@ -126,7 +126,6 @@ public class MarkerConstructor : MonoBehaviour
         {
             draftMarkerList = new List<DraftMarkerData>();
         }
-        Debug.Log("Add marker " + draftmarker.markerID);
         draftMarkerList.Add(draftmarker);
     }
 
@@ -177,13 +176,13 @@ public class MarkerConstructor : MonoBehaviour
     private void CreateArObject(GameObject markerObject)
     /* factory pattern to create/activate AR object and put data attrach to parent */
     {
-        Debug.Log("Create AR Object to " + markerObject.name);
+        //Debug.Log("Create AR Object to " + markerObject.name);
         foreach (GameObject arobj in arObjectList)
         {
             arobj.transform.SetParent(markerObject.transform);
             arobj.GetComponent<IARObject>().InitAR();
             arobj.transform.localPosition = Vector3.zero;
-            Debug.Log("Create AR Object to rotation " + new Vector3(0, 0, markerObject.GetComponent<MarkerData>().markerOrientation));
+            //Debug.Log("Create AR Object to rotation " + new Vector3(0, 0, markerObject.GetComponent<MarkerData>().markerOrientation));
             arobj.transform.localEulerAngles = new Vector3(0, 0, markerObject.GetComponent<MarkerData>().markerOrientation);
 
             arobj.transform.localScale = Vector3.one;

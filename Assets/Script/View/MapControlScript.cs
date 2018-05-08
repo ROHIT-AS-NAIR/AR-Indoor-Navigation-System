@@ -402,19 +402,23 @@ public class MapControlScript : MonoBehaviour, IPointerClickHandler
     {
         float nearestDistance = Single.PositiveInfinity;
         float distance = 0;
-        GameObject nearestConnectNode = floorObject.transform.GetChild(0).GetChild(0).gameObject;
-        foreach (Transform roomTransform in floorObject.transform)
+        GameObject[] roomlst = floorObject.GetComponent<FloorData>().GetRoomsList();
+        GameObject nearestConnectNode = roomlst[0].transform.GetChild(0).gameObject;
+        foreach (GameObject roomObj in roomlst)
         {
-            if (roomTransform.gameObject.GetComponent<RoomData>().isConnector)
+            if(roomObj.GetComponent<RoomData>() != null) 
             {
-                foreach (Transform nodeTransform in roomTransform)
+                if (roomObj.GetComponent<RoomData>().isConnector)
                 {
-                    NodeData nodedt = nodeTransform.gameObject.GetComponent<NodeData>();
-                    distance = Vector3.Distance(nodedt.position, beginPointData.position);
-                    if (distance < nearestDistance)
+                    foreach (Transform nodeTransform in roomObj.transform)
                     {
-                        nearestConnectNode = nodeTransform.gameObject;
-                        nearestDistance = distance;
+                        NodeData nodedt = nodeTransform.gameObject.GetComponent<NodeData>();
+                        distance = Vector3.Distance(nodedt.position, beginPointData.position);
+                        if (distance < nearestDistance)
+                        {
+                            nearestConnectNode = nodeTransform.gameObject;
+                            nearestDistance = distance;
+                        }
                     }
                 }
             }

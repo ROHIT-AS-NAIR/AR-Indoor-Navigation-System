@@ -200,8 +200,7 @@ public class JsonReader : MonoBehaviour
             ndt.orientation = GetSplitValue(node.xzOrientation.Split(' ')[0] + " " + node.yOrientation + " " + node.xzOrientation.Split(' ')[1]); //Warn xz lenght 1
             ndt.fkRoomID = node.fkRoomID;
             //find parent
-            Debug.Log("attract Node " + ndt.nodeID + " to " + ndt.fkRoomID + " :"
-                + FindObjectToAttract(emptyobj, StctType.Room, ndt.fkRoomID));
+            FindObjectToAttract(emptyobj, StctType.Room, ndt.fkRoomID);
             emptyobj.transform.localPosition = ndt.position;
         }
     }
