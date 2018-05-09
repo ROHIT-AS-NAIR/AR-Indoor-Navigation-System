@@ -5,6 +5,7 @@
             "roomName": "room1",
             "roomDescription": "room1 descript",
             "isConnector": false,
+            "showInRoom": true,
             "fkFloorID": "f00"
         },
         {
@@ -41,6 +42,7 @@
             "roomName": "Auditorium",
             "roomDescription": "ห้องประชุม Auditorium",
             "isConnector": false,
+            "showInRoom": true,
             "fkFloorID": "f01"
         },
         {
@@ -62,6 +64,7 @@
             "roomName": "ห้อง 111",
             "roomDescription": "ห้อง 111",
             "isConnector": false,
+            "showInRoom": true,
             "fkFloorID": "f01"
         },
         {
@@ -69,6 +72,7 @@
             "roomName": "Lift ชั้น 1",
             "roomDescription": "Lift ชั้น 1",
             "isConnector": true,
+            "showInRoom": true,
             "fkFloorID": "f01"
         },
         {

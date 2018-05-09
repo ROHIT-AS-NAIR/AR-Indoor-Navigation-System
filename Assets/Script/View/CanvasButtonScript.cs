@@ -9,7 +9,7 @@ public class CanvasButtonScript : MonoBehaviour
 
     public GameObject markerPrefab, roomButtonPrefab;
     public GameObject actionBar;
-    public GameObject searchPanel, mapPanel; //panel
+    public GameObject searchPanel, mapPanel, errorPanel; //panel
     private GameObject hambergerButton, mapButton, searchButton, backButton, clearButton; //button
     private GameObject searchInputField, appName; //InputFields + text
     private Text appNameText;
@@ -17,6 +17,7 @@ public class CanvasButtonScript : MonoBehaviour
     private GameObject searchHelpText, searchList, viewPort, scrollbar, searchContent, roomDataPanel, roomDataDialog;
     private GameObject roomNameTitle, roomMapImage, roomDesData, roomNavigateButton;
     private GameObject mapImage, rightButton, leftButton, navline, userDot;
+    private GameObject errorDialog, errorHeadText;
 
 
     private GameObject showingFloor;
@@ -37,11 +38,12 @@ public class CanvasButtonScript : MonoBehaviour
     private ToastMessageScript toastMessageScript;
 
     private bool canQuitApp = true;
+    private bool isErrorCantReadFile = false;
 
     // Use this for initialization
     void Start()
     {
-        StartCanvas();
+        //StartCanvas();
     }
 
     // Update is called once per frame
@@ -72,17 +74,10 @@ public class CanvasButtonScript : MonoBehaviour
     public void StartCanvas()
     {
         Screen.fullScreen = false;
-        building = GameObject.FindWithTag("Building").GetComponent<BuildingData>();
-        Debug.Log(building.name);
-        showingFloor = building.floorList[0];
-        searchShowList = new List<GameObject>();
 
-        //canvasResolutionScript = gameObject.GetComponent<CanvasResolutionScript>();
         toastMessageScript = gameObject.GetComponent<ToastMessageScript>();
         stateDisplay = gameObject.GetComponent<StateDisplayController>();
-        stateDisplay.ShowToastMessage("ส่องกล้องไปยังจุดต่างๆ เช่น ป้ายบอกทาง เลขห้อง เพื่อเริ่มต้นระบุตำแหน่งของคุณ", false);
-        stateDisplay.AddSound(SoundManager.SoundType.InitApp, 0);
-        stateDisplay.PlaySoundQueue();
+
 
         hambergerButton = actionBar.gameObject.transform.Find("HambergerButton").gameObject;
         mapButton = actionBar.gameObject.transform.Find("MapButton").gameObject;
@@ -100,7 +95,6 @@ public class CanvasButtonScript : MonoBehaviour
         viewPort = searchList.gameObject.transform.Find("Viewport").gameObject;
         scrollbar = searchList.gameObject.transform.Find("Scrollbar Vertical").gameObject;
         searchContent = viewPort.gameObject.transform.Find("Content").gameObject;
-        //searchContent.GetComponent<GridLayoutGroup>().cellSize = new Vector2(Screen.width - 50, 100);
         roomDataPanel = searchPanel.transform.Find("RoomDataPanel").gameObject;
         roomDataDialog = roomDataPanel.transform.Find("RoomDataDialog").gameObject;
         roomNameTitle = roomDataDialog.transform.Find("RoomNameTitle").gameObject;
@@ -114,9 +108,26 @@ public class CanvasButtonScript : MonoBehaviour
         leftButton = mapPanel.transform.Find("LeftButton").gameObject;
         mapControl = mapImage.transform.Find("Mask/MapImage").gameObject.GetComponent<MapControlScript>();
 
+        /* error */
+        errorDialog = errorPanel.transform.Find("ErrorDialog").gameObject;
+        errorHeadText = errorDialog.transform.Find("HeadText").gameObject;
+
         backButton.SetActive(false);
         searchInputField.SetActive(false);
         clearButton.SetActive(false);
+    }
+
+    /* start canvas in readable data mode */
+    public void StartNormalStateAppCanvas()
+    {
+        building = GameObject.FindWithTag("Building").GetComponent<BuildingData>();
+        Debug.Log(building.name);
+        showingFloor = building.floorList[0];
+        searchShowList = new List<GameObject>();
+        stateDisplay.ShowToastMessage("ส่องกล้องไปยังจุดต่างๆ เช่น ป้ายบอกทาง เลขห้อง เพื่อเริ่มต้นระบุตำแหน่งของคุณ", false);
+        stateDisplay.AddSound(SoundManager.SoundType.InitApp, 0);
+        stateDisplay.PlaySoundQueue();
+        isErrorCantReadFile = false;
     }
 
     public void OnBackButton()
@@ -151,13 +162,6 @@ public class CanvasButtonScript : MonoBehaviour
         searchInputField.SetActive(true);
         clearButton.SetActive(true);
 
-        // canvasResolutionScript.SetBackButtonInSearch();
-        // canvasResolutionScript.SetClearButtonInSearch();
-        // canvasResolutionScript.SetSearchFieldInSearch();
-
-        // canvasResolutionScript.SetHelpTextInSearch();
-        // canvasResolutionScript.SetScrollListInSearch();
-        // canvasResolutionScript.SetContentInSearch();
         OnTyping();
     }
 
@@ -175,11 +179,6 @@ public class CanvasButtonScript : MonoBehaviour
         backButton.SetActive(false);
         searchInputField.SetActive(false);
         clearButton.SetActive(false);
-
-        // canvasResolutionScript.SetHambergerButtonInMain();
-        // canvasResolutionScript.SetMapButtonInMain();
-        // canvasResolutionScript.SetSearchButtonInMain();
-        // canvasResolutionScript.SetAppNameInMain();
     }
 
     public void OnOpenMap()
@@ -197,12 +196,7 @@ public class CanvasButtonScript : MonoBehaviour
         searchInputField.SetActive(false);
         clearButton.SetActive(false);
 
-        // canvasResolutionScript.SetAppNameInMap();
-        // canvasResolutionScript.SetAppNameInMap();
-
-        // canvasResolutionScript.SetMapImageInMap();
-        // canvasResolutionScript.SetArrowButtonInMap();
-        if (MainController.instance.beginPoint != null)
+        if (MainController.instance.beginPoint != null && !isErrorCantReadFile)
         {
             showingFloor = MainController.instance.beginPoint.GetComponent<NodeData>().GetParentObjectData().GetParentFloorObject();
         }
@@ -223,11 +217,6 @@ public class CanvasButtonScript : MonoBehaviour
         backButton.SetActive(false);
         searchInputField.SetActive(false);
         clearButton.SetActive(false);
-
-        // canvasResolutionScript.SetHambergerButtonInMain();
-        // canvasResolutionScript.SetMapButtonInMain();
-        // canvasResolutionScript.SetSearchButtonInMain();
-        // canvasResolutionScript.SetAppNameInMain();
     }
 
     public void OnOpenRoomDialoge(GameObject roomObj, bool isDestination)
@@ -302,20 +291,22 @@ public class CanvasButtonScript : MonoBehaviour
     {
         string typingWord = searchInputField.GetComponent<InputField>().text;
         searchShowList.Clear();
+
         foreach (GameObject floor in building.floorList)
         {
             foreach (GameObject nodet in floor.GetComponent<FloorData>().GetNodesList())
             {
-                NodeData markerData = nodet.GetComponent<NodeData>();
-                if (typingWord == "" && !IsDuplicateShowingRoom(searchShowList, markerData.GetParentObjectData().roomName))
+                NodeData nodeData = nodet.GetComponent<NodeData>();
+                if (typingWord == "" 
+                    && !IsDuplicateShowingRoom(searchShowList, nodeData.GetParentObjectData().roomName)
+                    && nodeData.GetParentObjectData().showInRoom)
                 {
-                    //Debug.Log(typingWord + " In " + markerData.GetParentObjectData().roomName);
                     searchShowList.Add(nodet);
                 }
-                else if (markerData.GetParentObjectData().roomName.Contains(typingWord)
-                    && !IsDuplicateShowingRoom(searchShowList, markerData.GetParentObjectData().roomName))
+                else if (nodeData.GetParentObjectData().roomName.Contains(typingWord)
+                    && !IsDuplicateShowingRoom(searchShowList, nodeData.GetParentObjectData().roomName)
+                    && nodeData.GetParentObjectData().showInRoom)
                 {
-                    //Debug.Log(typingWord + " In " + markerData.GetParentObjectData().roomName);
                     searchShowList.Add(nodet);
                 }
             }
@@ -341,7 +332,7 @@ public class CanvasButtonScript : MonoBehaviour
         //if system have begin point, need to color it, set to false
         bool beginColored = !(MainController.instance.beginPoint != null);
         bool destColored = !(MainController.instance.destinationPoint != null);
-        
+
         //destroy all list
         foreach (Transform ch in searchContent.transform)
         {
@@ -391,25 +382,63 @@ public class CanvasButtonScript : MonoBehaviour
 
     public void OnShiftMap(bool isForward)
     {
-        //BuildingData building = showingFloor.GetComponent<FloorData>().GetBuilding().GetComponent<BuildingData>();
-
-        //get next floor from buildingData
-        // GameObject floorObject = isForward ?
-        //     building.GetNextFloor(showingFloor.GetComponent<FloorData>().floorName) :
-        //     building.GetPreviousFloor(showingFloor.GetComponent<FloorData>().floorName);
-        GameObject floorObject; // = building.floorList[(int)Random.Range(0,4)];
-        if(isForward)
+        GameObject floorObject;
+        if (isForward)
         {
             floorObject = building.GetNextFloor(showingFloor.GetComponent<FloorData>().floorName);
         }
-        else{
+        else
+        {
             floorObject = building.GetPreviousFloor(showingFloor.GetComponent<FloorData>().floorName);
         }
-        
+
         mapControl.UpdateMap(floorObject);
         showingFloor = floorObject;
     }
 
     #endregion
 
+    #region Error Message
+
+    public void ShowErrorCantReadFile(JsonReader.ReadState readState)
+    {
+        isErrorCantReadFile = true;
+        errorDialog.SetActive(true);
+        errorPanel.SetActive(true);
+        searchButton.GetComponent<Button>().enabled = false;
+        searchButton.transform.GetChild(0).gameObject.GetComponent<Image>().color = Color.gray;
+        mapButton.GetComponent<Button>().enabled = false;
+        mapButton.transform.GetChild(0).gameObject.GetComponent<Image>().color = Color.gray;
+        string errortext = "Error in Json File";
+        switch (readState)
+        {
+            case JsonReader.ReadState.BuildingError:
+                errortext = "Error in Building Json File";
+                break;
+            case JsonReader.ReadState.FloorError:
+                errortext = "Error in Floor Json File";
+                break;
+            case JsonReader.ReadState.RoomError:
+                errortext = "Error in Room Json File";
+                break;
+            case JsonReader.ReadState.NodeError:
+                errortext = "Error in Node Json File";
+                break;
+            case JsonReader.ReadState.MarkerError:
+                errortext = "Error in Marker Json File";
+                break;
+            case JsonReader.ReadState.ConnectError:
+                errortext = "Error in Connect Json File";
+                break;
+        }
+        errorHeadText.GetComponent<Text>().text = errortext;
+    }
+
+    public void CloseErrorPanel()
+    {
+        errorDialog.SetActive(false);
+        errorPanel.SetActive(false);
+    }
+
+    #endregion
 }

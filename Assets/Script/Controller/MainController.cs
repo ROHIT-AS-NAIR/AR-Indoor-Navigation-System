@@ -39,10 +39,23 @@ public class MainController : MonoBehaviour
             instance = this;
             dijsktra = new DijsktraAlgorithm();
             ar = new ARDisplayController();
-            jsonReader = new JsonReader();
-            jsonReader.ReadJsonData();
-            stateDisplay = GameObject.Find("Canvas").GetComponent<StateDisplayController>();
-            GameObject.FindWithTag("Building").GetComponent<BuildingData>().GetAllFloorToList();
+            canvas = GameObject.Find("Canvas").GetComponent<CanvasButtonScript>();
+            canvas.StartCanvas();
+            
+            jsonReader = gameObject.GetComponent<JsonReader>();//new JsonReader();
+            JsonReader.ReadState readState = jsonReader.ReadJsonData();
+            Debug.Log("State "+ readState);
+
+            if(readState == JsonReader.ReadState.ReadOK) 
+            {
+                GameObject.FindWithTag("Building").GetComponent<BuildingData>().GetAllFloorToList();
+                canvas.StartNormalStateAppCanvas();
+                stateDisplay = GameObject.Find("Canvas").GetComponent<StateDisplayController>();
+            }
+            else 
+            {
+                canvas.ShowErrorCantReadFile(readState);
+            }
         }
         else if (instance != this)
         {

@@ -11,8 +11,11 @@ public class JsonReader : MonoBehaviour
     public string[] fileToLoadName = {"BuildingJsonData", "FloorJsonData",
         "RoomJsonData", "NodeJsonData", "MarkerJsonData", "ConnectJsonData"};
     public string[] structTag = { "Building", "Floor", "Room", "Node", "Marker", "Connect" };
-    private string path;
+    public string errorMessage;
+
+
     private string jsonString;
+    private ReadState readState = ReadState.ReadOK;
 
     private enum StctType
     {
@@ -23,6 +26,17 @@ public class JsonReader : MonoBehaviour
         Node = 3,
         Marker = 4,
         Connect = 5
+    }
+
+    public enum ReadState 
+    {
+        ReadOK,
+        BuildingError,
+        FloorError,
+        RoomError,
+        NodeError,
+        ConnectError,
+        MarkerError
     }
 
     // Use this for initialization
@@ -36,12 +50,7 @@ public class JsonReader : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            LoadBuilding();
-            LoadFloor();
-            LoadRoom();
-            LoadNode();
-            LoadConnect();
-            LoadMarker();
+            
         }
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
@@ -54,7 +63,7 @@ public class JsonReader : MonoBehaviour
         }
     }
 
-    public void ReadJsonData()
+    public ReadState ReadJsonData()
     {
         LoadBuilding();
         LoadFloor();
@@ -62,6 +71,7 @@ public class JsonReader : MonoBehaviour
         LoadNode();
         LoadConnect();
         LoadMarker();
+        return readState;
     }
 
     public void InitReading(string filename)
@@ -79,7 +89,24 @@ public class JsonReader : MonoBehaviour
         string roomFileJsonName = fileToLoadName[(int)StctType.Building];
         InitReading(roomFileJsonName);
 
-        JBuilding[] buildings = JsonHelper.FromJson<JBuilding>(jsonString);
+        JBuilding[] buildings;
+        try
+        {
+            buildings = JsonHelper.FromJson<JBuilding>(jsonString);
+        }
+        catch (ArgumentException age)
+        {
+            Debug.Log("Building Error: " + age.Message);
+            readState = ReadState.BuildingError;
+            throw;
+        }
+        catch (System.Exception) 
+        {
+            Debug.Log("building Error other exception");
+            readState = ReadState.BuildingError;
+            throw;
+        }
+        
         Debug.Log("Loading Building total:" + buildings.Length);
 
         foreach (JBuilding building in buildings)
@@ -107,35 +134,49 @@ public class JsonReader : MonoBehaviour
         Quaternion planeRotation = Quaternion.Euler(new Vector3(0, 180, 0));
         Vector3 planeScale = new Vector3(100, 1, 100);
 
-        JFloor[] floors = JsonHelper.FromJson<JFloor>(jsonString);
-        Debug.Log("Loading Floor total:" + floors.Length);
-
-        foreach (JFloor floor in floors)
+        JFloor[] floors;
+        try
         {
-            GameObject emptyobj = new GameObject(structTag[(int)StctType.Floor] + floor.floorID);
-            emptyobj.tag = structTag[(int)StctType.Floor];
+            floors = JsonHelper.FromJson<JFloor>(jsonString);
+            Debug.Log("Loading Floor total:" + floors.Length);
 
-            // add floor data
-            emptyobj.AddComponent<FloorData>();
-            FloorData fdt = emptyobj.GetComponent<FloorData>();
-            fdt.floorID = floor.floorID;
-            fdt.floorName = floor.floorName;
-            fdt.floorIndex = Mathf.CeilToInt(floor.floorIndex);
-            fdt.fkBuildingID = floor.fkBuildingID;
+            foreach (JFloor floor in floors)
+            {
+                GameObject emptyobj = new GameObject(structTag[(int)StctType.Floor] + floor.floorID);
+                emptyobj.tag = structTag[(int)StctType.Floor];
 
-            //find building parent and set localpos
-            FindObjectToAttract(emptyobj, StctType.Building, fdt.fkBuildingID);
-            emptyobj.transform.localPosition = new Vector3(Mathf.CeilToInt(floor.floorIndex) * 1000, 0, 0);
+                // add floor data
+                emptyobj.AddComponent<FloorData>();
+                FloorData fdt = emptyobj.GetComponent<FloorData>();
+                fdt.floorID = floor.floorID;
+                fdt.floorName = floor.floorName;
+                fdt.floorIndex = Mathf.CeilToInt(floor.floorIndex);
+                fdt.fkBuildingID = floor.fkBuildingID;
 
-            // create plane child
-            GameObject plane = GameObject.CreatePrimitive(PrimitiveType.Plane);
-            Transform planeTransform = plane.transform;
-            planeTransform.SetParent(emptyobj.transform);
-            planeTransform.localPosition = planePosition;
-            planeTransform.localRotation = planeRotation;
-            planeTransform.localScale = planeScale;
-            ChangeMat(plane, floor.floorImageName);
+                //find building parent and set localpos
+                FindObjectToAttract(emptyobj, StctType.Building, fdt.fkBuildingID);
+                emptyobj.transform.localPosition = new Vector3(Mathf.CeilToInt(floor.floorIndex) * 1000, 0, 0);
 
+                // create plane child
+                GameObject plane = GameObject.CreatePrimitive(PrimitiveType.Plane);
+                Transform planeTransform = plane.transform;
+                planeTransform.SetParent(emptyobj.transform);
+                planeTransform.localPosition = planePosition;
+                planeTransform.localRotation = planeRotation;
+                planeTransform.localScale = planeScale;
+                ChangeMat(plane, floor.floorImageName);
+
+            }
+        }
+        catch (ArgumentException age)
+        {
+            Debug.Log("Floor Error: " + age.Message);
+            readState = ReadState.FloorError;
+        }
+        catch (System.Exception) 
+        {
+            Debug.Log("Floor Error other exception");
+            readState = ReadState.FloorError;
         }
     }
 
@@ -155,25 +196,43 @@ public class JsonReader : MonoBehaviour
         string roomFileJsonName = fileToLoadName[(int)StctType.Room];
         InitReading(roomFileJsonName);
 
-        JRoom[] rooms = JsonHelper.FromJson<JRoom>(jsonString);
-        Debug.Log("Loading Room total:" + rooms.Length);
-
-        foreach (JRoom room in rooms)
+        JRoom[] rooms;
+        try
         {
-            GameObject emptyobj = new GameObject(structTag[(int)StctType.Room] + room.roomID);
-            emptyobj.tag = structTag[(int)StctType.Room];
-            //define position
-            emptyobj.AddComponent<RoomData>();
-            RoomData rdt = emptyobj.GetComponent<RoomData>();
-            rdt.roomID = room.roomID;
-            rdt.roomName = room.roomName;
-            rdt.roomDescription = room.roomDescription;
-            rdt.isConnector = room.isConnector;
-            rdt.fkFloorID = room.fkFloorID;
-            //find parent
-            FindObjectToAttract(emptyobj, StctType.Floor, rdt.fkFloorID);
-            emptyobj.transform.localPosition = Vector3.zero;
+            rooms = JsonHelper.FromJson<JRoom>(jsonString);
+            Debug.Log("Loading Room total:" + rooms.Length);
+
+            foreach (JRoom room in rooms)
+            {
+                GameObject emptyobj = new GameObject(structTag[(int)StctType.Room] + room.roomID);
+                emptyobj.tag = structTag[(int)StctType.Room];
+                //define position
+                emptyobj.AddComponent<RoomData>();
+                RoomData rdt = emptyobj.GetComponent<RoomData>();
+                rdt.roomID = room.roomID;
+                rdt.roomName = room.roomName;
+                rdt.roomDescription = room.roomDescription;
+                rdt.isConnector = room.isConnector;
+                rdt.showInRoom = room.showInRoom;
+                rdt.fkFloorID = room.fkFloorID;
+                //find parent
+                FindObjectToAttract(emptyobj, StctType.Floor, rdt.fkFloorID);
+                emptyobj.transform.localPosition = Vector3.zero;
+                
+            }
         }
+        catch (ArgumentException age)
+        {
+            Debug.Log("Room Error: " + age.Message);
+            readState = ReadState.RoomError;
+        }
+        catch (System.Exception) 
+        {
+            Debug.Log("room Error other exception");
+            readState = ReadState.RoomError;
+        }
+
+        
     }
 
     #endregion
@@ -184,24 +243,39 @@ public class JsonReader : MonoBehaviour
         string nodeFileJsonName = fileToLoadName[(int)StctType.Node];
         InitReading(nodeFileJsonName);
 
-        JNode[] nodes = JsonHelper.FromJson<JNode>(jsonString);
-        Debug.Log("Loading Node total:" + nodes.Length);
-
-        foreach (JNode node in nodes)
+        JNode[] nodes;
+        try
         {
-            GameObject emptyobj = new GameObject(structTag[(int)StctType.Node] + node.nodeID);
-            emptyobj.tag = structTag[(int)StctType.Node];
-            //define position
-            emptyobj.AddComponent<NodeData>();
-            NodeData ndt = emptyobj.GetComponent<NodeData>();
-            ndt.nodeID = node.nodeID;
-            ndt.position = GetSplitValue(node.position);
-            ndt.referencePosition = GetSplitValue(node.referencePosition);
-            ndt.orientation = GetSplitValue(node.xzOrientation.Split(' ')[0] + " " + node.yOrientation + " " + node.xzOrientation.Split(' ')[1]); //Warn xz lenght 1
-            ndt.fkRoomID = node.fkRoomID;
-            //find parent
-            FindObjectToAttract(emptyobj, StctType.Room, ndt.fkRoomID);
-            emptyobj.transform.localPosition = ndt.position;
+            nodes = JsonHelper.FromJson<JNode>(jsonString);
+
+            Debug.Log("Loading Node total:" + nodes.Length);
+
+            foreach (JNode node in nodes)
+            {
+                GameObject emptyobj = new GameObject(structTag[(int)StctType.Node] + node.nodeID);
+                emptyobj.tag = structTag[(int)StctType.Node];
+                //define position
+                emptyobj.AddComponent<NodeData>();
+                NodeData ndt = emptyobj.GetComponent<NodeData>();
+                ndt.nodeID = node.nodeID;
+                ndt.position = GetSplitValue(node.position);
+                ndt.referencePosition = GetSplitValue(node.referencePosition);
+                ndt.orientation = GetSplitValue(node.xzOrientation.Split(' ')[0] + " " + node.yOrientation + " " + node.xzOrientation.Split(' ')[1]); //Warn xz lenght 1
+                ndt.fkRoomID = node.fkRoomID;
+                //find parent
+                FindObjectToAttract(emptyobj, StctType.Room, ndt.fkRoomID);
+                emptyobj.transform.localPosition = ndt.position;
+            }
+        }
+        catch (ArgumentException age)
+        {
+            Debug.Log("Node Error: " + age.Message);
+            readState = ReadState.NodeError;
+        }
+        catch (System.Exception) 
+        {
+            Debug.Log("node Error other exception");
+            readState = ReadState.NodeError;
         }
     }
 
@@ -255,7 +329,24 @@ public class JsonReader : MonoBehaviour
         string connectFileJsonName = fileToLoadName[(int)StctType.Connect];
         InitReading(connectFileJsonName);
 
-        JConnect[] cons = JsonHelper.FromJson<JConnect>(jsonString);
+        JConnect[] cons;
+        try
+        {
+            cons = JsonHelper.FromJson<JConnect>(jsonString);
+        }
+        catch (ArgumentException age)
+        {
+            Debug.Log("Connect Error: " + age.Message);
+            readState = ReadState.ConnectError;
+            throw;
+        }
+        catch (System.Exception) 
+        {
+            Debug.Log("connect Error other exception");
+            readState = ReadState.ConnectError;
+            throw;
+        }
+
         Debug.Log("Loading Connect total:" + cons.Length);
 
         GameObject[] nodeObjs = GameObject.FindGameObjectsWithTag(structTag[(int)StctType.Node]);
@@ -306,19 +397,34 @@ public class JsonReader : MonoBehaviour
         string markerFileJsonName = fileToLoadName[(int)StctType.Marker];
         InitReading(markerFileJsonName);
 
-        JMarker[] markers = JsonHelper.FromJson<JMarker>(jsonString);
-        Debug.Log("Loading Marker total:" + markers.Length);
-
-        MarkerConstructor markerConstructor = GameObject.Find("ARCamera").GetComponent<MarkerConstructor>();
-        foreach (JMarker marker in markers)
+        JMarker[] markers;
+        try
         {
-            markerConstructor.AddDraftMarker(new DraftMarkerData(
-                marker.markerID,
-                marker.markerImageName,
-                Mathf.CeilToInt(marker.priority),  //may not
-                marker.markerOrientation,
-                marker.fkNodeID
-            ));
+            markers = JsonHelper.FromJson<JMarker>(jsonString);
+
+            Debug.Log("Loading Marker total:" + markers.Length);
+
+            MarkerConstructor markerConstructor = GameObject.Find("ARCamera").GetComponent<MarkerConstructor>();
+            foreach (JMarker marker in markers)
+            {
+                markerConstructor.AddDraftMarker(new DraftMarkerData(
+                    marker.markerID,
+                    marker.markerImageName,
+                    Mathf.CeilToInt(marker.priority),  //may not
+                    marker.markerOrientation,
+                    marker.fkNodeID
+                ));
+            }
+        }
+        catch (ArgumentException age)
+        {
+            Debug.Log("Marker Error: " + age.Message);
+            readState = ReadState.MarkerError;
+        }
+        catch (System.Exception) 
+        {
+            Debug.Log("marker Error other exception");
+            readState = ReadState.MarkerError;
         }
     }
     #endregion
@@ -397,6 +503,7 @@ public class JRoom
     public string roomName;
     public string roomDescription;
     public bool isConnector;
+    public bool showInRoom;
     public string fkFloorID;
 }
 
