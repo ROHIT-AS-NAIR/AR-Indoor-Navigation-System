@@ -213,12 +213,12 @@ public class JsonReader : MonoBehaviour
                 rdt.roomName = room.roomName;
                 rdt.roomDescription = room.roomDescription;
                 rdt.isConnector = room.isConnector;
-                rdt.showInRoom = room.showInRoom;
+                rdt.showInSearch = room.showInSearch;
                 rdt.fkFloorID = room.fkFloorID;
                 //find parent
                 FindObjectToAttract(emptyobj, StctType.Floor, rdt.fkFloorID);
                 emptyobj.transform.localPosition = Vector3.zero;
-                
+                Debug.Log(rdt.showInSearch);
             }
         }
         catch (ArgumentException age)
@@ -503,7 +503,7 @@ public class JRoom
     public string roomName;
     public string roomDescription;
     public bool isConnector;
-    public bool showInRoom;
+    public bool showInSearch;
     public string fkFloorID;
 }
 

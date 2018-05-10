@@ -99,8 +99,8 @@ public class CanvasButtonScript : MonoBehaviour
         roomDataDialog = roomDataPanel.transform.Find("RoomDataDialog").gameObject;
         roomNameTitle = roomDataDialog.transform.Find("RoomNameTitle").gameObject;
         roomMapImage = roomDataDialog.transform.Find("RoomMapImage").gameObject;
-        roomDesData = roomDataDialog.transform.Find("RoomData").gameObject;
-        roomNavigateButton = roomDataDialog.transform.Find("NavigateButton").gameObject;
+        roomDesData = roomDataDialog.transform.Find("DescriptionScrollView").GetChild(0).GetChild(0).Find("RoomData").gameObject;
+        roomNavigateButton = roomDataDialog.transform.Find("ButtonViewport").GetChild(0).Find("NavButtonText").gameObject;
 
         /* map */
         mapImage = mapPanel.transform.Find("MapScrollViewArea").gameObject;
@@ -230,7 +230,8 @@ public class CanvasButtonScript : MonoBehaviour
         roomDesData.GetComponent<Text>().text = nddt.GetParentObjectData().roomDescription;
         if (!isDestination)
         {
-            roomNavigateButton.transform.GetChild(0).gameObject.GetComponent<Text>().text = "Navigate.";
+            roomNavigateButton.GetComponent<Text>().text = "Navigate.";
+            roomNavigateButton.GetComponent<Text>().color = new Color32(64, 0, 192, 255);
             roomNavigateButton.GetComponent<Button>().onClick.RemoveAllListeners();
             roomNavigateButton.GetComponent<Button>().onClick.AddListener(delegate { SelectToNavigate(roomObj); });
             if (MainController.instance.beginPoint != null)
@@ -238,7 +239,8 @@ public class CanvasButtonScript : MonoBehaviour
                 if (nddt.GetParentObjectData().roomName ==
                     MainController.instance.beginPoint.GetComponent<NodeData>().GetParentObjectData().roomName)
                 {
-                    roomNavigateButton.transform.GetChild(0).gameObject.GetComponent<Text>().text = "Here is Current Room";
+                    roomNavigateButton.GetComponent<Text>().text = "Here is Current Room";
+                    roomNavigateButton.GetComponent<Text>().color = new Color32(150, 130, 180, 255);
                     roomNavigateButton.GetComponent<Button>().onClick.RemoveAllListeners();
                     roomNavigateButton.GetComponent<Button>().onClick.AddListener(delegate
                     {
@@ -249,7 +251,8 @@ public class CanvasButtonScript : MonoBehaviour
         }
         else
         {
-            roomNavigateButton.transform.GetChild(0).gameObject.GetComponent<Text>().text = "Cancle Navigate";
+            roomNavigateButton.GetComponent<Text>().text = "Cancle Navigate";
+            roomNavigateButton.GetComponent<Text>().color = new Color32(64, 0, 192, 255);
             roomNavigateButton.GetComponent<Button>().onClick.RemoveAllListeners();
             roomNavigateButton.GetComponent<Button>().onClick.AddListener(ClearPoint);
         }
@@ -291,6 +294,12 @@ public class CanvasButtonScript : MonoBehaviour
     {
         string typingWord = searchInputField.GetComponent<InputField>().text;
         searchShowList.Clear();
+        
+        string fkrid = "";
+        if(MainController.instance.beginPoint != null)
+        {
+            fkrid = MainController.instance.beginPoint.GetComponent<NodeData>().fkRoomID;
+        }
 
         foreach (GameObject floor in building.floorList)
         {
@@ -299,13 +308,13 @@ public class CanvasButtonScript : MonoBehaviour
                 NodeData nodeData = nodet.GetComponent<NodeData>();
                 if (typingWord == "" 
                     && !IsDuplicateShowingRoom(searchShowList, nodeData.GetParentObjectData().roomName)
-                    && nodeData.GetParentObjectData().showInRoom)
+                    && (nodeData.GetParentObjectData().showInSearch || nodeData.fkRoomID == fkrid))
                 {
                     searchShowList.Add(nodet);
                 }
                 else if (nodeData.GetParentObjectData().roomName.Contains(typingWord)
                     && !IsDuplicateShowingRoom(searchShowList, nodeData.GetParentObjectData().roomName)
-                    && nodeData.GetParentObjectData().showInRoom)
+                    && (nodeData.GetParentObjectData().showInSearch || nodeData.fkRoomID == fkrid))
                 {
                     searchShowList.Add(nodet);
                 }

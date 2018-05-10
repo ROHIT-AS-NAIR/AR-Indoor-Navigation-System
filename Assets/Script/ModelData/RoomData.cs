@@ -9,7 +9,7 @@ public class RoomData : MonoBehaviour
     public string roomName;
     public string roomDescription;
     public bool isConnector = false;
-    public bool showInRoom = true;
+    public bool showInSearch = true;
     public string fkFloorID = "0";
 
     // Use this for initialization
