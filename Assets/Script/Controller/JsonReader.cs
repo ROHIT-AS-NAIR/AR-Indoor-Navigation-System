@@ -218,7 +218,6 @@ public class JsonReader : MonoBehaviour
                 //find parent
                 FindObjectToAttract(emptyobj, StctType.Floor, rdt.fkFloorID);
                 emptyobj.transform.localPosition = Vector3.zero;
-                Debug.Log(rdt.showInSearch);
             }
         }
         catch (ArgumentException age)
