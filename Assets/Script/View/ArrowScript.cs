@@ -75,6 +75,7 @@ public class ArrowScript : MonoBehaviour, IARObject
 
     public float PointToCoordinate(Vector3 destination) /* Get Destination of object to point, return degree and rotate arrow */
     {
+        PointToZero();
         targetData = transform.parent.gameObject.GetComponent<MarkerData>().GetParentObjectData().GetComponent<NodeData>();
         float planeDistance = Vector2.Distance(targetData.position, destination);
         float deltaX = targetData.position.x - destination.x;
