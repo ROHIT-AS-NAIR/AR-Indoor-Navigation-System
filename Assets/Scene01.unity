@@ -235,7 +235,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -1209,6 +1209,7 @@ MonoBehaviour:
   searchPanel: {fileID: 1052187225}
   mapPanel: {fileID: 480738945}
   errorPanel: {fileID: 1253609452}
+  dbtext: {fileID: 0}
 --- !u!114 &250712168
 MonoBehaviour:
   m_ObjectHideFlags: 0

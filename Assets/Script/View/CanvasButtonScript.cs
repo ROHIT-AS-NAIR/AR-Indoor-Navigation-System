@@ -131,7 +131,7 @@ public class CanvasButtonScript : MonoBehaviour
             stateDisplay.AddSound(SoundManager.SoundType.InitApp, 0);
             stateDisplay.PlaySoundQueue();
             isErrorCantReadFile = false;
-            stateDisplay.ShowToastMessage("ส่องกล้องไปยังจุดต่างๆ เช่น ป้ายบอกทาง เลขห้อง เพื่อเริ่มต้นระบุตำแหน่งของคุณ");
+            stateDisplay.ShowToastMessage("ส่องกล้องไปยังจุดต่างๆ เช่น ป้ายบอกทาง เลขห้อง เพื่อเริ่มต้นระบุตำแหน่งของคุณ", 5);
         }
         catch (System.Exception e)
         {
@@ -269,7 +269,7 @@ roomNavigateButton.GetComponent<Text>().text = "Navigate.";
                     roomNavigateButton.GetComponent<Button>().onClick.RemoveAllListeners();
                     roomNavigateButton.GetComponent<Button>().onClick.AddListener(delegate
                     {
-                        stateDisplay.ShowToastMessage("จุดล่าสุดของคุณคือจุดที่คุณเลือกอยู่ กรุณาเลือกปลายทางที่อื่น");
+                        stateDisplay.ShowToastMessage("จุดล่าสุดของคุณคือจุดที่คุณเลือกอยู่ กรุณาเลือกปลายทางที่อื่น", 1);
                     });
                 }
             }

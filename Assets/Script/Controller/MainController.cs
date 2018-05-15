@@ -43,18 +43,18 @@ public class MainController : MonoBehaviour
             ar = new ARDisplayController();
             canvas = GameObject.Find("Canvas").GetComponent<CanvasButtonScript>();
             canvas.StartCanvas();
-            
+
             jsonReader = gameObject.GetComponent<JsonReader>();//new JsonReader();
             JsonReader.ReadState readState = jsonReader.ReadJsonData();
-            Debug.Log("State "+ readState);
+            Debug.Log("State " + readState);
 
-            if(readState == JsonReader.ReadState.ReadOK) 
+            if (readState == JsonReader.ReadState.ReadOK)
             {
                 GameObject.FindWithTag("Building").GetComponent<BuildingData>().GetAllFloorToList();
                 canvas.StartNormalStateAppCanvas();
                 stateDisplay = GameObject.Find("Canvas").GetComponent<StateDisplayController>();
             }
-            else 
+            else
             {
                 canvas.ShowErrorCantReadFile(readState);
             }
@@ -76,15 +76,17 @@ public class MainController : MonoBehaviour
             //SetDisplay();
             oldAppState = appState;
         }
-        
+
         if (Input.GetKeyDown(KeyCode.Space))
-        {Debug.Log("---------- Tracking -----------");
-            StateManager sm = TrackerManager.Instance.GetStateManager ();
-            IEnumerable<TrackableBehaviour> activeTrackables = sm.GetActiveTrackableBehaviours ();
-            foreach (TrackableBehaviour tb in activeTrackables) {
+        {
+            Debug.Log("---------- Tracking -----------");
+            StateManager sm = TrackerManager.Instance.GetStateManager();
+            IEnumerable<TrackableBehaviour> activeTrackables = sm.GetActiveTrackableBehaviours();
+            foreach (TrackableBehaviour tb in activeTrackables)
+            {
                 Debug.Log("Trackable: " + tb.TrackableName);
             }
-            
+
         }
     }
 
@@ -170,21 +172,11 @@ public class MainController : MonoBehaviour
             }
         }
         //another case    else if (this.destinationPoint != null && this.reachedPoint != null)
-
-            try
-        {
-
-SetDisplay();
+        SetDisplay();
         stateDisplay.ChangeActionText(appstring);
         stateDisplay.PlaySoundQueue();
-        stateDisplay.ShowToastMessage(toastmsg);
+        stateDisplay.ShowToastMessage(toastmsg, 1);
 
-        }
-        catch (System.Exception e)
-        {
-            canvas.dbtext.text = Random.Range(10,99) + ": ProcessBeginPoint Error " + e.Message + "\n" + e.StackTrace;
-        }
-        
     }
 
     public void SetDestinationPoint(GameObject destinationPoint)
@@ -242,20 +234,10 @@ SetDisplay();
                 Navigate();
             }
         }
-        try
-        {
-
-SetDisplay();
+        SetDisplay();
         stateDisplay.ChangeActionText(appstring);
         stateDisplay.PlaySoundQueue();
-        stateDisplay.ShowToastMessage(toastmsg);
-
-        }
-        catch (System.Exception e)
-        {
-            canvas.dbtext.text = Random.Range(10,99) + ": ProcessDestinationPoint Error " + e.Message + "\n" + e.StackTrace;
-        }
-        
+        stateDisplay.ShowToastMessage(toastmsg, 1);
     }
     public void ClearDestinationPoint()
     {
@@ -584,7 +566,7 @@ SetDisplay();
                 stateDisplay.AddSound(stateDisplay.GetSoundDirection(arrowZrotation), 1);
             }
         }
-        
+
     }
     #endregion
 
@@ -599,18 +581,18 @@ SetDisplay();
 
         foreach (GameObject room in roomInFloorOfThisNode)
         {
-            if(room.GetComponent<RoomData>() != null)
+            if (room.GetComponent<RoomData>() != null)
             {
                 if (room.GetComponent<RoomData>().isConnector)
                 {
-                    Debug.Log("found connector at room " +room.gameObject.name);
+                    Debug.Log("found connector at room " + room.gameObject.name);
                     return room.transform.GetChild(0).gameObject;
                 }
             }
         }
         // return first child of floor, room
-        Debug.Log("can't found connector  use " +roomInFloorOfThisNode[0]);
-        return roomInFloorOfThisNode[0] != null ? roomInFloorOfThisNode[0]: null;
+        Debug.Log("can't found connector  use " + roomInFloorOfThisNode[0]);
+        return roomInFloorOfThisNode[0] != null ? roomInFloorOfThisNode[0] : null;
     }
     #endregion
 

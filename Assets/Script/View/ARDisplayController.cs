@@ -47,12 +47,14 @@ public class ARDisplayController : MonoBehaviour {
 		ArrowScript arrowsc = arrowObj.GetComponent<ArrowScript>();
 		if(navigatable || objectNodeToAugment.GetComponent<NodeData>().successor != null)
 		{
+			arrowsc.PointToZero();
 			arrowsc.PointToCoordinate(objectNodeToAugment.GetComponent<NodeData>().successor.GetComponent<NodeData>().position);
 			Debug.Log("Point to " + objectNodeToAugment.GetComponent<NodeData>().successor.name);
 		}
 		else
 		{
 			Debug.Log("Can't navigatable");
+			arrowsc.PointToZero();
 			arrowsc.PointToCoordinate(objectNodeToAugment.GetComponent<NodeData>().position);
 		}
 		arrowObj.SetActive(true);
@@ -65,6 +67,7 @@ public class ARDisplayController : MonoBehaviour {
 	{
 		GameObject arrowObj = GetARObjectOfType(markerObject, ARObject.Type.Arrow);
 		ArrowScript arrowsc = arrowObj.GetComponent<ArrowScript>();
+		arrowsc.PointToZero();
 		arrowsc.PointToCoordinate(destinationNode.GetComponent<NodeData>().position);
 		arrowObj.SetActive(true);
 		SendLastObject(arrowsc.Type);

@@ -8,3 +8,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scene01.unity
     guid: 1f43cf8dcb0a7b240bda74ff21868946
+  - enabled: 0
+    path: Assets/UnityAndroidExtras/Demo/Scenes/Demo_build_run.unity
+    guid: 301fd05a8fc6b40fe84ad310235a3ce7

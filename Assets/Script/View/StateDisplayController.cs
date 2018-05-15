@@ -66,15 +66,10 @@ public class StateDisplayController : MonoBehaviour
         }
     }
 
-	public void ShowToastMessage(string toastmsg)
+	public void ShowToastMessage(string toastmsg, int lenght)
 	{
-		toastMessageScript.showToastOnUiThread(toastmsg);
+		UnityAndroidExtras.instance.makeToast(toastmsg, lenght);
 	}
-
-	// public void ShowToastMessage(string toastmsg, bool isshort)
-	// {
-	// 	toastMessageScript.showToastOnUiThread(toastmsg);
-	// }
 
     public void ChangeActionText(string actext)
     {
