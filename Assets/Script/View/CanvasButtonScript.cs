@@ -13,6 +13,7 @@ public class CanvasButtonScript : MonoBehaviour
     private GameObject hambergerButton, mapButton, searchButton, backButton, clearButton; //button
     private GameObject searchInputField, appName; //InputFields + text
     private Text appNameText;
+    public Text dbtext;
 
     private GameObject searchHelpText, searchList, viewPort, scrollbar, searchContent, roomDataPanel, roomDataDialog;
     private GameObject roomNameTitle, roomMapImage, roomDesData, roomNavigateButton;
@@ -84,6 +85,7 @@ public class CanvasButtonScript : MonoBehaviour
         searchButton = actionBar.gameObject.transform.Find("SearchButton").gameObject;
         appName = actionBar.gameObject.transform.Find("AppName").gameObject;
         appNameText = appName.GetComponent<Text>();
+        dbtext = gameObject.transform.Find("DebugText").GetComponent<Text>();
 
         backButton = actionBar.gameObject.transform.Find("BackButton").gameObject;
         searchInputField = actionBar.gameObject.transform.Find("SearchInputField").gameObject;
@@ -120,15 +122,34 @@ public class CanvasButtonScript : MonoBehaviour
     /* start canvas in readable data mode */
     public void StartNormalStateAppCanvas()
     {
-        building = GameObject.FindWithTag("Building").GetComponent<BuildingData>();
-        Debug.Log(building.name);
-        showingFloor = building.floorList[0];
-        searchShowList = new List<GameObject>();
-        stateDisplay.ShowToastMessage("ส่องกล้องไปยังจุดต่างๆ เช่น ป้ายบอกทาง เลขห้อง เพื่อเริ่มต้นระบุตำแหน่งของคุณ", false);
-        stateDisplay.AddSound(SoundManager.SoundType.InitApp, 0);
-        stateDisplay.PlaySoundQueue();
-        isErrorCantReadFile = false;
+        try
+        {
+            building = GameObject.FindWithTag("Building").GetComponent<BuildingData>();
+            Debug.Log(building.name);
+            showingFloor = building.floorList[0];
+            searchShowList = new List<GameObject>();
+            stateDisplay.AddSound(SoundManager.SoundType.InitApp, 0);
+            stateDisplay.PlaySoundQueue();
+            isErrorCantReadFile = false;
+            stateDisplay.ShowToastMessage("ส่องกล้องไปยังจุดต่างๆ เช่น ป้ายบอกทาง เลขห้อง เพื่อเริ่มต้นระบุตำแหน่งของคุณ");
+        }
+        catch (System.Exception e)
+        {
+            dbtext.text = Random.Range(10, 99) + ": startnormalstate Error " + e.Message + "\n" + e.StackTrace;
+        }
+
     }
+
+        // try
+        // {
+
+
+
+        // }
+        // catch (System.Exception e)
+        // {
+        //     dbtext.text = Random.Range(10,99) + ": startnormalstateError " + e.Message + "\n" + e.StackTrace;
+        //}
 
     public void OnBackButton()
     {
@@ -142,6 +163,7 @@ public class CanvasButtonScript : MonoBehaviour
 
     public void DummyOnclickFunction()
     {
+        dbtext.text = Random.Range(10, 99) + ": Dummy";
         Debug.Log("Dummy");
     }
 
@@ -230,7 +252,10 @@ public class CanvasButtonScript : MonoBehaviour
         roomDesData.GetComponent<Text>().text = nddt.GetParentObjectData().roomDescription;
         if (!isDestination)
         {
-            roomNavigateButton.GetComponent<Text>().text = "Navigate.";
+            try
+            {
+
+roomNavigateButton.GetComponent<Text>().text = "Navigate.";
             roomNavigateButton.GetComponent<Text>().color = new Color32(64, 0, 192, 255);
             roomNavigateButton.GetComponent<Button>().onClick.RemoveAllListeners();
             roomNavigateButton.GetComponent<Button>().onClick.AddListener(delegate { SelectToNavigate(roomObj); });
@@ -248,6 +273,13 @@ public class CanvasButtonScript : MonoBehaviour
                     });
                 }
             }
+
+            }
+            catch (System.Exception e)
+            {
+                dbtext.text = Random.Range(10, 99) + ": OnOpenRoomDialoge Error " + e.Message+ "\n" + e.StackTrace;
+            }
+            
         }
         else
         {
@@ -294,9 +326,9 @@ public class CanvasButtonScript : MonoBehaviour
     {
         string typingWord = searchInputField.GetComponent<InputField>().text;
         searchShowList.Clear();
-        
+
         string fkrid = "";
-        if(MainController.instance.beginPoint != null)
+        if (MainController.instance.beginPoint != null)
         {
             fkrid = MainController.instance.beginPoint.GetComponent<NodeData>().fkRoomID;
         }
@@ -306,7 +338,7 @@ public class CanvasButtonScript : MonoBehaviour
             foreach (GameObject nodet in floor.GetComponent<FloorData>().GetNodesList())
             {
                 NodeData nodeData = nodet.GetComponent<NodeData>();
-                if (typingWord == "" 
+                if (typingWord == ""
                     && !IsDuplicateShowingRoom(searchShowList, nodeData.GetParentObjectData().roomName)
                     && (nodeData.GetParentObjectData().showInSearch || nodeData.fkRoomID == fkrid))
                 {

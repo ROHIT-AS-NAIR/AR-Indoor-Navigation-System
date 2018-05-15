@@ -170,10 +170,21 @@ public class MainController : MonoBehaviour
             }
         }
         //another case    else if (this.destinationPoint != null && this.reachedPoint != null)
-        SetDisplay();
-        stateDisplay.ShowToastMessage(toastmsg);
+
+            try
+        {
+
+SetDisplay();
         stateDisplay.ChangeActionText(appstring);
         stateDisplay.PlaySoundQueue();
+        stateDisplay.ShowToastMessage(toastmsg);
+
+        }
+        catch (System.Exception e)
+        {
+            canvas.dbtext.text = Random.Range(10,99) + ": ProcessBeginPoint Error " + e.Message + "\n" + e.StackTrace;
+        }
+        
     }
 
     public void SetDestinationPoint(GameObject destinationPoint)
@@ -231,10 +242,20 @@ public class MainController : MonoBehaviour
                 Navigate();
             }
         }
-        SetDisplay();
-        stateDisplay.ShowToastMessage(toastmsg);
+        try
+        {
+
+SetDisplay();
         stateDisplay.ChangeActionText(appstring);
         stateDisplay.PlaySoundQueue();
+        stateDisplay.ShowToastMessage(toastmsg);
+
+        }
+        catch (System.Exception e)
+        {
+            canvas.dbtext.text = Random.Range(10,99) + ": ProcessDestinationPoint Error " + e.Message + "\n" + e.StackTrace;
+        }
+        
     }
     public void ClearDestinationPoint()
     {

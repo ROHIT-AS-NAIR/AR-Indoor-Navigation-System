@@ -16,52 +16,45 @@
 		},
 		{
 			"markerID": "M02",
-			"markerImageName": "",
+			"markerImageName": "TestMarker03",
 			"priority": 5,
 			"markerOrientation": 0,
 			"fkNodeID": "N0002"
 		},
 		{
 			"markerID": "M03",
-			"markerImageName": "TestMarker03",
+			"markerImageName": "TestMarker04",
 			"priority": 5,
 			"markerOrientation": 0,
 			"fkNodeID": "N0003"
 		},
 		{
 			"markerID": "M04",
-			"markerImageName": "TestMarker04",
+			"markerImageName": "TestMarker06",
 			"priority": 5,
 			"markerOrientation": 0,
 			"fkNodeID": "N0004"
 		},
 		{
 			"markerID": "M05",
-			"markerImageName": "TestMarker05",
+			"markerImageName": "TestMarker07",
 			"priority": 5,
 			"markerOrientation": 0,
 			"fkNodeID": "N0005"
 		},
 		{
 			"markerID": "M06",
-			"markerImageName": "TestMarker07",
+			"markerImageName": "TestMarker05",
 			"priority": 5,
 			"markerOrientation": 0,
 			"fkNodeID": "N0006"
 		},
 		{
 			"markerID": "M07",
-			"markerImageName": "TestMarker06",
-			"priority": 5,
-			"markerOrientation": 0,
-			"fkNodeID": "N0007"
-		},
-		{
-			"markerID": "M08",
 			"markerImageName": "TestMarker08",
 			"priority": 5,
 			"markerOrientation": 0,
-			"fkNodeID": "N0008"
+			"fkNodeID": "N0007"
 		}
 	]
 }

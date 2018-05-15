@@ -68,13 +68,13 @@ public class StateDisplayController : MonoBehaviour
 
 	public void ShowToastMessage(string toastmsg)
 	{
-		toastMessageScript.showToastOnUiThread(toastmsg, true);
+		toastMessageScript.showToastOnUiThread(toastmsg);
 	}
 
-	public void ShowToastMessage(string toastmsg, bool isshort)
-	{
-		toastMessageScript.showToastOnUiThread(toastmsg, isshort);
-	}
+	// public void ShowToastMessage(string toastmsg, bool isshort)
+	// {
+	// 	toastMessageScript.showToastOnUiThread(toastmsg);
+	// }
 
     public void ChangeActionText(string actext)
     {

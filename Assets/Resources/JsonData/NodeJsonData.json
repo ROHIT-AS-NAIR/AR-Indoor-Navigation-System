@@ -2,65 +2,65 @@
 	"Items": [
 		{
 			"nodeID": "N0000",
-			"position": "494 0 724",
-			"referencePosition": "494 0 724",
+			"position": "466 0 736",
+			"referencePosition": "466 0 696",
 			"yOrientation": 0,
 			"xzOrientation": "0 0",
 			"fkRoomID": "R000"
 		},
 		{
 			"nodeID": "N0001",
-			"position": "676 0 726",
-			"referencePosition": "676 0 726",
+			"position": "672 0 730",
+			"referencePosition": "672 0 690",
 			"yOrientation": 0,
 			"xzOrientation": "0 0",
 			"fkRoomID": "R000"
 		},
 		{
+			"nodeID": "N0002",
+			"position": "694 0 412",
+			"referencePosition": "680.107 0 426.387",
+			"yOrientation": 136,
+			"xzOrientation": "0 0",
+			"fkRoomID": "R001"
+		},
+		{
 			"nodeID": "N0003",
-			"position": "682 0 408",
-			"referencePosition": "682 0 408",
-			"yOrientation": 127,
+			"position": "634 0 346",
+			"referencePosition": "614.076 0 344.257",
+			"yOrientation": 85,
 			"xzOrientation": "0 0",
 			"fkRoomID": "R001"
 		},
 		{
 			"nodeID": "N0004",
-			"position": "622 0 342",
-			"referencePosition": "622 0 342",
-			"yOrientation": 85,
-			"xzOrientation": "0 0",
-			"fkRoomID": "R001"
-		},
-		{
-			"nodeID": "N0005",
-			"position": "926 0 638",
-			"referencePosition": "926 0 638",
-			"yOrientation": 85,
+			"position": "930 0 650",
+			"referencePosition": "910 0 650",
+			"yOrientation": 90,
 			"xzOrientation": "0 0",
 			"fkRoomID": "R002"
 		},
 		{
-			"nodeID": "N0006",
-			"position": "840 0 300",
-			"referencePosition": "840 0 300",
-			"yOrientation": 289,
+			"nodeID": "N0005",
+			"position": "834 0 302",
+			"referencePosition": "867.162 0 279.632",
+			"yOrientation": 304,
 			"xzOrientation": "0 0",
 			"fkRoomID": "R001"
 		},
 		{
-			"nodeID": "N0007",
-			"position": "782 0 124",
-			"referencePosition": "782 0 124",
-			"yOrientation": 130,
+			"nodeID": "N0006",
+			"position": "794 0 134",
+			"referencePosition": "773.16 0 155.58",
+			"yOrientation": 136,
 			"xzOrientation": "0 0",
 			"fkRoomID": "R003"
 		},
 		{
-			"nodeID": "N0008",
-			"position": "540 0 434",
-			"referencePosition": "540 0 434",
-			"yOrientation": 45,
+			"nodeID": "N0007",
+			"position": "540 0 438",
+			"referencePosition": "517.706 0 417.926",
+			"yOrientation": 48,
 			"xzOrientation": "0 0",
 			"fkRoomID": "R004"
 		}

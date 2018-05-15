@@ -44,6 +44,7 @@ MonoBehaviour:
       ContainsMagnet: 0
   databaseLoad:
     dataSetsToLoad:
+    - SQ1floor6
     - ITFloor6
     - ITFloor5
     - ITFloor3
@@ -51,6 +52,7 @@ MonoBehaviour:
     - ITFloor1
     - TestMarkerDB
     dataSetsToActivate:
+    - SQ1floor6
     - ITFloor6
     - ITFloor5
     - ITFloor3
