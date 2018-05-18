@@ -2,9 +2,9 @@
 	"Items": [
 		{
 			"floorID": "F00",
-			"floorName": "floor for test",
+			"floorName": "Floor F00",
 			"floorIndex": 0,
-			"floorImageName": "Testmap",
+			"floorImageName": "floor",
 			"fkBuildingID": "B0"
 		}
 	]

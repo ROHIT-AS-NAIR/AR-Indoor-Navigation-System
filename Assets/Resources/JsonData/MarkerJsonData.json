@@ -2,59 +2,528 @@
 	"Items": [
 		{
 			"markerID": "M00",
-			"markerImageName": "TestMarker01",
+			"markerImageName": "001-3",
 			"priority": 5,
 			"markerOrientation": 0,
 			"fkNodeID": "N0000"
 		},
 		{
 			"markerID": "M01",
-			"markerImageName": "TestMarker02",
+			"markerImageName": "001-4",
+			"priority": 5,
+			"markerOrientation": 0,
+			"fkNodeID": "N0000"
+		},
+		{
+			"markerID": "M02",
+			"markerImageName": "001",
 			"priority": 5,
 			"markerOrientation": 0,
 			"fkNodeID": "N0001"
 		},
 		{
-			"markerID": "M02",
-			"markerImageName": "TestMarker03",
+			"markerID": "M03",
+			"markerImageName": "001-2",
+			"priority": 5,
+			"markerOrientation": 0,
+			"fkNodeID": "N0001"
+		},
+		{
+			"markerID": "M04",
+			"markerImageName": "003",
 			"priority": 5,
 			"markerOrientation": 0,
 			"fkNodeID": "N0002"
 		},
 		{
-			"markerID": "M03",
-			"markerImageName": "TestMarker04",
+			"markerID": "M05",
+			"markerImageName": "005",
 			"priority": 5,
 			"markerOrientation": 0,
 			"fkNodeID": "N0003"
 		},
 		{
-			"markerID": "M04",
-			"markerImageName": "TestMarker06",
+			"markerID": "M06",
+			"markerImageName": "006",
 			"priority": 5,
 			"markerOrientation": 0,
 			"fkNodeID": "N0004"
 		},
 		{
-			"markerID": "M05",
-			"markerImageName": "TestMarker07",
+			"markerID": "M07",
+			"markerImageName": "006-2",
+			"priority": 5,
+			"markerOrientation": 0,
+			"fkNodeID": "N0004"
+		},
+		{
+			"markerID": "M08",
+			"markerImageName": "007",
 			"priority": 5,
 			"markerOrientation": 0,
 			"fkNodeID": "N0005"
 		},
 		{
-			"markerID": "M06",
-			"markerImageName": "TestMarker05",
+			"markerID": "M09",
+			"markerImageName": "007-2",
+			"priority": 5,
+			"markerOrientation": 0,
+			"fkNodeID": "N0005"
+		},
+		{
+			"markerID": "M10",
+			"markerImageName": "008",
 			"priority": 5,
 			"markerOrientation": 0,
 			"fkNodeID": "N0006"
 		},
 		{
-			"markerID": "M07",
-			"markerImageName": "TestMarker08",
+			"markerID": "M11",
+			"markerImageName": "008-2",
+			"priority": 5,
+			"markerOrientation": 0,
+			"fkNodeID": "N0006"
+		},
+		{
+			"markerID": "M12",
+			"markerImageName": "009-2",
 			"priority": 5,
 			"markerOrientation": 0,
 			"fkNodeID": "N0007"
+		},
+		{
+			"markerID": "M13",
+			"markerImageName": "009-3",
+			"priority": 5,
+			"markerOrientation": 0,
+			"fkNodeID": "N0007"
+		},
+		{
+			"markerID": "M14",
+			"markerImageName": "009",
+			"priority": 5,
+			"markerOrientation": 0,
+			"fkNodeID": "N0008"
+		},
+		{
+			"markerID": "M15",
+			"markerImageName": "010-4",
+			"priority": 5,
+			"markerOrientation": 0,
+			"fkNodeID": "N0009"
+		},
+		{
+			"markerID": "M16",
+			"markerImageName": "010-2",
+			"priority": 5,
+			"markerOrientation": 0,
+			"fkNodeID": "N0009"
+		},
+		{
+			"markerID": "M17",
+			"markerImageName": "010-3",
+			"priority": 5,
+			"markerOrientation": 0,
+			"fkNodeID": "N00010"
+		},
+		{
+			"markerID": "M18",
+			"markerImageName": "010",
+			"priority": 5,
+			"markerOrientation": 0,
+			"fkNodeID": "N00011"
+		},
+		{
+			"markerID": "M19",
+			"markerImageName": "010-2",
+			"priority": 5,
+			"markerOrientation": 0,
+			"fkNodeID": "N00011"
+		},
+		{
+			"markerID": "M20",
+			"markerImageName": "031",
+			"priority": 5,
+			"markerOrientation": 0,
+			"fkNodeID": "N00012"
+		},
+		{
+			"markerID": "M21",
+			"markerImageName": "031-2",
+			"priority": 5,
+			"markerOrientation": 0,
+			"fkNodeID": "N00012"
+		},
+		{
+			"markerID": "M22",
+			"markerImageName": "031-3",
+			"priority": 5,
+			"markerOrientation": 0,
+			"fkNodeID": "N00012"
+		},
+		{
+			"markerID": "M23",
+			"markerImageName": "032-4",
+			"priority": 5,
+			"markerOrientation": 0,
+			"fkNodeID": "N00013"
+		},
+		{
+			"markerID": "M24",
+			"markerImageName": "032",
+			"priority": 5,
+			"markerOrientation": 0,
+			"fkNodeID": "N00014"
+		},
+		{
+			"markerID": "M25",
+			"markerImageName": "032-3",
+			"priority": 5,
+			"markerOrientation": 0,
+			"fkNodeID": "N00014"
+		},
+		{
+			"markerID": "M26",
+			"markerImageName": "033",
+			"priority": 5,
+			"markerOrientation": 0,
+			"fkNodeID": "N00015"
+		},
+		{
+			"markerID": "M27",
+			"markerImageName": "033-2",
+			"priority": 5,
+			"markerOrientation": 0,
+			"fkNodeID": "N00016"
+		},
+		{
+			"markerID": "M28",
+			"markerImageName": "035-2",
+			"priority": 5,
+			"markerOrientation": 0,
+			"fkNodeID": "N00017"
+		},
+		{
+			"markerID": "M29",
+			"markerImageName": "035-3",
+			"priority": 5,
+			"markerOrientation": 0,
+			"fkNodeID": "N00017"
+		},
+		{
+			"markerID": "M30",
+			"markerImageName": "",
+			"priority": 5,
+			"markerOrientation": 0,
+			"fkNodeID": "N00018"
+		},
+		{
+			"markerID": "M31",
+			"markerImageName": "038",
+			"priority": 5,
+			"markerOrientation": 0,
+			"fkNodeID": "N00019"
+		},
+		{
+			"markerID": "M32",
+			"markerImageName": "038-2",
+			"priority": 5,
+			"markerOrientation": 0,
+			"fkNodeID": "N00020"
+		},
+		{
+			"markerID": "M33",
+			"markerImageName": "040",
+			"priority": 5,
+			"markerOrientation": 0,
+			"fkNodeID": "N00021"
+		},
+		{
+			"markerID": "M34",
+			"markerImageName": "041-2",
+			"priority": 5,
+			"markerOrientation": 0,
+			"fkNodeID": "N00022"
+		},
+		{
+			"markerID": "M35",
+			"markerImageName": "041",
+			"priority": 5,
+			"markerOrientation": 0,
+			"fkNodeID": "N00023"
+		},
+		{
+			"markerID": "M37",
+			"markerImageName": "021",
+			"priority": 5,
+			"markerOrientation": 0,
+			"fkNodeID": "N00024"
+		},
+		{
+			"markerID": "M38",
+			"markerImageName": "042-2",
+			"priority": 5,
+			"markerOrientation": 0,
+			"fkNodeID": "N00025"
+		},
+		{
+			"markerID": "M39",
+			"markerImageName": "042-3",
+			"priority": 5,
+			"markerOrientation": 0,
+			"fkNodeID": "N00025"
+		},
+		{
+			"markerID": "M40",
+			"markerImageName": "042-4",
+			"priority": 5,
+			"markerOrientation": 0,
+			"fkNodeID": "N00025"
+		},
+		{
+			"markerID": "M41",
+			"markerImageName": "042",
+			"priority": 5,
+			"markerOrientation": 0,
+			"fkNodeID": "N00026"
+		},
+		{
+			"markerID": "M42",
+			"markerImageName": "022-4",
+			"priority": 5,
+			"markerOrientation": 0,
+			"fkNodeID": "N00027"
+		},
+		{
+			"markerID": "M43",
+			"markerImageName": "022",
+			"priority": 5,
+			"markerOrientation": 0,
+			"fkNodeID": "N00028"
+		},
+		{
+			"markerID": "M44",
+			"markerImageName": "022-2",
+			"priority": 5,
+			"markerOrientation": 0,
+			"fkNodeID": "N00028"
+		},
+		{
+			"markerID": "M45",
+			"markerImageName": "022-3",
+			"priority": 5,
+			"markerOrientation": 0,
+			"fkNodeID": "N00028"
+		},
+		{
+			"markerID": "M46",
+			"markerImageName": "022-5",
+			"priority": 5,
+			"markerOrientation": 0,
+			"fkNodeID": "N00029"
+		},
+		{
+			"markerID": "M47",
+			"markerImageName": "022-6",
+			"priority": 5,
+			"markerOrientation": 0,
+			"fkNodeID": "N00030"
+		},
+		{
+			"markerID": "M48",
+			"markerImageName": "020-2",
+			"priority": 5,
+			"markerOrientation": 0,
+			"fkNodeID": "N00031"
+		},
+		{
+			"markerID": "M49",
+			"markerImageName": "020",
+			"priority": 5,
+			"markerOrientation": 0,
+			"fkNodeID": "N00032"
+		},
+		{
+			"markerID": "M50",
+			"markerImageName": "019",
+			"priority": 5,
+			"markerOrientation": 0,
+			"fkNodeID": "N00033"
+		},
+		{
+			"markerID": "M51",
+			"markerImageName": "019-2",
+			"priority": 5,
+			"markerOrientation": 0,
+			"fkNodeID": "N00034"
+		},
+		{
+			"markerID": "M52",
+			"markerImageName": "018-2",
+			"priority": 5,
+			"markerOrientation": 0,
+			"fkNodeID": "N00035"
+		},
+		{
+			"markerID": "M53",
+			"markerImageName": "018",
+			"priority": 5,
+			"markerOrientation": 0,
+			"fkNodeID": "N00036"
+		},
+		{
+			"markerID": "M54",
+			"markerImageName": "017-2",
+			"priority": 5,
+			"markerOrientation": 0,
+			"fkNodeID": "N00037"
+		},
+		{
+			"markerID": "M55",
+			"markerImageName": "017",
+			"priority": 5,
+			"markerOrientation": 0,
+			"fkNodeID": "N00038"
+		},
+		{
+			"markerID": "M56",
+			"markerImageName": "015-2",
+			"priority": 5,
+			"markerOrientation": 0,
+			"fkNodeID": "N00039"
+		},
+		{
+			"markerID": "M57",
+			"markerImageName": "015",
+			"priority": 5,
+			"markerOrientation": 0,
+			"fkNodeID": "N00040"
+		},
+		{
+			"markerID": "M58",
+			"markerImageName": "013-2",
+			"priority": 5,
+			"markerOrientation": 0,
+			"fkNodeID": "N00041"
+		},
+		{
+			"markerID": "M59",
+			"markerImageName": "013",
+			"priority": 5,
+			"markerOrientation": 0,
+			"fkNodeID": "N00042"
+		},
+		{
+			"markerID": "M60",
+			"markerImageName": "030",
+			"priority": 5,
+			"markerOrientation": 0,
+			"fkNodeID": "N00043"
+		},
+		{
+			"markerID": "M61",
+			"markerImageName": "030-2",
+			"priority": 5,
+			"markerOrientation": 0,
+			"fkNodeID": "N00044"
+		},
+		{
+			"markerID": "M62",
+			"markerImageName": "030-3",
+			"priority": 5,
+			"markerOrientation": 0,
+			"fkNodeID": "N00045"
+		},
+		{
+			"markerID": "M63",
+			"markerImageName": "028",
+			"priority": 5,
+			"markerOrientation": 0,
+			"fkNodeID": "N00046"
+		},
+		{
+			"markerID": "M64",
+			"markerImageName": "028-2",
+			"priority": 5,
+			"markerOrientation": 0,
+			"fkNodeID": "N00047"
+		},
+		{
+			"markerID": "M65",
+			"markerImageName": "027-2",
+			"priority": 5,
+			"markerOrientation": 0,
+			"fkNodeID": "N00048"
+		},
+		{
+			"markerID": "M66",
+			"markerImageName": "026",
+			"priority": 5,
+			"markerOrientation": 0,
+			"fkNodeID": "N00049"
+		},
+		{
+			"markerID": "M67",
+			"markerImageName": "026-2",
+			"priority": 5,
+			"markerOrientation": 0,
+			"fkNodeID": "N00049"
+		},
+		{
+			"markerID": "M68",
+			"markerImageName": "025",
+			"priority": 5,
+			"markerOrientation": 0,
+			"fkNodeID": "N00050"
+		},
+		{
+			"markerID": "M69",
+			"markerImageName": "025-2",
+			"priority": 5,
+			"markerOrientation": 0,
+			"fkNodeID": "N00050"
+		},
+		{
+			"markerID": "M70",
+			"markerImageName": "6",
+			"priority": 5,
+			"markerOrientation": 0,
+			"fkNodeID": "N00051"
+		},
+		{
+			"markerID": "M71",
+			"markerImageName": "LF6",
+			"priority": 5,
+			"markerOrientation": 0,
+			"fkNodeID": "N00052"
+		},
+		{
+			"markerID": "M72",
+			"markerImageName": "LF6-2",
+			"priority": 5,
+			"markerOrientation": 0,
+			"fkNodeID": "N00053"
+		},
+		{
+			"markerID": "M73",
+			"markerImageName": "6-2",
+			"priority": 5,
+			"markerOrientation": 0,
+			"fkNodeID": "N00054"
+		},
+		{
+			"markerID": "M74",
+			"markerImageName": "6-3",
+			"priority": 5,
+			"markerOrientation": 0,
+			"fkNodeID": "N00055"
+		},
+		{
+			"markerID": "M75",
+			"markerImageName": "6-4",
+			"priority": 5,
+			"markerOrientation": 0,
+			"fkNodeID": "N00055"
 		}
 	]
 }

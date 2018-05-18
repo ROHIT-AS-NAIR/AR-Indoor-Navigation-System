@@ -1,44 +1,260 @@
 {
-	"Items": [
-		{
-			"roomID": "R000",
-			"roomName": "forst room",
-			"roomDescription": "11\n11\n11",
-			"isConnector": false,
-			"showInSearch": true,
-			"fkFloorID": "F00"
-		},
-		{
-			"roomID": "R001",
-			"roomName": "Room02 ",
-			"roomDescription": "222222222222222222222222",
-			"isConnector": false,
-			"showInSearch": true,
-			"fkFloorID": "F00"
-		},
-		{
-			"roomID": "R002",
-			"roomName": "Room3",
-			"roomDescription": "",
-			"isConnector": false,
-			"showInSearch": true,
-			"fkFloorID": "F00"
-		},
-		{
-			"roomID": "R003",
-			"roomName": "Fouth",
-			"roomDescription": "4 4 4 4\n4 4\n4 4 4 4\n4 4",
-			"isConnector": false,
-			"showInSearch": true,
-			"fkFloorID": "F00"
-		},
-		{
-			"roomID": "R004",
-			"roomName": "Lift",
-			"roomDescription": "wall ",
-			"isConnector": true,
-			"showInSearch": true,
-			"fkFloorID": "F00"
-		}
-	]
+    "Items": [
+        {
+            "roomID": "R000",
+            "roomName": "001 SLC Saim Laser Clinic",
+            "roomDescription": "SLC Saim Laser Clinic\nเอสแอลซีสหคลินิก",
+            "isConnector": false,
+            "showInSearch": true,
+            "fkFloorID": "F00"
+        },
+        {
+            "roomID": "R001",
+            "roomName": "002-3 H.I.S Tours",
+            "roomDescription": "H.I.S Tours",
+            "isConnector": false,
+            "showInSearch": true,
+            "fkFloorID": "F00"
+        },
+        {
+            "roomID": "R002",
+            "roomName": "004-5 KIHS Aesthetic Wellness Solutions",
+            "roomDescription": "KIHS Aesthetic Wellness Solutions",
+            "isConnector": false,
+            "showInSearch": true,
+            "fkFloorID": "F00"
+        },
+        {
+            "roomID": "R003",
+            "roomName": "006 Origin",
+            "roomDescription": "Origin",
+            "isConnector": false,
+            "showInSearch": true,
+            "fkFloorID": "F00"
+        },
+        {
+            "roomID": "R004",
+            "roomName": "007 Chaba Nail & Spa",
+            "roomDescription": "Chaba Nail & Spa",
+            "isConnector": false,
+            "showInSearch": true,
+            "fkFloorID": "F00"
+        },
+        {
+            "roomID": "R005",
+            "roomName": "008 The 1derland",
+            "roomDescription": "The 1derland",
+            "isConnector": false,
+            "showInSearch": true,
+            "fkFloorID": "F00"
+        },
+        {
+            "roomID": "R006",
+            "roomName": "009 Center Point Massage",
+            "roomDescription": "Center Point Massage",
+            "isConnector": false,
+            "showInSearch": true,
+            "fkFloorID": "F00"
+        },
+        {
+            "roomID": "R007",
+            "roomName": "010-11 Pornkasem Clinic",
+            "roomDescription": "Pornkasem Clinic\nพรเกษมสยามคลินิกเวชกรรมเฉพาะทางผิวหนัง",
+            "isConnector": false,
+            "showInSearch": true,
+            "fkFloorID": "F00"
+        },
+        {
+            "roomID": "R008",
+            "roomName": "031 Siam Family Dental Clinic",
+            "roomDescription": "Siam Family Dental Clinic\nสยามแฟมิลี่ เดนตอล คลินิก 1\nคลินิกทัตกรรม",
+            "isConnector": false,
+            "showInSearch": true,
+            "fkFloorID": "F00"
+        },
+        {
+            "roomID": "R009",
+            "roomName": "032 Let’s Relex",
+            "roomDescription": "Let’s Relex",
+            "isConnector": false,
+            "showInSearch": true,
+            "fkFloorID": "F00"
+        },
+        {
+            "roomID": "R0010",
+            "roomName": "033-34 Government Savings Bank",
+            "roomDescription": "Government Savings Bank\nธนาคารออมสิน",
+            "isConnector": false,
+            "showInSearch": true,
+            "fkFloorID": "F00"
+        },
+        {
+            "roomID": "R0011",
+            "roomName": "035-36 CLUE49",
+            "roomDescription": "CLUE49",
+            "isConnector": false,
+            "showInSearch": true,
+            "fkFloorID": "F00"
+        },
+        {
+            "roomID": "R0012",
+            "roomName": "037-39 Government Housing Bank",
+            "roomDescription": "Government Housing Bank\nธนาคารอาคารสงเคราะห์",
+            "isConnector": false,
+            "showInSearch": true,
+            "fkFloorID": "F00"
+        },
+        {
+            "roomID": "R0013",
+            "roomName": "040 Wax Corner",
+            "roomDescription": "Wax Corner",
+            "isConnector": false,
+            "showInSearch": true,
+            "fkFloorID": "F00"
+        },
+        {
+            "roomID": "R0014",
+            "roomName": "041 Let’s Relex",
+            "roomDescription": "Let’s Relex",
+            "isConnector": false,
+            "showInSearch": true,
+            "fkFloorID": "F00"
+        },
+        {
+            "roomID": "R0015",
+            "roomName": "021 At medical Clinic",
+            "roomDescription": "At medical Clinic",
+            "isConnector": false,
+            "showInSearch": true,
+            "fkFloorID": "F00"
+        },
+        {
+            "roomID": "R0016",
+            "roomName": "042 Toon Zone",
+            "roomDescription": "Toon Zone",
+            "isConnector": false,
+            "showInSearch": true,
+            "fkFloorID": "F00"
+        },
+        {
+            "roomID": "R0017",
+            "roomName": "022-23 Daisy Diva Clinic",
+            "roomDescription": "Daisy Diva Clinic\nเดซี่ ดิว่า คลินิกเวชกรรม",
+            "isConnector": false,
+            "showInSearch": true,
+            "fkFloorID": "F00"
+        },
+        {
+            "roomID": "R0018",
+            "roomName": "020 Central Clinic",
+            "roomDescription": "Central Clinic\nเซ็นโทรลคลิินิกเวชกรรม",
+            "isConnector": false,
+            "showInSearch": true,
+            "fkFloorID": "F00"
+        },
+        {
+            "roomID": "R0019",
+            "roomName": "019 Blac Eyelash Salon",
+            "roomDescription": "Blac Eyelash Salon",
+            "isConnector": false,
+            "showInSearch": true,
+            "fkFloorID": "F00"
+        },
+        {
+            "roomID": "R0020",
+            "roomName": "018 Beaute’ Equilibree Medical & BEQ Clinic",
+            "roomDescription": "Beaute’ Equilibree Medical & BEQ Clinic\nบีอีคิว คลินิกเวชกรรม",
+            "isConnector": false,
+            "showInSearch": true,
+            "fkFloorID": "F00"
+        },
+        {
+            "roomID": "R0021",
+            "roomName": "016-17 The Dentist Clinic",
+            "roomDescription": "The Dentist Clinic\nเดอะเด็นทิส",
+            "isConnector": false,
+            "showInSearch": true,
+            "fkFloorID": "F00"
+        },
+        {
+            "roomID": "R0022",
+            "roomName": "014-15 The Sib Clinic",
+            "roomDescription": "The Sib Clinic\nเดอะ ซิบส์ คลินิกเวชกรรม",
+            "isConnector": false,
+            "showInSearch": true,
+            "fkFloorID": "F00"
+        },
+        {
+            "roomID": "R0023",
+            "roomName": "012-13 The Demis Clinic",
+            "roomDescription": "The Demis Clinic\nเดอะ ดี มิสคลินิกเวชกรรม",
+            "isConnector": false,
+            "showInSearch": true,
+            "fkFloorID": "F00"
+        },
+        {
+            "roomID": "R0024",
+            "roomName": "029-30 The Klinique",
+            "roomDescription": "The Klinique\nเดอะคลีนิกค์ คลินิกเวชกรรม",
+            "isConnector": false,
+            "showInSearch": true,
+            "fkFloorID": "F00"
+        },
+        {
+            "roomID": "R0025",
+            "roomName": "028 Bank for Agriculture & Agricultural Cooperat",
+            "roomDescription": "Bank for Agriculture & Agricultural Cooperation\nธนาคารเพื่อการเกษตรและสหกรณ์การเกษตร (ธ.ก.ส.)",
+            "isConnector": false,
+            "showInSearch": true,
+            "fkFloorID": "F00"
+        },
+        {
+            "roomID": "R0026",
+            "roomName": "027 Aster Spring",
+            "roomDescription": "Aster Spring",
+            "isConnector": false,
+            "showInSearch": true,
+            "fkFloorID": "F00"
+        },
+        {
+            "roomID": "R0027",
+            "roomName": "026 Yasashii Clinic",
+            "roomDescription": "Yasashii Clinic\nยาซาชี่สยามสแควร์คลินิก",
+            "isConnector": false,
+            "showInSearch": true,
+            "fkFloorID": "F00"
+        },
+        {
+            "roomID": "R0028",
+            "roomName": "024-25 Ideal Smile",
+            "roomDescription": "Ideal Smile",
+            "isConnector": false,
+            "showInSearch": true,
+            "fkFloorID": "F00"
+        },
+        {
+            "roomID": "R0029",
+            "roomName": "Map floor 6",
+            "roomDescription": "Map floor 6",
+            "isConnector": false,
+            "showInSearch": false,
+            "fkFloorID": "F00"
+        },
+        {
+            "roomID": "R0030",
+            "roomName": "Lift floor 6",
+            "roomDescription": "Lift floor 6",
+            "isConnector": true,
+            "showInSearch": true,
+            "fkFloorID": "F00"
+        },
+        {
+            "roomID": "R0031",
+            "roomName": "KBank Siam Pic Ganesha",
+            "roomDescription": "KBank Siam Pic Ganesha\nโรงละคร เคแบงก์ สยามพิฆเนศ",
+            "isConnector": true,
+            "showInSearch": true,
+            "fkFloorID": "F00"
+        }
+    ]
 }
