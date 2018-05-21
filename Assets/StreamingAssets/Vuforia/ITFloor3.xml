@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <QCARConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="qcar_config.xsd">
   <Tracking>
+    <ImageTarget name="Marker325" size="5.000000 3.850148" />
+    <ImageTarget name="Marker308-m-2" size="2.000000 1.275124" />
+    <ImageTarget name="Marker306-m-2" size="2.000000 1.549180" />
+    <ImageTarget name="Marker304-m-2" size="2.000000 1.182752" />
+    <ImageTarget name="Marker327" size="10.000000 3.084112" />
+    <ImageTarget name="Marker322-2" size="2.000000 0.879679" />
+    <ImageTarget name="Marker322" size="10.000000 13.279468" />
     <ImageTarget name="Marker331-b" size="10.000000 13.293769" />
     <ImageTarget name="Marker329-b" size="10.000000 13.785961" />
     <ImageTarget name="Marker308-f" size="8.000000 9.745325" />

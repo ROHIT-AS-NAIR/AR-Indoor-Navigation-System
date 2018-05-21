@@ -1,6 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <QCARConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="qcar_config.xsd">
   <Tracking>
+    <ImageTarget name="Marker221-3" size="2.000000 1.196078" />
+    <ImageTarget name="Marker221-2" size="2.000000 0.563288" />
+    <ImageTarget name="Marker221" size="5.000000 3.579302" />
+    <ImageTarget name="Marker220-3" size="2.000000 1.000000" />
+    <ImageTarget name="Marker220-2" size="2.000000 0.551042" />
+    <ImageTarget name="Marker220" size="5.000000 3.585185" />
+    <ImageTarget name="Marker219-f-3" size="2.000000 0.665072" />
+    <ImageTarget name="Marker219-f-2" size="3.000000 1.837032" />
+    <ImageTarget name="Marker219-f" size="5.000000 4.581218" />
+    <ImageTarget name="Marker219-b-3" size="2.000000 0.975877" />
+    <ImageTarget name="Marker219-b-2" size="3.000000 1.718555" />
+    <ImageTarget name="Marker219-b" size="5.000000 4.613838" />
+    <ImageTarget name="Marker218-f-3" size="2.000000 0.666667" />
+    <ImageTarget name="Marker218-b-3" size="2.000000 0.770134" />
+    <ImageTarget name="Marker218-f-2" size="3.000000 1.228255" />
+    <ImageTarget name="Marker218-f" size="5.000000 6.121024" />
+    <ImageTarget name="Marker218-b-2" size="3.000000 1.722222" />
+    <ImageTarget name="Marker218-b" size="5.000000 4.785922" />
     <ImageTarget name="Marker231" size="10.000000 13.297873" />
     <ImageTarget name="Marker230" size="10.000000 13.297873" />
     <ImageTarget name="Marker226-f" size="10.000000 13.297873" />
