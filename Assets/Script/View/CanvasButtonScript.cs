@@ -140,16 +140,6 @@ public class CanvasButtonScript : MonoBehaviour
 
     }
 
-        // try
-        // {
-
-
-
-        // }
-        // catch (System.Exception e)
-        // {
-        //     dbtext.text = Random.Range(10,99) + ": startnormalstateError " + e.Message + "\n" + e.StackTrace;
-        //}
 
     public void OnBackButton()
     {
@@ -325,6 +315,7 @@ roomNavigateButton.GetComponent<Text>().text = "Navigate.";
     public void OnTyping()
     {
         string typingWord = searchInputField.GetComponent<InputField>().text;
+        typingWord = typingWord.ToLower();
         searchShowList.Clear();
 
         string fkrid = "";
@@ -344,7 +335,7 @@ roomNavigateButton.GetComponent<Text>().text = "Navigate.";
                 {
                     searchShowList.Add(nodet);
                 }
-                else if (nodeData.GetParentObjectData().roomName.Contains(typingWord)
+                else if (nodeData.GetParentObjectData().roomName.ToLower().Contains(typingWord)
                     && !IsDuplicateShowingRoom(searchShowList, nodeData.GetParentObjectData().roomName)
                     && (nodeData.GetParentObjectData().showInSearch || nodeData.fkRoomID == fkrid))
                 {
@@ -417,6 +408,11 @@ roomNavigateButton.GetComponent<Text>().text = "Navigate.";
             }
         }
     }
+
+    public void ClearSearch() {
+        searchInputField.GetComponent<InputField>().text = "";
+    }
+    
     #endregion
 
     #region Map Action
