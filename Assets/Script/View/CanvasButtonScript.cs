@@ -317,6 +317,7 @@ roomNavigateButton.GetComponent<Text>().text = "Navigate.";
         string typingWord = searchInputField.GetComponent<InputField>().text;
         typingWord = typingWord.ToLower();
         searchShowList.Clear();
+        List<GameObject> searchindescription = new List<GameObject>();
 
         string fkrid = "";
         if (MainController.instance.beginPoint != null)
@@ -341,7 +342,17 @@ roomNavigateButton.GetComponent<Text>().text = "Navigate.";
                 {
                     searchShowList.Add(nodet);
                 }
+                else if (nodeData.GetParentObjectData().roomDescription.ToLower().Contains(typingWord)
+                    && !IsDuplicateShowingRoom(searchShowList, nodeData.GetParentObjectData().roomName)
+                    && (nodeData.GetParentObjectData().showInSearch || nodeData.fkRoomID == fkrid))
+                {
+                    searchindescription.Add(nodet);
+                }
             }
+        }
+        foreach (GameObject searchdes in searchindescription)
+        {
+            searchShowList.Add(searchdes);
         }
         ShowAllRoomOf(searchShowList);
     }

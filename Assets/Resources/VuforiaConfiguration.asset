@@ -44,21 +44,9 @@ MonoBehaviour:
       ContainsMagnet: 0
   databaseLoad:
     dataSetsToLoad:
-    - SQ1floor6
-    - ITFloor6
-    - ITFloor5
-    - ITFloor3
-    - ITFloor2
-    - ITFloor1
-    - TestMarkerDB
+    - ITSeniorProject
     dataSetsToActivate:
-    - SQ1floor6
-    - ITFloor6
-    - ITFloor5
-    - ITFloor3
-    - ITFloor2
-    - ITFloor1
-    - TestMarkerDB
+    - ITSeniorProject
   videoBackground:
     clippingMode: 0
     numDivisions: 2

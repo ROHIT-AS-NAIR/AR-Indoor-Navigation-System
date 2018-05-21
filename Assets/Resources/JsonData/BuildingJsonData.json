@@ -1,8 +1,8 @@
 {
-    "Items": [
-        {
-            "buildingID": "b1",
-            "buildingName": "IT KMITL Building"
-        }
-    ]
+	"Items": [
+		{
+			"buildingID": "B0",
+			"buildingName": ""
+		}
+	]
 }
