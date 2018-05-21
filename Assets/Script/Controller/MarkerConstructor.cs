@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Vuforia;
@@ -10,8 +11,9 @@ public class MarkerConstructor : MonoBehaviour
     private GameObject[] allNodeList;
     private GameObject choosenMarker, oldMarker;
     private ARObject.Type lastObjectType = ARObject.Type.Board;
-    private float mostPriority = 0;
-    private int markerCount = 0;
+    private float leastPriority = 0;
+    private int markerCount = 0; //count marker detected
+    private Dictionary<NodeData, int> markerDetected = new Dictionary<NodeData, int>();
     public enum ObjectType
     {
         Arrow,
@@ -33,22 +35,51 @@ public class MarkerConstructor : MonoBehaviour
     void Update()
     {
         markerCount = 0;
-        mostPriority = 0;
+        leastPriority = Single.PositiveInfinity;
+        markerDetected.Clear();
         IEnumerable<TrackableBehaviour> trackableBehaviours = TrackerManager.Instance.GetStateManager().GetActiveTrackableBehaviours();
 
-        // Loop over all TrackableBehaviours. add data and 
+        // Loop over all TrackableBehaviours. add data and count marker in node
         foreach (TrackableBehaviour trackableBehaviour in trackableBehaviours)
         {
             AddMarkerData(trackableBehaviour);
-            GameObject markerObj = trackableBehaviour.gameObject;
-            //Select marker to Choosen marker  ... now use most priority that found
-            if (markerObj.GetComponent<MarkerData>().priority > mostPriority)
-            {
-                choosenMarker = markerObj;
-                mostPriority = markerObj.GetComponent<MarkerData>().priority;
-            }
+            MarkerData tbvmd = trackableBehaviour.gameObject.GetComponent<MarkerData>();
+            CountMarkerOne(tbvmd.GetParentObjectData());
             markerCount = +1;
+            choosenMarker = trackableBehaviour.gameObject;
         }
+
+        if (markerCount != 1 || markerCount != 0)
+        {
+            // find [node] that have [most marker] by weight
+            int mostNodeScore = 0;
+            string mostnodekey = "";
+            foreach (KeyValuePair<NodeData, int> md in markerDetected)
+            {
+                Debug.Log(md.Key.nodeID + "| " +md.Value +"/"+ md.Key.markerCount);
+                if (md.Value / md.Key.markerCount > mostNodeScore)
+                {
+                    mostNodeScore = md.Value;
+                    mostnodekey = md.Key.nodeID;
+                }
+            }
+
+            //find marker have least priority, that marker in [node most mrker]
+            foreach (TrackableBehaviour trackableBehaviour in trackableBehaviours)
+            {
+                MarkerData tbvmd = trackableBehaviour.gameObject.GetComponent<MarkerData>();
+                if (tbvmd.GetParentObjectData().nodeID == mostnodekey)
+                {
+                    if (tbvmd.priority < leastPriority)
+                    {
+                        leastPriority = tbvmd.priority;
+                        choosenMarker = trackableBehaviour.gameObject;
+                    }
+                }
+            }
+        }
+
+
 
         /* take action with choosen marker */
         if (choosenMarker != null && oldMarker != null)
@@ -186,6 +217,18 @@ public class MarkerConstructor : MonoBehaviour
             arobj.transform.localEulerAngles = new Vector3(0, 0, markerObject.GetComponent<MarkerData>().markerOrientation);
 
             arobj.transform.localScale = Vector3.one;
+        }
+    }
+
+    private void CountMarkerOne(NodeData nodekey)
+    {
+        if (markerDetected.ContainsKey(nodekey))
+        {
+            markerDetected[nodekey] += 1;
+        }
+        else
+        {
+            markerDetected.Add(nodekey, 1);
         }
     }
 }

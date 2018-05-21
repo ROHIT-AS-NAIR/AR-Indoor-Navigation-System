@@ -1,4 +1,4 @@
-﻿ using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -260,6 +260,7 @@ public class JsonReader : MonoBehaviour
                 ndt.position = GetSplitValue(node.position);
                 ndt.referencePosition = GetSplitValue(node.referencePosition);
                 ndt.orientation = GetSplitValue(node.xzOrientation.Split(' ')[0] + " " + node.yOrientation + " " + node.xzOrientation.Split(' ')[1]); //Warn xz lenght 1
+                ndt.markerCount = node.markerCount <= 0 ? 1 : node.markerCount;
                 ndt.fkRoomID = node.fkRoomID;
                 //find parent
                 FindObjectToAttract(emptyobj, StctType.Room, ndt.fkRoomID);
@@ -492,6 +493,7 @@ public class JNode
     public string referencePosition;
     public int yOrientation;
     public string xzOrientation;
+    public int markerCount;
     public string fkRoomID;
 }
 

@@ -245,31 +245,31 @@ public class CanvasButtonScript : MonoBehaviour
             try
             {
 
-roomNavigateButton.GetComponent<Text>().text = "Navigate.";
-            roomNavigateButton.GetComponent<Text>().color = new Color32(64, 0, 192, 255);
-            roomNavigateButton.GetComponent<Button>().onClick.RemoveAllListeners();
-            roomNavigateButton.GetComponent<Button>().onClick.AddListener(delegate { SelectToNavigate(roomObj); });
-            if (MainController.instance.beginPoint != null)
-            {
-                if (nddt.GetParentObjectData().roomName ==
-                    MainController.instance.beginPoint.GetComponent<NodeData>().GetParentObjectData().roomName)
+                roomNavigateButton.GetComponent<Text>().text = "Navigate.";
+                roomNavigateButton.GetComponent<Text>().color = new Color32(64, 0, 192, 255);
+                roomNavigateButton.GetComponent<Button>().onClick.RemoveAllListeners();
+                roomNavigateButton.GetComponent<Button>().onClick.AddListener(delegate { SelectToNavigate(roomObj); });
+                if (MainController.instance.beginPoint != null)
                 {
-                    roomNavigateButton.GetComponent<Text>().text = "Here is Current Room";
-                    roomNavigateButton.GetComponent<Text>().color = new Color32(150, 130, 180, 255);
-                    roomNavigateButton.GetComponent<Button>().onClick.RemoveAllListeners();
-                    roomNavigateButton.GetComponent<Button>().onClick.AddListener(delegate
+                    if (nddt.GetParentObjectData().roomName ==
+                        MainController.instance.beginPoint.GetComponent<NodeData>().GetParentObjectData().roomName)
                     {
-                        stateDisplay.ShowToastMessage("จุดล่าสุดของคุณคือจุดที่คุณเลือกอยู่ กรุณาเลือกปลายทางที่อื่น", 1);
-                    });
+                        roomNavigateButton.GetComponent<Text>().text = "Here is Current Room";
+                        roomNavigateButton.GetComponent<Text>().color = new Color32(150, 130, 180, 255);
+                        roomNavigateButton.GetComponent<Button>().onClick.RemoveAllListeners();
+                        roomNavigateButton.GetComponent<Button>().onClick.AddListener(delegate
+                        {
+                            stateDisplay.ShowToastMessage("จุดล่าสุดของคุณคือจุดที่คุณเลือกอยู่ กรุณาเลือกปลายทางที่อื่น", 1);
+                        });
+                    }
                 }
-            }
 
             }
             catch (System.Exception e)
             {
-                dbtext.text = Random.Range(10, 99) + ": OnOpenRoomDialoge Error " + e.Message+ "\n" + e.StackTrace;
+                dbtext.text = Random.Range(10, 99) + ": OnOpenRoomDialoge Error " + e.Message + "\n" + e.StackTrace;
             }
-            
+
         }
         else
         {
@@ -317,6 +317,7 @@ roomNavigateButton.GetComponent<Text>().text = "Navigate.";
         string typingWord = searchInputField.GetComponent<InputField>().text;
         typingWord = typingWord.ToLower();
         searchShowList.Clear();
+        List<GameObject> equalInDescription = new List<GameObject>();
 
         string fkrid = "";
         if (MainController.instance.beginPoint != null)
@@ -341,141 +342,152 @@ roomNavigateButton.GetComponent<Text>().text = "Navigate.";
                 {
                     searchShowList.Add(nodet);
                 }
+                else if (nodeData.GetParentObjectData().roomDescription.ToLower().Contains(typingWord)
+                    && !IsDuplicateShowingRoom(searchShowList, nodeData.GetParentObjectData().roomName)
+                    && (nodeData.GetParentObjectData().showInSearch || nodeData.fkRoomID == fkrid))
+                {
+                    equalInDescription.Add(nodet);
+                }
             }
+        }
+        foreach (GameObject searchdes in equalInDescription)
+        {
+            searchShowList.Add(searchdes);
         }
         ShowAllRoomOf(searchShowList);
     }
 
     // detect too much loop here
     private bool IsDuplicateShowingRoom(List<GameObject> searchLst, string findingMarkerName) /* false if already has marker of that room */
+{
+    foreach (GameObject mk in searchLst)
     {
-        foreach (GameObject mk in searchLst)
+        if (mk.GetComponent<NodeData>().GetParentObjectData().roomName == findingMarkerName)
         {
-            if (mk.GetComponent<NodeData>().GetParentObjectData().roomName == findingMarkerName)
+            return true;
+        }
+    }
+    return false;
+}
+
+private void ShowAllRoomOf(List<GameObject> searchMarkerList)
+{
+    //if system have begin point, need to color it, set to false
+    bool beginColored = !(MainController.instance.beginPoint != null);
+    bool destColored = !(MainController.instance.destinationPoint != null);
+
+    //destroy all list
+    foreach (Transform ch in searchContent.transform)
+    {
+        Destroy(ch.gameObject);
+    }
+    foreach (GameObject nodeob in searchMarkerList)
+    {
+        GameObject roomButton = Instantiate(roomButtonPrefab);
+        roomButton.GetComponent<RoomButtonScript>().room = nodeob;
+        NodeData nodedata = nodeob.GetComponent<NodeData>();
+        roomButton.transform.SetParent(searchContent.transform, false);
+        Text RoomNameContent = roomButton.transform.GetChild(0).gameObject.GetComponent<Text>();
+        RoomNameContent.text = nodedata.GetParentObjectData().roomName;
+        Text RoomDescriptionContent = roomButton.transform.GetChild(1).gameObject.GetComponent<Text>();
+        RoomDescriptionContent.text = nodedata.GetParentObjectData().roomDescription;
+        if (!beginColored)
+        {
+            if (MainController.instance.beginPoint.GetComponent<NodeData>().GetParentObjectData().roomName
+                == nodedata.GetParentObjectData().roomName)
             {
-                return true;
+                roomButton.GetComponent<Image>().color = new Color32(0, 0, 0, 255);
+                RoomNameContent.color = Color.white;
+                RoomDescriptionContent.color = Color.white;
+                RoomNameContent.text = " ⦿ ต้นทาง: " + nodedata.GetParentObjectData().roomName;
+                beginColored = true;
             }
         }
-        return false;
-    }
-
-    private void ShowAllRoomOf(List<GameObject> searchMarkerList)
-    {
-        //if system have begin point, need to color it, set to false
-        bool beginColored = !(MainController.instance.beginPoint != null);
-        bool destColored = !(MainController.instance.destinationPoint != null);
-
-        //destroy all list
-        foreach (Transform ch in searchContent.transform)
+        if (!destColored)
         {
-            Destroy(ch.gameObject);
-        }
-        foreach (GameObject nodeob in searchMarkerList)
-        {
-            GameObject roomButton = Instantiate(roomButtonPrefab);
-            roomButton.GetComponent<RoomButtonScript>().room = nodeob;
-            NodeData nodedata = nodeob.GetComponent<NodeData>();
-            roomButton.transform.SetParent(searchContent.transform, false);
-            Text RoomNameContent = roomButton.transform.GetChild(0).gameObject.GetComponent<Text>();
-            RoomNameContent.text = nodedata.GetParentObjectData().roomName;
-            Text RoomDescriptionContent = roomButton.transform.GetChild(1).gameObject.GetComponent<Text>();
-            RoomDescriptionContent.text = nodedata.GetParentObjectData().roomDescription;
-            if (!beginColored)
+            if (MainController.instance.destinationPoint.GetComponent<NodeData>().GetParentObjectData().roomName
+                == nodedata.GetParentObjectData().roomName)
             {
-                if (MainController.instance.beginPoint.GetComponent<NodeData>().GetParentObjectData().roomName
-                    == nodedata.GetParentObjectData().roomName)
-                {
-                    roomButton.GetComponent<Image>().color = new Color32(0, 0, 0, 255);
-                    RoomNameContent.color = Color.white;
-                    RoomDescriptionContent.color = Color.white;
-                    RoomNameContent.text = " ⦿ ต้นทาง: " + nodedata.GetParentObjectData().roomName;
-                    beginColored = true;
-                }
-            }
-            if (!destColored)
-            {
-                if (MainController.instance.destinationPoint.GetComponent<NodeData>().GetParentObjectData().roomName
-                    == nodedata.GetParentObjectData().roomName)
-                {
-                    roomButton.GetComponent<RoomButtonScript>().isDestination = true;
-                    roomButton.GetComponent<Image>().color = new Color32(0, 0, 0, 255);
-                    RoomNameContent.color = Color.white;
-                    RoomDescriptionContent.color = Color.white;
-                    //roomButton.GetComponent<Image>().color = new Color32(126, 60, 255, 255); // purple
-                    RoomNameContent.text = " ⦿ ปลายทาง: " + nodedata.GetParentObjectData().roomName;
-                    destColored = true;
-                }
+                roomButton.GetComponent<RoomButtonScript>().isDestination = true;
+                roomButton.GetComponent<Image>().color = new Color32(0, 0, 0, 255);
+                RoomNameContent.color = Color.white;
+                RoomDescriptionContent.color = Color.white;
+                //roomButton.GetComponent<Image>().color = new Color32(126, 60, 255, 255); // purple
+                RoomNameContent.text = " ⦿ ปลายทาง: " + nodedata.GetParentObjectData().roomName;
+                destColored = true;
             }
         }
     }
+}
 
-    public void ClearSearch() {
-        searchInputField.GetComponent<InputField>().text = "";
-    }
-    
-    #endregion
+public void ClearSearch()
+{
+    searchInputField.GetComponent<InputField>().text = "";
+}
 
-    #region Map Action
+#endregion
 
-    public void OnShiftMap(bool isForward)
+#region Map Action
+
+public void OnShiftMap(bool isForward)
+{
+    GameObject floorObject;
+    if (isForward)
     {
-        GameObject floorObject;
-        if (isForward)
-        {
-            floorObject = building.GetNextFloor(showingFloor.GetComponent<FloorData>().floorName);
-        }
-        else
-        {
-            floorObject = building.GetPreviousFloor(showingFloor.GetComponent<FloorData>().floorName);
-        }
-
-        mapControl.UpdateMap(floorObject);
-        showingFloor = floorObject;
+        floorObject = building.GetNextFloor(showingFloor.GetComponent<FloorData>().floorName);
     }
-
-    #endregion
-
-    #region Error Message
-
-    public void ShowErrorCantReadFile(JsonReader.ReadState readState)
+    else
     {
-        isErrorCantReadFile = true;
-        errorDialog.SetActive(true);
-        errorPanel.SetActive(true);
-        searchButton.GetComponent<Button>().enabled = false;
-        searchButton.transform.GetChild(0).gameObject.GetComponent<Image>().color = Color.gray;
-        mapButton.GetComponent<Button>().enabled = false;
-        mapButton.transform.GetChild(0).gameObject.GetComponent<Image>().color = Color.gray;
-        string errortext = "Error in Json File";
-        switch (readState)
-        {
-            case JsonReader.ReadState.BuildingError:
-                errortext = "Error in Building Json File";
-                break;
-            case JsonReader.ReadState.FloorError:
-                errortext = "Error in Floor Json File";
-                break;
-            case JsonReader.ReadState.RoomError:
-                errortext = "Error in Room Json File";
-                break;
-            case JsonReader.ReadState.NodeError:
-                errortext = "Error in Node Json File";
-                break;
-            case JsonReader.ReadState.MarkerError:
-                errortext = "Error in Marker Json File";
-                break;
-            case JsonReader.ReadState.ConnectError:
-                errortext = "Error in Connect Json File";
-                break;
-        }
-        errorHeadText.GetComponent<Text>().text = errortext;
+        floorObject = building.GetPreviousFloor(showingFloor.GetComponent<FloorData>().floorName);
     }
 
-    public void CloseErrorPanel()
+    mapControl.UpdateMap(floorObject);
+    showingFloor = floorObject;
+}
+
+#endregion
+
+#region Error Message
+
+public void ShowErrorCantReadFile(JsonReader.ReadState readState)
+{
+    isErrorCantReadFile = true;
+    errorDialog.SetActive(true);
+    errorPanel.SetActive(true);
+    searchButton.GetComponent<Button>().enabled = false;
+    searchButton.transform.GetChild(0).gameObject.GetComponent<Image>().color = Color.gray;
+    mapButton.GetComponent<Button>().enabled = false;
+    mapButton.transform.GetChild(0).gameObject.GetComponent<Image>().color = Color.gray;
+    string errortext = "Error in Json File";
+    switch (readState)
     {
-        errorDialog.SetActive(false);
-        errorPanel.SetActive(false);
+        case JsonReader.ReadState.BuildingError:
+            errortext = "Error in Building Json File";
+            break;
+        case JsonReader.ReadState.FloorError:
+            errortext = "Error in Floor Json File";
+            break;
+        case JsonReader.ReadState.RoomError:
+            errortext = "Error in Room Json File";
+            break;
+        case JsonReader.ReadState.NodeError:
+            errortext = "Error in Node Json File";
+            break;
+        case JsonReader.ReadState.MarkerError:
+            errortext = "Error in Marker Json File";
+            break;
+        case JsonReader.ReadState.ConnectError:
+            errortext = "Error in Connect Json File";
+            break;
     }
+    errorHeadText.GetComponent<Text>().text = errortext;
+}
+
+public void CloseErrorPanel()
+{
+    errorDialog.SetActive(false);
+    errorPanel.SetActive(false);
+}
 
     #endregion
 }

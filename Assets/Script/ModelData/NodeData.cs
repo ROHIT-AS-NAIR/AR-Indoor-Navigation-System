@@ -10,6 +10,7 @@ public class NodeData : MonoBehaviour
     public Vector3 position = Vector3.zero;
     public Vector3 referencePosition = Vector3.zero;
     public Vector3 orientation = Vector3.zero;
+    public int markerCount = 1;
     public float cost = Single.PositiveInfinity;
     public GameObject predecessor = null;
     public GameObject successor = null;
